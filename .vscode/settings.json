@@ -1,0 +1,5 @@
+{
+    "editor.foldingStrategy": "indentation",
+    "editor.showFoldingControls": "always",
+    "editor.foldingImportsByDefault": true
+}
