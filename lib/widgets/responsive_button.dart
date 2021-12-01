@@ -1,6 +1,5 @@
 import 'package:tourismapp/misc/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:tourismapp/widgets/simple_txt.dart';
 
 

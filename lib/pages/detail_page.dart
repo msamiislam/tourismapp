@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tourismapp/cubit/app_cubits.dart';
 import 'package:tourismapp/misc/colors.dart';
 import 'package:tourismapp/widgets/app_button.dart';
 import 'package:tourismapp/widgets/large_txt.dart';
@@ -13,23 +15,16 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
-  int selectedindex = -1;
+  int selectedIndex = -1;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         width: double.maxFinite,
         height: double.maxFinite,
         child: Stack(
           children: [
-            Positioned(
-                left: 20,
-                top: 70,
-                child: Row(
-                  children: [
-                    IconButton(onPressed: () {}, icon: Icon(Icons.menu))
-                  ],
-                )),
             Positioned(
                 left: 0,
                 right: 0,
@@ -132,22 +127,16 @@ class _DetailPageState extends State<DetailPage> {
                         return InkWell(
                           onTap: () {
                             setState(() {
-                              selectedindex = index;
+                              selectedIndex = index;
                             });
                           },
                           child: Container(
                             margin: const EdgeInsets.only(right: 10),
                             child: AppButtons(
                               size: 50,
-                              backgroundColor: selectedindex == index
-                                  ? Colors.black
-                                  : AppColors.buttonBackground,
-                              borderColor: selectedindex == index
-                                  ? Colors.black
-                                  : AppColors.buttonBackground,
-                              color: selectedindex == index
-                                  ? Colors.white
-                                  : Colors.black,
+                              backgroundColor: selectedIndex == index ? Colors.black : AppColors.buttonBackground,
+                              borderColor: selectedIndex == index ? Colors.black : AppColors.buttonBackground,
+                              color: selectedIndex == index ? Colors.white : Colors.black,
                               text: (index + 1).toString(),
                               //for icon use in button
                               //icon: Icons.favourite_border,
@@ -179,29 +168,36 @@ class _DetailPageState extends State<DetailPage> {
                     ],
                   ),
                 )),
-
-                //at bootom wishlist button and booknow button
-                Positioned(
-                  bottom: 20,
-                  left: 20,
-                  right: 20,
-                  child: Row(
-                    children: [
-                      AppButtons(
-                        size: 4, 
-                        backgroundColor: AppColors.textColor2, 
-                        borderColor: Colors.white, 
-                        color: AppColors.textColor2,
-                        isIcon: true,
-                        icon: Icons.favorite_border,
-                        ),
-                      SizedBox(width: 20,),
-                      ResponsiveButton(
-                        isResponsive: true,
-                        
-                      ),
-                    ],
-                  ))
+            //at bottom wishlist button and book now button
+            Positioned(
+                bottom: 20,
+                left: 20,
+                right: 20,
+                child: Row(
+                  children: [
+                    AppButtons(
+                      size: 4,
+                      backgroundColor: AppColors.textColor2,
+                      borderColor: Colors.white,
+                      color: AppColors.textColor2,
+                      isIcon: true,
+                      icon: Icons.favorite_border,
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    ResponsiveButton(
+                      isResponsive: true,
+                    ),
+                  ],
+                )),
+            Positioned(
+                left: 20,
+                top: 70,
+                child: InkWell(
+                  onTap: () => BlocProvider.of<AppCubits>(context).mainPage(),
+                  child: Icon(Icons.arrow_back),
+                )),
           ],
         ),
       ),

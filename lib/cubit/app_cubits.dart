@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:tourismapp/cubit/app_cubit_state.dart';
 import 'package:tourismapp/model/data_model.dart';
-import 'package:tourismapp/pages/detail_page.dart';
 import 'package:tourismapp/services/data_services.dart';
 
 class AppCubits extends Cubit<CubitStates>{
@@ -12,17 +11,18 @@ class AppCubits extends Cubit<CubitStates>{
   late final places;
 
   Future<void> getData() async {
-    try{
+    try {
       emit(LoadingState());
-      places=await data.getInfo();
-      emit(LoadedState(places));
-    }catch(e){
-
-    }
+      places = await data.getInfo();
+      emit(MainState(places));
+    } catch (e) {}
   }
 
-  detailpage(DataModel data){
-    emit(DetailState(data));
+  detailPage([DataModel? data]) {
+    emit(DetailState());
   }
-  
+
+  mainPage() {
+    emit(MainState([]));
+  }
 }
