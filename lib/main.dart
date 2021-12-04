@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tourismapp/cubit/app_cubits.dart';
-import 'package:tourismapp/cubit/app_cubits_logic.dart';
-
-import 'package:tourismapp/services/data_services.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:get/get.dart';
+import 'package:tourismapp/pages/login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,20 +13,17 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
+    return GetMaterialApp(
+      title: 'Adventuree',
+      localizationsDelegates: [FormBuilderLocalizations.delegate],
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-
-        primarySwatch: Colors.blue,
-      ),
-      home: BlocProvider<AppCubits>(
-        create:(context)=>AppCubits(
-          data: DataServices(),
-        ),
-        child: AppCubitsLogic(),
-        )
-      
+      home: LoginPage(),
+      // BlocProvider<AppCubits>(
+      // create:(context)=>AppCubits(
+      //   data: DataServices(),
+      // ),
+      // child: AppCubitsLogic(),
+      // )
     );
   }
 }
