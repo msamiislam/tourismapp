@@ -8,8 +8,7 @@ class GuideModel {
     required this.phone,
     required this.address,
     required this.bloodGroup,
-    required this.dob
-    ,
+    required this.dob,
     required this.gender,
     required this.city,
     required this.state,
@@ -19,22 +18,23 @@ class GuideModel {
     required this.totalTTrips,
   });
 
-  String uid;
-  String imgUrl;
-  String fName;
-  String lName;
-  String email;
-  String phone;
-  String address;
-  String bloodGroup;
-  String dob;
-  String gender;
-  String city;
-  String state;
-  String companyName;
-  List<String> services;
-  List<String> trip;
-  String totalTTrips;
+  final String uid;
+  final String imgUrl;
+  final String fName;
+  final String lName;
+  final String email;
+  final String phone;
+  final String address;
+  final String bloodGroup;
+  final String dob;
+  final String gender;
+  final String city;
+  final String state;
+  final String companyName;
+  final List<String> services;
+  final List<String> trip;
+  final String totalTTrips;
+
 
   static fromJson(Map<String, dynamic> json) => GuideModel(
     uid: json["uid"],
