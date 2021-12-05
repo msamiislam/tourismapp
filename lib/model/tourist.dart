@@ -1,4 +1,5 @@
 class TouristModel {
+  final String uid;
   final String fName;
   final String lName;
   final String email;
@@ -13,6 +14,7 @@ class TouristModel {
   final List<String> favHotels;
 
   TouristModel({
+    required this.uid,
     required this.fName,
     required this.lName,
     required this.email,
@@ -29,6 +31,7 @@ class TouristModel {
 
   static TouristModel fromJson(Map<String, dynamic> json) {
     return TouristModel(
+      uid: json['uid'],
       fName: json['fName'],
       lName: json['lName'],
       email: json['email'],
@@ -46,6 +49,7 @@ class TouristModel {
 
   static Map<String, dynamic> toJson(TouristModel touristModel){
     return {
+      'uid':touristModel.uid,
       'fName':touristModel.fName,
       'lName':touristModel.lName,
       'email':touristModel.email,
