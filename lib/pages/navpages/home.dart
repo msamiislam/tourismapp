@@ -43,15 +43,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         iconTheme: IconThemeData(color: Colors.black),
         elevation: 0.0,
         actions: [
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 5.0),
-            width: 45.0,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.0),
-              color: Colors.grey,
-            ),
-          ),
-          SizedBox(width: 20.0),
+          CircleAvatar(backgroundColor: Colors.grey),
+          SizedBox(width: 10.0),
         ],
       ),
       drawer: Drawer(
