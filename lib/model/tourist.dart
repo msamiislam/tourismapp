@@ -47,21 +47,21 @@ class TouristModel {
     );
   }
 
-  static Map<String, dynamic> toJson(TouristModel touristModel){
+  Map<String, dynamic> toJson( ){
     return {
-      'uid':touristModel.uid,
-      'fName':touristModel.fName,
-      'lName':touristModel.lName,
-      'email':touristModel.email,
-      'phone':touristModel.phone,
-      'address':touristModel.address,
-      'bloodGroup':touristModel.bloodGroup,
-      'dob':touristModel.dob,
-      'gender':touristModel.gender,
-      'trips':touristModel.trips,
-      'favRestaurant':touristModel.favRestaurant,
-      'favMall':touristModel.favMall,
-      'favHotels':touristModel.favHotels,
+      'uid':uid,
+      'fName':fName,
+      'lName':lName,
+      'email':email,
+      'phone':phone,
+      'address':address,
+      'bloodGroup':bloodGroup,
+      'dob':dob,
+      'gender':gender,
+      'trips':trips,
+      'favRestaurant':favRestaurant,
+      'favMall':favMall,
+      'favHotels':favHotels,
     };
   }
 }
