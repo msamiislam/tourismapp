@@ -10,6 +10,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:ndialog/ndialog.dart';
 import 'package:tourismapp/pages/dashboard.dart';
 import 'package:tourismapp/pages/registration_personal.dart';
+import 'package:tourismapp/services/auth.dart';
 import 'package:tourismapp/utils/colors.dart';
 import 'package:tourismapp/widgets/large_txt.dart';
 import 'package:tourismapp/widgets/password_field.dart';
@@ -65,6 +66,12 @@ class LoginPage extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 20.0),
+                    TextButton(
+                        onPressed: () => _loginWithGoogle(),
+                        child: Text("Login with Google"),
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(AppColors.buttonBackground),
+                        )),
                   ],
                 ),
               ),
@@ -118,6 +125,22 @@ class LoginPage extends StatelessWidget {
           ),
         );
       }
+    }
+  }
+
+  void _loginWithGoogle() async {
+    try{
+      UserCredential user = await
+      AuthService.signInWithGoogle();
+      print('--------- ${user.user}');
+
+    }on FirebaseAuthException catch(e){
+      print('--------- Auth Exception - $e');
+      //show a dialog or toast
+
+    }catch(e){
+      print('--------- Exception - $e');
+
     }
   }
 }
