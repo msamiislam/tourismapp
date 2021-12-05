@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "720963813885",
+    "project_id": "adventuree-c6726",
+    "storage_bucket": "adventuree-c6726.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:720963813885:android:e85c403f67711568fdd994",
+        "android_client_info": {
+          "package_name": "com.example.tourismapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "720963813885-unjrmtj770hv4t18u1hlgjb2qcf3re6m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtmo1orYPC67Tw7B-T0fpsMoRKYMueipY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "720963813885-unjrmtj770hv4t18u1hlgjb2qcf3re6m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

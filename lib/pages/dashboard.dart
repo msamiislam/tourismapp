@@ -1,39 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:tourismapp/pages/navpages/bar_item_page.dart';
-import 'package:tourismapp/pages/home_page.dart';
-import 'package:tourismapp/pages/navpages/my_page.dart';
-import 'package:tourismapp/pages/navpages/search_page.dart';
+import 'package:tourismapp/pages/navpages/bar_item.dart';
+import 'package:tourismapp/pages/navpages/home.dart';
+import 'package:tourismapp/pages/navpages/profile.dart';
+import 'package:tourismapp/pages/navpages/search.dart';
 
-class MainPage extends StatefulWidget {
-  const MainPage({ Key? key }) : super(key: key);
+class DashboardPage extends StatefulWidget {
+  const DashboardPage({Key? key}) : super(key: key);
 
   @override
-  _MainPageState createState() => _MainPageState();
+  _DashboardPageState createState() => _DashboardPageState();
 }
 
-class _MainPageState extends State<MainPage> {
-  List pages=[
+class _DashboardPageState extends State<DashboardPage> {
+  List pages = [
     HomePage(),
     BarItemPage(),
     SearchPage(),
     MyPage(),
   ];
-  int c_index=0;
-  void onTapButton(int index){
-    setState(() {
-      c_index=index;
-    });
+  int cIndex = 0;
+
+  void onTapButton(int index) {
+    setState(() => cIndex = index);
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: pages[c_index],
+      body: pages[cIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.white,
         onTap: onTapButton,
-        currentIndex: c_index,
+        currentIndex: cIndex,
         selectedItemColor: Colors.black45,
         unselectedItemColor: Colors.blueGrey.withOpacity(0.5),
         showSelectedLabels: false,

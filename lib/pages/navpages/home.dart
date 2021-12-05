@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tourismapp/cubit/app_cubit_state.dart';
-import 'package:tourismapp/cubit/app_cubits.dart';
-import 'package:tourismapp/misc/colors.dart';
+import 'package:tourismapp/utils/colors.dart';
 import 'package:tourismapp/widgets/large_txt.dart';
 import 'package:tourismapp/widgets/simple_txt.dart';
 
@@ -47,59 +44,56 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         elevation: 0.0,
         actions: [
           Container(
-            margin: const EdgeInsets.only(right: 20),
-            width: 50,
-            height: 50,
+            margin: EdgeInsets.symmetric(vertical: 5.0),
+            width: 45.0,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(10.0),
               color: Colors.grey,
             ),
           ),
+          SizedBox(width: 20.0),
         ],
       ),
-      drawer: Drawer(),
-      body: BlocBuilder<AppCubits, CubitStates>(
-        builder: (context, state) {
-          if (state is MainState) {
-            return ListView(
-              children: [
-                //upper Menu bar icon + image
-                Container(
-                  margin: const EdgeInsets.only(left: 20),
-                  child: AppLargeText(text: "Discover"),
-                ),
-                SizedBox(height: 20),
-                //TabBar (which show the different thins within tabview and its carry less space)
-                Container(
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: TabBar(
-                      labelPadding: const EdgeInsets.only(left: 20, right: 20),
-                      indicatorSize: TabBarIndicatorSize.label,
-                      controller: _tabController,
-                      labelColor: Colors.black,
-                      unselectedLabelColor: Colors.grey,
-                      isScrollable: true,
-                      indicator: CircleTabIndicator(color: AppColors.mainColor, radius: 4),
-                      tabs: _tabs.map((e) => Tab(text: e)).toList(),
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.only(left: 20),
-                  height: 300,
-                  child: TabBarView(controller: _tabController, children: _tabViews),
-                ),
-                SizedBox(height: 20),
-                ExploreSection(title: "Travels",nameImages: travelImages, names: travels),
-                SizedBox(height: 20),
-                ExploreSection(title: "Guiders",nameImages: guiderImages, names: guiders),
-              ],
-            );
-          } else {
-            return Container();
-          }
-        },
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            UserAccountsDrawerHeader(accountName: Text("accountName"), accountEmail: Text("accountEmail")),
+          ],
+        ),
+      ),
+      body: ListView(
+        children: [
+          //upper Menu bar icon + image
+          Container(
+            margin: const EdgeInsets.only(left: 20),
+            child: AppLargeText(text: "Discover"),
+          ),
+          SizedBox(height: 20),
+          Container(
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: TabBar(
+                labelPadding: const EdgeInsets.only(left: 20, right: 20),
+                indicatorSize: TabBarIndicatorSize.label,
+                controller: _tabController,
+                labelColor: Colors.black,
+                unselectedLabelColor: Colors.grey,
+                isScrollable: true,
+                indicator: CircleTabIndicator(color: AppColors.mainColor, radius: 4),
+                tabs: _tabs.map((e) => Tab(text: e)).toList(),
+              ),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.only(left: 20),
+            height: 300,
+            child: TabBarView(controller: _tabController, children: _tabViews),
+          ),
+          SizedBox(height: 20),
+          ExploreSection(title: "Travels", nameImages: travelImages, names: travels),
+          SizedBox(height: 20),
+          ExploreSection(title: "Guiders", nameImages: guiderImages, names: guiders),
+        ],
       ),
     );
   }
@@ -182,17 +176,14 @@ class TabView extends StatelessWidget {
       itemCount: data.length,
       scrollDirection: Axis.horizontal,
       itemBuilder: (BuildContext context, int index) {
-        return GestureDetector(
-          onTap: () => BlocProvider.of<AppCubits>(context).detailPage(),
-          child: Container(
-              margin: const EdgeInsets.only(top: 10, right: 15),
-              width: 200,
-              height: 300,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.white,
-                  image: DecorationImage(fit: BoxFit.cover, image: NetworkImage("https://picsum.photos/200")))),
-        );
+        return Container(
+            margin: const EdgeInsets.only(top: 10, right: 15),
+            width: 200,
+            height: 300,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.white,
+                image: DecorationImage(fit: BoxFit.cover, image: NetworkImage("https://picsum.photos/200"))));
       },
     );
   }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tourismapp/cubit/app_cubits.dart';
-import 'package:tourismapp/misc/colors.dart';
+import 'package:get/get.dart';
+import 'package:tourismapp/utils/colors.dart';
 import 'package:tourismapp/widgets/app_button.dart';
 import 'package:tourismapp/widgets/large_txt.dart';
 import 'package:tourismapp/widgets/responsive_button.dart';
@@ -64,8 +63,7 @@ class _DetailPageState extends State<DetailPage> {
                             text: "Lahore",
                             color: Colors.black,
                           ),
-                          AppLargeText(
-                              text: "PKR 8000", color: AppColors.maintextColor),
+                          AppLargeText(text: "PKR 8000", color: AppColors.mainTextColor),
                         ],
                       ),
                       SizedBox(
@@ -145,9 +143,7 @@ class _DetailPageState extends State<DetailPage> {
                           ),
                         );
                       })),
-                      SizedBox(
-                        height: 20,
-                      ),
+                      SizedBox(height: 20),
 
                       //description heading and text
                       AppLargeText(
@@ -195,7 +191,7 @@ class _DetailPageState extends State<DetailPage> {
                 left: 20,
                 top: 70,
                 child: InkWell(
-                  onTap: () => BlocProvider.of<AppCubits>(context).mainPage(),
+                  onTap: () => Get.back(),
                   child: Icon(Icons.arrow_back),
                 )),
           ],

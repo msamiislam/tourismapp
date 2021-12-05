@@ -44,7 +44,12 @@ dependencies:
   form_builder_validators: ^7.2.0
   font_awesome_flutter: ^9.2.0
   get: ^4.5.1
-  form_builder_file_picker: ^2.0.0
+  image_picker: ^0.8.4+4
+  firebase_core: ^1.10.2
+  firebase_auth: ^3.3.0
+  fluttertoast: ^8.0.8
+  loading_animation_widget: ^0.0.2+2
+  ndialog: ^4.1.0
 
 dev_dependencies:
   flutter_test:

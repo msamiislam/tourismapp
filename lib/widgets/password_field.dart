@@ -4,7 +4,18 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 class PasswordField extends StatefulWidget {
-  const PasswordField({Key? key}) : super(key: key);
+  final String name;
+  final String hintText;
+  final String labelText;
+
+  const PasswordField({
+    this.name = "password",
+    this.hintText = "Enter your password",
+    this.labelText = "Password",
+    Key? key}) : super(key: key);
+
+
+
 
   @override
   _PasswordFieldState createState() => _PasswordFieldState();
@@ -16,12 +27,12 @@ class _PasswordFieldState extends State<PasswordField> {
   @override
   Widget build(BuildContext context) {
     return FormBuilderTextField(
-      name: "password",
+      name: widget.name,
       obscureText: obscureText,
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
-          hintText: "Enter you Password",
-          labelText: "Password",
+          hintText: widget.hintText,
+          labelText: widget.labelText,
           border: OutlineInputBorder(),
           suffixIcon: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -40,5 +51,6 @@ class _PasswordFieldState extends State<PasswordField> {
         FormBuilderValidators.minLength(context, 8, errorText: "Password must be at least 8 characters."),
       ]),
     );
+
   }
 }

@@ -1,21 +1,22 @@
-import 'package:tourismapp/misc/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:tourismapp/utils/colors.dart';
 import 'package:tourismapp/widgets/simple_txt.dart';
 
-
 class ResponsiveButton extends StatelessWidget {
-  bool? isResponsive;
-  double? width;
+  final bool? isResponsive;
+  final double? width;
 
-  ResponsiveButton({ Key? key,
-  this.isResponsive=false,
-  this.width=120,}) : super(key: key);
+  const ResponsiveButton({
+    Key? key,
+    this.isResponsive = false,
+    this.width = 120,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Flexible(
       child: Container(
-        width: isResponsive==true?double.maxFinite:width,
+        width: isResponsive == true ? double.maxFinite : width,
         height: 50,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
