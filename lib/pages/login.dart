@@ -6,7 +6,6 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:ndialog/ndialog.dart';
 import 'package:tourismapp/pages/dashboard.dart';
@@ -22,8 +21,6 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(GetStorage().read<bool>("opened_app"));
-
     return Scaffold(
       body: Center(
         child: SafeArea(
@@ -81,6 +78,7 @@ class LoginPage extends StatelessWidget {
   void _login(BuildContext context) async {
     if (_fbKey.currentState!.saveAndValidate()) {
       CustomProgressDialog dialog = CustomProgressDialog(context,
+          dismissable: false,
           loadingWidget: SizedBox(
             width: Get.width * 0.7,
             height: 80.0,

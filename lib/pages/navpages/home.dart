@@ -1,13 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:tourismapp/pages/login.dart';
 import 'package:tourismapp/utils/colors.dart';
 import 'package:tourismapp/widgets/large_txt.dart';
 import 'package:tourismapp/widgets/simple_txt.dart';
 
-
 class HomePage extends StatefulWidget {
-  const HomePage({ Key? key }) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -56,7 +57,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ListTile(
               leading: Icon(FontAwesomeIcons.signOutAlt),
               title: AppText(text: "Logout"),
-              onTap: () => FirebaseAuth.instance.signOut(),
+              onTap: () {
+                FirebaseAuth.instance.signOut();
+                Get.offAll(() => LoginPage());
+              },
             ),
           ],
         ),
@@ -202,7 +206,7 @@ class CircleTabIndicator extends Decoration {
   }
 }
 
-class CirclePainter extends BoxPainter{
+class CirclePainter extends BoxPainter {
   final Color color;
   double radius;
 
