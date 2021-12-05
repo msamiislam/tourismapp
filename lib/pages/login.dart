@@ -32,6 +32,7 @@ class LoginPage extends StatelessWidget {
               child: FormBuilder(
                 key: _fbKey,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     const SizedBox(height: 50.0),
                     AppLargeText(text: "Sign In with your Email"),
@@ -51,9 +52,9 @@ class LoginPage extends StatelessWidget {
                     const SizedBox(height: 20.0),
                     TextButton(
                         onPressed: () => _login(context),
-                        child: Text("Login"),
+                        child: AppText(text: "Login", color: Colors.white, weight: FontWeight.bold),
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(AppColors.buttonBackground),
+                          backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
                         )),
                     const SizedBox(height: 10.0),
                     Row(
@@ -62,7 +63,7 @@ class LoginPage extends StatelessWidget {
                         AppText(text: "Don't have an account?"),
                         InkWell(
                             onTap: () => Get.to(() => RegistrationPersonalPage()),
-                            child: AppText(text: " Sign up", color: Colors.blue)),
+                            child: AppText(text: " Sign up", color: Colors.blue, weight: FontWeight.normal)),
                       ],
                     ),
                     const SizedBox(height: 20.0),
@@ -85,6 +86,7 @@ class LoginPage extends StatelessWidget {
   void _login(BuildContext context) async {
     if (_fbKey.currentState!.saveAndValidate()) {
       CustomProgressDialog dialog = CustomProgressDialog(context,
+          dismissable: false,
           loadingWidget: SizedBox(
             width: Get.width * 0.7,
             height: 80.0,
