@@ -1,13 +1,3 @@
-// To parse this JSON data, do
-//
-//     final guideModel = guideModelFromJson(jsonString);
-
-import 'dart:convert';
-
-GuideModel guideModelFromJson(String str) => GuideModel.fromJson(json.decode(str));
-
-String guideModelToJson(GuideModel data) => json.encode(data.toJson());
-
 class GuideModel {
   GuideModel({
     required this.uid,
@@ -46,7 +36,7 @@ class GuideModel {
   List<String> trip;
   String totalTTrips;
 
-  factory GuideModel.fromJson(Map<String, dynamic> json) => GuideModel(
+  static fromJson(Map<String, dynamic> json) => GuideModel(
     uid: json["uid"],
     imgUrl: json["imgUrl"],
     fName: json["fName"],
@@ -65,22 +55,22 @@ class GuideModel {
     totalTTrips: json["totalTTrips"],
   );
 
-  Map<String, dynamic> toJson() => {
-    "uid": uid,
-    "imgUrl": imgUrl,
-    "fName": fName,
-    "lName": lName,
-    "email": email,
-    "phone": phone,
-    "address": address,
-    "bloodGroup": bloodGroup,
-    "dob": dob,
-    "gender": gender,
-    "city": city,
-    "state": state,
-    "companyName": companyName,
-    "services": List<dynamic>.from(services.map((x) => x)),
-    "trip": List<dynamic>.from(trip.map((x) => x)),
-    "totalTTrips": totalTTrips,
+  static Map<String, dynamic> toJson(GuideModel guideModel) => {
+    "uid": guideModel.uid,
+    "imgUrl": guideModel.imgUrl,
+    "fName": guideModel.fName,
+    "lName": guideModel.lName,
+    "email":guideModel. email,
+    "phone": guideModel.phone,
+    "address": guideModel.address,
+    "bloodGroup": guideModel.bloodGroup,
+    "dob": guideModel.dob,
+    "gender": guideModel.gender,
+    "city": guideModel.city,
+    "state": guideModel.state,
+    "companyName": guideModel.companyName,
+    "services": List<dynamic>.from(guideModel.services.map((x) => x)),
+    "trip": List<dynamic>.from(guideModel.trip.map((x) => x)),
+    "totalTTrips": guideModel.totalTTrips,
   };
 }
