@@ -2,11 +2,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
-import 'package:tourismapp/pages/login.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:tourismapp/pages/splash.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await GetStorage.init();
   runApp(const MyApp());
 }
 
@@ -20,13 +22,7 @@ class MyApp extends StatelessWidget {
       title: 'Adventuree',
       localizationsDelegates: [FormBuilderLocalizations.delegate],
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
-      // BlocProvider<AppCubits>(
-      // create:(context)=>AppCubits(
-      //   data: DataServices(),
-      // ),
-      // child: AppCubitsLogic(),
-      // )
+      home: SplashPage(),
     );
   }
 }

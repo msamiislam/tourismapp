@@ -59,7 +59,7 @@ class RegistrationAccount extends StatelessWidget {
   void _register() {
     if (_fbKey.currentState!.saveAndValidate()) {
       print(_fbKey.currentState!.value);
-      Get.to(() => LoginPage());
+      Get.off(() => LoginPage());
     }
   }
 }

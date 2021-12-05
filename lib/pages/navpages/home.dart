@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tourismapp/utils/colors.dart';
 import 'package:tourismapp/widgets/large_txt.dart';
 import 'package:tourismapp/widgets/simple_txt.dart';
@@ -39,7 +41,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     TabController _tabController = TabController(length: _tabs.length, vsync: this);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         iconTheme: IconThemeData(color: Colors.black),
         elevation: 0.0,
         actions: [
@@ -51,6 +53,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         child: ListView(
           children: [
             UserAccountsDrawerHeader(accountName: Text("accountName"), accountEmail: Text("accountEmail")),
+            ListTile(
+              leading: Icon(FontAwesomeIcons.signOutAlt),
+              title: AppText(text: "Logout"),
+              onTap: () => FirebaseAuth.instance.signOut(),
+            ),
           ],
         ),
       ),
@@ -86,6 +93,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           ExploreSection(title: "Travels", nameImages: travelImages, names: travels),
           SizedBox(height: 20),
           ExploreSection(title: "Guiders", nameImages: guiderImages, names: guiders),
+          SizedBox(height: 20),
         ],
       ),
     );
@@ -195,9 +203,11 @@ class CircleTabIndicator extends Decoration {
 }
 
 class CirclePainter extends BoxPainter{
-   final Color color;
+  final Color color;
   double radius;
+
   CirclePainter({required this.color, required this.radius});
+
   @override
   void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
     Paint _paint = Paint();

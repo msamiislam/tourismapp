@@ -6,11 +6,11 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:ndialog/ndialog.dart';
 import 'package:tourismapp/pages/dashboard.dart';
 import 'package:tourismapp/pages/registration_personal.dart';
-import 'package:tourismapp/utils/colors.dart';
 import 'package:tourismapp/widgets/large_txt.dart';
 import 'package:tourismapp/widgets/password_field.dart';
 import 'package:tourismapp/widgets/simple_txt.dart';
@@ -22,6 +22,8 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(GetStorage().read<bool>("opened_app"));
+
     return Scaffold(
       body: Center(
         child: SafeArea(
@@ -31,6 +33,7 @@ class LoginPage extends StatelessWidget {
               child: FormBuilder(
                 key: _fbKey,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     const SizedBox(height: 50.0),
                     AppLargeText(text: "Sign In with your Email"),
@@ -50,9 +53,9 @@ class LoginPage extends StatelessWidget {
                     const SizedBox(height: 20.0),
                     TextButton(
                         onPressed: () => _login(context),
-                        child: Text("Login"),
+                        child: AppText(text: "Login", color: Colors.white, weight: FontWeight.bold),
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(AppColors.buttonBackground),
+                          backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
                         )),
                     const SizedBox(height: 10.0),
                     Row(
@@ -61,7 +64,7 @@ class LoginPage extends StatelessWidget {
                         AppText(text: "Don't have an account?"),
                         InkWell(
                             onTap: () => Get.to(() => RegistrationPersonalPage()),
-                            child: AppText(text: " Sign up", color: Colors.blue)),
+                            child: AppText(text: " Sign up", color: Colors.blue, weight: FontWeight.normal)),
                       ],
                     ),
                     const SizedBox(height: 20.0),
