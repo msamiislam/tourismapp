@@ -107,8 +107,8 @@ class ExploreSection extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              AppLargeText( "Explore $title", size: 20),
-              AppText( "See all", color: AppColors.textColor1),
+              AppLargeText("Explore $title", size: 20),
+              AppText("See all", color: AppColors.textColor1),
             ],
           ),
         ),
@@ -137,7 +137,7 @@ class ExploreSection extends StatelessWidget {
                       SizedBox(height: 5),
                       Container(
                         child: AppText(
-                           names[index],
+                          names[index],
                           size: 10,
                           color: AppColors.textColor2,
                         ),
