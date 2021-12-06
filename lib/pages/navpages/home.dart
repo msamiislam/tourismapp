@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -43,6 +42,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     TabController _tabController = TabController(length: _tabs.length, vsync: this);
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         iconTheme: IconThemeData(color: Colors.black),
         elevation: 0.0,
@@ -51,21 +51,21 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           SizedBox(width: 10.0),
         ],
       ),
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            UserAccountsDrawerHeader(accountName: Text("accountName"), accountEmail: Text("accountEmail")),
-            ListTile(
-              leading: Icon(FontAwesomeIcons.signOutAlt),
-              title: AppText( "Logout"),
-              onTap: () {
-                FirebaseAuth.instance.signOut();
-                Get.offAll(() => LoginPage());
-              },
-            ),
-          ],
-        ),
-      ),
+      // drawer: Drawer(
+      //   child: ListView(
+      //     children: [
+      //       UserAccountsDrawerHeader(accountName: Text("accountName"), accountEmail: Text("accountEmail")),
+      //       ListTile(
+      //         leading: Icon(FontAwesomeIcons.signOutAlt),
+      //         title: AppText( "Logout"),
+      //         onTap: () {
+      //           FirebaseAuth.instance.signOut();
+      //           Get.offAll(() => LoginPage());
+      //         },
+      //       ),
+      //     ],
+      //   ),
+      // ),
       body: ListView(
         children: [
           //upper Menu bar icon + image

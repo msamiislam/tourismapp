@@ -1,20 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:lottie/lottie.dart';
+import 'package:tourismapp/utils/colors.dart';
 
 class SearchPage extends StatelessWidget {
-  const SearchPage({ Key? key }) : super(key: key);
+  final TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-
-    return Container(
-
-      child: Center(
-        
-        child: Text(
-          "Search Page"
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: FormBuilderTextField(
+                    controller: _controller,
+                    name: "search",
+                    keyboardType: TextInputType.text,
+                    decoration: const InputDecoration(isDense: true, hintText: "Search", border: OutlineInputBorder()),
+                  ),
+                ),
+                SizedBox(width: 5.0),
+                Container(
+                  width: 56.0,
+                  height: 56.0,
+                  decoration: BoxDecoration(color: AppColors.primary,borderRadius: BorderRadius.all(Radius.circular(4.0))),
+                  child: Icon(Icons.filter_alt, color: AppColors.white),
+                ),
+              ],
+            ),
+            Spacer(),
+            Lottie.asset('anim/search.json'),
+            Spacer(),
+          ],
         ),
-      )
-      
+      ),
     );
   }
 }
