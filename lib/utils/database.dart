@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:tourismapp/model/guide_model.dart';
-import 'package:tourismapp/model/tourist_model.dart';
-import 'package:tourismapp/model/user_model.dart';
+
+import '../models/guide_model.dart';
+import '../models/tourist_model.dart';
+import '../models/user_model.dart';
 
 abstract class Database {
   static final CollectionReference _usersCollection = FirebaseFirestore.instance.collection('Users');

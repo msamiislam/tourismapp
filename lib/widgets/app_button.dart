@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tourismapp/utils/colors.dart';
-import 'package:tourismapp/widgets/simple_txt.dart';
+import '../utils/colors.dart';
+import '../widgets/simple_txt.dart';
 
 class AppButtons extends StatelessWidget {
   final Color color;

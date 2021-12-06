@@ -1,8 +1,8 @@
-import 'package:tourismapp/model/hotel_model.dart';
-import 'package:tourismapp/model/mall_model.dart';
-import 'package:tourismapp/model/restaurant_model.dart';
-import 'package:tourismapp/model/trip_model.dart';
-import 'package:tourismapp/model/user_model.dart';
+import '../models/hotel_model.dart';
+import '../models/mall_model.dart';
+import '../models/restaurant_model.dart';
+import '../models/trip_model.dart';
+import '../models/user_model.dart';
 
 import 'enums.dart';
 

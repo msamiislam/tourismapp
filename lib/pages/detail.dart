@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tourismapp/utils/colors.dart';
-import 'package:tourismapp/widgets/app_button.dart';
-import 'package:tourismapp/widgets/large_txt.dart';
-import 'package:tourismapp/widgets/responsive_button.dart';
-import 'package:tourismapp/widgets/simple_txt.dart';
+import '../utils/colors.dart';
+import '../widgets/app_button.dart';
+import '../widgets/large_txt.dart';
+import '../widgets/responsive_button.dart';
+import '../widgets/simple_txt.dart';
 
 class DetailPage extends StatefulWidget {
   const DetailPage({Key? key}) : super(key: key);

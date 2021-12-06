@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tourismapp/pages/navpages/bar_item.dart';
-import 'package:tourismapp/pages/navpages/home.dart';
-import 'package:tourismapp/pages/navpages/profile.dart';
-import 'package:tourismapp/pages/navpages/search.dart';
+import '../pages/navpages/bar_item.dart';
+import '../pages/navpages/home.dart';
+import '../pages/navpages/profile.dart';
+import '../pages/navpages/search.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);

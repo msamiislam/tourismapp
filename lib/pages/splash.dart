@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:tourismapp/pages/dashboard.dart';
-import 'package:tourismapp/pages/login.dart';
-import 'package:tourismapp/pages/welcome.dart';
+
+import '../pages/dashboard.dart';
+import '../pages/login.dart';
+import '../pages/welcome.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -21,7 +22,7 @@ class _SplashPageState extends State<SplashPage> {
       bool openedApp = GetStorage().read<bool>("opened_app") ?? false;
       if (openedApp) {
         if (FirebaseAuth.instance.currentUser == null) {
-          Get.off(() => LoginPage());
+          Get.offAll(() => LoginPage());
         } else {
           Get.off(() => DashboardPage());
         }

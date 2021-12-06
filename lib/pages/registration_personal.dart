@@ -5,11 +5,11 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tourismapp/model/enums.dart';
-import 'package:tourismapp/pages/registration_account.dart';
-import 'package:tourismapp/utils/colors.dart';
-import 'package:tourismapp/widgets/large_txt.dart';
-import 'package:tourismapp/widgets/profile_image.dart';
+import '../models/enums.dart';
+import '../pages/registration_account.dart';
+import '../utils/colors.dart';
+import '../widgets/large_txt.dart';
+import '../widgets/profile_image.dart';
 
 class RegistrationPersonalPage extends StatefulWidget {
   const RegistrationPersonalPage({Key? key}) : super(key: key);

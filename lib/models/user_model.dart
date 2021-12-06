@@ -1,5 +1,5 @@
-import 'package:tourismapp/model/enums.dart';
-import 'package:tourismapp/model/trip_model.dart';
+import '../models/enums.dart';
+import '../models/trip_model.dart';
 
 abstract class UserModel {
   final String id;

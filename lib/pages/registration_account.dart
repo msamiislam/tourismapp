@@ -10,13 +10,13 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
-import 'package:tourismapp/model/tourist_model.dart';
-import 'package:tourismapp/pages/login.dart';
-import 'package:tourismapp/utils/database.dart';
-import 'package:tourismapp/utils/progress_dialog.dart';
-import 'package:tourismapp/widgets/large_txt.dart';
-import 'package:tourismapp/widgets/password_field.dart';
-import 'package:tourismapp/widgets/simple_txt.dart';
+import '../models/tourist_model.dart';
+import '../pages/login.dart';
+import '../utils/database.dart';
+import '../utils/progress_dialog.dart';
+import '../widgets/large_txt.dart';
+import '../widgets/password_field.dart';
+import '../widgets/simple_txt.dart';
 
 class RegistrationAccount extends StatelessWidget {
   final Map<String, dynamic> personalDetails;
@@ -91,7 +91,7 @@ class RegistrationAccount extends StatelessWidget {
         Database.createTourist(TouristModel.fromJson(data));
         Loader.hide();
         FirebaseAuth.instance.signOut();
-        Get.to(() => LoginPage());
+        Get.offAll(() => LoginPage());
         Fluttertoast.showToast(msg: "Registered successfully.");
       } on FirebaseAuthException catch (exception) {
         Loader.hide();

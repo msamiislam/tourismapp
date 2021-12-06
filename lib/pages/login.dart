@@ -6,16 +6,17 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
-import 'package:tourismapp/model/user_model.dart';
-import 'package:tourismapp/pages/dashboard.dart';
-import 'package:tourismapp/pages/registration_personal.dart';
-import 'package:tourismapp/services/auth.dart';
-import 'package:tourismapp/utils/colors.dart';
-import 'package:tourismapp/utils/database.dart';
-import 'package:tourismapp/utils/progress_dialog.dart';
-import 'package:tourismapp/widgets/large_txt.dart';
-import 'package:tourismapp/widgets/password_field.dart';
-import 'package:tourismapp/widgets/simple_txt.dart';
+
+import '../models/user_model.dart';
+import '../pages/dashboard.dart';
+import '../pages/registration_personal.dart';
+import '../services/auth.dart';
+import '../utils/colors.dart';
+import '../utils/database.dart';
+import '../utils/progress_dialog.dart';
+import '../widgets/large_txt.dart';
+import '../widgets/password_field.dart';
+import '../widgets/simple_txt.dart';
 
 class LoginPage extends StatelessWidget {
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
@@ -93,7 +94,7 @@ class LoginPage extends StatelessWidget {
             email: _fbKey.currentState!.value["email"], password: _fbKey.currentState!.value["password"]);
         UserModel user = await Database.getTourist(credentials.user!.uid);
         Loader.hide();
-        Get.to(() => DashboardPage());
+        Get.off(() => DashboardPage());
         Fluttertoast.showToast(msg: "Logged in successfully.");
       } on FirebaseAuthException catch (exception) {
         Loader.hide();

@@ -1,5 +1,5 @@
-import 'package:tourismapp/model/trip_model.dart';
-import 'package:tourismapp/model/user_model.dart';
+import '../models/trip_model.dart';
+import '../models/user_model.dart';
 
 import 'enums.dart';
 

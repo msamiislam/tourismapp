@@ -2,10 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:tourismapp/pages/login.dart';
-import 'package:tourismapp/utils/colors.dart';
-import 'package:tourismapp/widgets/large_txt.dart';
-import 'package:tourismapp/widgets/simple_txt.dart';
+
+import '../../pages/login.dart';
+import '../../utils/colors.dart';
+import '../../widgets/large_txt.dart';
+import '../../widgets/simple_txt.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

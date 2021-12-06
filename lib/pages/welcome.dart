@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:tourismapp/pages/registration_personal.dart';
-import 'package:tourismapp/utils/colors.dart';
-import 'package:tourismapp/widgets/large_txt.dart';
-import 'package:tourismapp/widgets/simple_txt.dart';
+import '../pages/registration_personal.dart';
+import '../utils/colors.dart';
+import '../widgets/large_txt.dart';
+import '../widgets/simple_txt.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);
