@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 labelColor: Colors.black,
                 unselectedLabelColor: Colors.grey,
                 isScrollable: true,
-                indicator: CircleTabIndicator(color: AppColors.mainColor, radius: 4),
+                indicator: CircleTabIndicator(color: AppColors.primary, radius: 4),
                 tabs: _tabs.map((e) => Tab(text: e)).toList(),
               ),
             ),
@@ -132,7 +132,7 @@ class ExploreSection extends StatelessWidget {
         ),
         SizedBox(height: 10),
         Container(
-          height: 102,
+          height: 110,
           width: double.maxFinite,
           margin: const EdgeInsets.only(left: 20),
           child: ListView.builder(
@@ -152,7 +152,7 @@ class ExploreSection extends StatelessWidget {
                               color: Colors.white,
                               image: DecorationImage(
                                   fit: BoxFit.cover, image: AssetImage("img/" + nameImages[names[index]]!)))),
-                      SizedBox(height: 10),
+                      SizedBox(height: 5),
                       Container(
                         child: AppText(
                           text: names[index],
