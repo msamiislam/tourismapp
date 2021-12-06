@@ -4,6 +4,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:tourismapp/pages/splash.dart';
+import 'package:tourismapp/utils/colors.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +23,11 @@ class MyApp extends StatelessWidget {
       title: 'Adventuree',
       localizationsDelegates: [FormBuilderLocalizations.delegate],
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        scaffoldBackgroundColor: AppColors.scaffoldBg,
+        primarySwatch: AppColors.primarySwatch,
+        primaryColor: AppColors.primary,
+      ),
       home: SplashPage(),
     );
   }
