@@ -18,16 +18,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   List<String> travels = ["Cab", "Train", "Plane", "Bus"];
   List<String> guiders = ["Kareem Dad", "Saif ur Rehman", "Arooj Fatima", "Phola Cheeda"];
   Map<String, String> travelImages = {
-    "Cab": "cab.jpg",
+    "Cab": "cab.png",
     "Train": "train.png",
-    "Plane": "plane.png",
-    "Bus": "plane.png",
+    "Plane": "airplane.png",
+    "Bus": "bus.png",
   };
   Map<String, String> guiderImages = {
-    "Kareem Dad": "cab.jpg",
+    "Kareem Dad": "cab.png",
     "Saif ur Rehman": "train.png",
-    "Arooj Fatima": "plane.png",
-    "Phola Cheeda": "plane.png",
+    "Arooj Fatima": "airplane.png",
+    "Phola Cheeda": "bus.png",
   };
   final List<String> _tabs = ["Places", "Hotels", "Restaurants", "Malls"];
   final List<Widget> _tabViews = [

@@ -4,15 +4,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:tourismapp/pages/registration_account.dart';
 import 'package:tourismapp/utils/colors.dart';
 import 'package:tourismapp/widgets/large_txt.dart';
 import 'package:tourismapp/widgets/profile_image.dart';
 
-class RegistrationPersonalPage extends StatelessWidget {
+class RegistrationPersonalPage extends StatefulWidget {
+  const RegistrationPersonalPage({Key? key}) : super(key: key);
+
+  @override
+  State<RegistrationPersonalPage> createState() => _RegistrationPersonalPageState();
+}
+
+class _RegistrationPersonalPageState extends State<RegistrationPersonalPage> {
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
 
-  RegistrationPersonalPage({Key? key}) : super(key: key);
+  XFile? profileImage;
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +43,13 @@ class RegistrationPersonalPage extends StatelessWidget {
                     AppLargeText(text: "Create Your Account"),
                     const SizedBox(height: 30.0),
                     Container(
+                      width: Get.width / 2,
+                      height: Get.width / 2,
                       clipBehavior: Clip.hardEdge,
                       decoration: BoxDecoration(shape: BoxShape.circle),
                       child: ProfileImage(
-                        onPicked: (file) {},
+                        radius: Get.width / 4,
+                        onPicked: (imageFile) => profileImage = imageFile,
                       ),
                     ),
                     const SizedBox(height: 30.0),
@@ -149,8 +160,11 @@ class RegistrationPersonalPage extends StatelessWidget {
 
   void _next() {
     if (_fbKey.currentState!.saveAndValidate()) {
-      log(_fbKey.currentState!.value.toString());
-      Get.to(() => RegistrationAccount());
+      Map<String, dynamic> data = {}..addAll(_fbKey.currentState!.value);
+      print(data.toString());
+      data["image"] = profileImage?.path;
+      log(data.toString());
+      Get.to(() => RegistrationAccount(data));
     }
   }
 }

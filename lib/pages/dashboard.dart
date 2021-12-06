@@ -42,7 +42,7 @@ class _DashboardPageState extends State<DashboardPage> {
         unselectedFontSize: 10.0,
         elevation: 0.0,
         items: [
-          BottomNavigationBarItem(label: "Home", icon: Icon(Icons.apps)),
+          BottomNavigationBarItem(label: "Home", icon: Icon(Icons.home)),
           BottomNavigationBarItem(label: "Bar", icon: Icon(Icons.bar_chart_sharp)),
           BottomNavigationBarItem(label: "Search", icon: Icon(Icons.search)),
           BottomNavigationBarItem(label: "Profile", icon: Icon(Icons.person)),

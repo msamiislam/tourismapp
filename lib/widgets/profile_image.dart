@@ -33,7 +33,7 @@ class _ProfileImageState extends State<ProfileImage> {
       onSelected: (source) {
         getImage(source);
       },
-      offset: Offset(0.0, 150.0),
+      offset: Offset(0.0, 2 * widget.radius),
       itemBuilder: (BuildContext context) {
         return [
           PopupMenuItem(
@@ -54,12 +54,12 @@ class _ProfileImageState extends State<ProfileImage> {
       child: Material(
         elevation: 4.0,
         child: Container(
-          decoration: BoxDecoration(color: Colors.white),
+          decoration: BoxDecoration(color: Colors.black26),
           child: image == null || image?.path == null
               ? Icon(
                   Icons.image,
                   size: 32.0,
-                  color: Colors.grey,
+                  color: Colors.white,
                 )
               : Stack(
                   alignment: Alignment.center,
