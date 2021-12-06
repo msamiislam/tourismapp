@@ -27,7 +27,21 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Poppins',
         scaffoldBackgroundColor: AppColors.scaffoldBg,
         primarySwatch: AppColors.primarySwatch,
-        primaryColor: AppColors.primary,
+        colorScheme: ColorScheme(
+          primary: AppColors.primary,
+          onPrimary: AppColors.onPrimary,
+          primaryVariant: AppColors.primaryVariant,
+          secondary: AppColors.secondary,
+          onSecondary: AppColors.onSecondary,
+          secondaryVariant: AppColors.secondaryVariant,
+          background: AppColors.background,
+          onBackground: AppColors.onBackground,
+          surface: AppColors.surface,
+          onSurface: AppColors.onSurface,
+          error: Theme.of(context).errorColor,
+          onError: AppColors.white,
+          brightness: Brightness.light,
+        )
       ),
       home: SplashPage(),
     );
