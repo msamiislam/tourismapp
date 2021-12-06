@@ -14,7 +14,7 @@ abstract class Database {
     await _usersCollection.doc(tourist.id).set(tourist.toJson());
   }
 
-  static Future<UserModel> getTourist(String id) async {
+  static Future<UserModel> getUser(String id) async {
     DocumentSnapshot doc = await _usersCollection.doc(id).get();
     Map<String, dynamic> json = doc.data() as Map<String, dynamic>;
     return UserModel.isTourist(json) ? TouristModel.fromJson(json) : GuideModel.fromJson(json);

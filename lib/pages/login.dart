@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 
+import '../controllers/login_controller.dart';
 import '../models/user_model.dart';
 import '../pages/dashboard.dart';
 import '../pages/registration_personal.dart';
@@ -91,7 +92,9 @@ class LoginPage extends StatelessWidget {
       try {
         UserCredential credentials = await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: _fbKey.currentState!.value["email"], password: _fbKey.currentState!.value["password"]);
-        UserModel user = await Database.getTourist(credentials.user!.uid);
+        UserModel user = await Database.getUser(credentials.user!.uid);
+        final LoginController login = Get.find();
+        login.updateUser(user);
         Loader.hide();
         Get.off(() => DashboardPage());
         Fluttertoast.showToast(msg: "Logged in successfully.");

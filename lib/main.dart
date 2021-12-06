@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+
 import '../pages/splash.dart';
 import '../utils/colors.dart';
 
@@ -16,7 +17,6 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
           error: Theme.of(context).errorColor,
           onError: AppColors.white,
           brightness: Brightness.light,
-        )
+        ),
       ),
       home: SplashPage(),
     );
