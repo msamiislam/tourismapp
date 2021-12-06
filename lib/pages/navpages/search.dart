@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:lottie/lottie.dart';
 import 'package:tourismapp/utils/colors.dart';
-import 'package:tourismapp/widgets/card.dart';
 
 class SearchPage extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
@@ -37,15 +37,19 @@ class SearchPage extends StatelessWidget {
               ],
             ),
             SizedBox(height: 20.0),
+
+            // Default screen
             Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: 2,
-                itemBuilder: (context, index) => PlaceCard(),
-              ),
+              child: Center(child: Lottie.asset('anim/search.json')),
             ),
+
+            // When search result appears
             // Expanded(
-            //   child: Center(child: Lottie.asset('anim/search.json')),
+            //   child: ListView.builder(
+            //     shrinkWrap: true,
+            //     itemCount: 2,
+            //     itemBuilder: (context, index) => PlaceCard(),
+            //   ),
             // ),
           ],
         ),
