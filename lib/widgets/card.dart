@@ -31,7 +31,7 @@ class GuideCard extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        AppText('Rachel Rose Robert Junior', maxLines: 1, height: 1.0,size: 16.0,weight: FontWeight.w600),
+                        AppText('Rachel Rose Robert Junior', maxLines: 1, height: 1.0,size: 16.0,weight: FontWeight.w600, overflow: TextOverflow.fade,),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -58,6 +58,52 @@ class GuideCard extends StatelessWidget {
             ),
           ),
 
+        ],
+      ),
+    );
+  }
+}
+
+class PlaceCard extends StatelessWidget {
+  const PlaceCard({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 10.0),
+      height: 120.0,
+      color: AppColors.onBackground.withOpacity(0.05),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 2,
+            child: Image.network(
+              'https://cdn.britannica.com/14/75514-120-05A119F2/K2-district-Karakoram-Range-portion-Gilgit-Baltistan-region.jpg',
+              fit: BoxFit.cover,
+              height: 120.0,
+            ),
+          ),
+          Expanded(
+            flex: 3,
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AppText('Title', maxLines: 1, height: 1.0,size: 16.0,weight: FontWeight.w600),
+                  SizedBox(height: 5.0),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(Icons.place_outlined, size: 18.0, color: AppColors.secondary),
+                      SizedBox(width: 5.0),
+                      Expanded(child: AppText('Lahore', size: 14.0, maxLines: 2,color: AppColors.secondary)),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
