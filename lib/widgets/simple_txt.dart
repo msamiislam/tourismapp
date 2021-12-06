@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppText extends StatelessWidget {
-  final double size;
+  final double? size;
   final String text;
   final int? maxLines;
   final double? height;
@@ -11,14 +11,13 @@ class AppText extends StatelessWidget {
   final FontWeight weight;
 
   const AppText(
-      this.text,
-      {
+    this.text, {
     Key? key,
-    this.size = 14.0,
+    this.size,
     this.color,
     this.maxLines,
-        this.height,
-        this.overflow,
+    this.height,
+    this.overflow,
     this.weight = FontWeight.normal,
   }) : super(key: key);
 
