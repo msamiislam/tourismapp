@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tourismapp/utils/colors.dart';
 
 class AppLargeText extends StatelessWidget {
   final double size;
@@ -12,7 +13,7 @@ class AppLargeText extends StatelessWidget {
       {
     Key? key,
     this.size = 30,
-    this.color = Colors.black,
+    this.color = AppColors.onBackground,
     this.centerAlign = false,
   }) : super(key: key);
 

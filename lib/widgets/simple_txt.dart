@@ -5,6 +5,7 @@ class AppText extends StatelessWidget {
   final double size;
   final String text;
   final int? maxLines;
+  final double? height;
   final Color? color;
   final FontWeight weight;
 
@@ -15,6 +16,7 @@ class AppText extends StatelessWidget {
     this.size = 14.0,
     this.color,
     this.maxLines,
+        this.height,
     this.weight = FontWeight.normal,
   }) : super(key: key);
 
@@ -25,6 +27,7 @@ class AppText extends StatelessWidget {
       maxLines: maxLines,
       style: TextStyle(
         color: color,
+        height: height,
         fontSize: size,
         fontWeight: weight,
       ),

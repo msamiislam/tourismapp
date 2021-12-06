@@ -1,7 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:lottie/lottie.dart';
 import 'package:tourismapp/utils/colors.dart';
+import 'package:tourismapp/widgets/card.dart';
 
 class SearchPage extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
@@ -30,14 +31,34 @@ class SearchPage extends StatelessWidget {
                 Container(
                   width: 56.0,
                   height: 56.0,
-                  decoration: BoxDecoration(color: AppColors.primary,borderRadius: BorderRadius.all(Radius.circular(4.0))),
+                  decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.all(Radius.circular(4.0))),
                   child: Icon(Icons.filter_alt, size: 28.0, color: AppColors.white),
                 ),
               ],
             ),
-            Spacer(),
-            Lottie.asset('anim/search.json'),
-            Spacer(),
+            SizedBox(height: 20.0),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    GridView.builder(
+                      shrinkWrap: true,
+                      itemCount: 3,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 10.0,
+                        mainAxisSpacing: 10.0,
+                        childAspectRatio: 1.65 / 2,
+                      ),
+                      itemBuilder: (context, index) => GuideCard(onTap: () {  }),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            // Expanded(
+            //   child: Center(child: Lottie.asset('anim/search.json')),
+            // ),
           ],
         ),
       ),
