@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: [FormBuilderLocalizations.delegate],
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        fontFamily: 'Poppins',
         scaffoldBackgroundColor: AppColors.scaffoldBg,
         primarySwatch: AppColors.primarySwatch,
         primaryColor: AppColors.primary,
