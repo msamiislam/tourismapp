@@ -10,6 +10,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
+
 import '../models/tourist_model.dart';
 import '../pages/login.dart';
 import '../utils/database.dart';
@@ -75,7 +76,6 @@ class RegistrationAccount extends StatelessWidget {
       Map<String, dynamic> data = {}
         ..addAll(_fbKey.currentState!.value)
         ..addAll(personalDetails);
-      print(data.toString());
       log(_fbKey.currentState!.value.toString());
       Loader.show(context, text: "Registering...");
       try {
@@ -87,7 +87,6 @@ class RegistrationAccount extends StatelessWidget {
         }
         data["id"] = credential.user!.uid;
         data["image_url"] = imageUrl;
-        print(data);
         Database.createTourist(TouristModel.fromJson(data));
         Loader.hide();
         FirebaseAuth.instance.signOut();
@@ -116,9 +115,6 @@ class RegistrationAccount extends StatelessWidget {
     final Reference firebaseStorageRef = FirebaseStorage.instance.ref().child(id);
     UploadTask uploadTask = firebaseStorageRef.putFile(image);
     TaskSnapshot storageSnapshot = await uploadTask;
-    uploadTask.asStream().listen((event) {
-      print("Uploaded ${event.bytesTransferred / event.totalBytes * 100}%");
-    });
     return await storageSnapshot.ref.getDownloadURL();
   }
 }

@@ -153,7 +153,6 @@ class _RegistrationPersonalPageState extends State<RegistrationPersonalPage> {
   void _next() {
     if (_fbKey.currentState!.saveAndValidate()) {
       Map<String, dynamic> data = {}..addAll(_fbKey.currentState!.value);
-      print(data.toString());
       data["image"] = profileImage?.path;
       log(data.toString());
 

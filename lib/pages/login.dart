@@ -116,14 +116,14 @@ class LoginPage extends StatelessWidget {
     try{
       UserCredential user = await
       AuthService.signInWithGoogle();
-      print('--------- ${user.user}');
+      log('Logged in: ${user.user}');
 
     }on FirebaseAuthException catch(e){
-      print('--------- Auth Exception - $e');
+      log('Auth Exception - $e');
       //show a dialog or toast
 
     }catch(e){
-      print('--------- Exception - $e');
+      log('Exception - $e');
 
     }
   }
