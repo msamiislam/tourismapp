@@ -37,7 +37,7 @@ class LoginPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     const SizedBox(height: 50.0),
-                    AppLargeText(text: "Sign In with your Email"),
+                    AppLargeText( "Sign In with your Email"),
                     const SizedBox(height: 30.0),
                     FormBuilderTextField(
                       name: "email",
@@ -52,29 +52,28 @@ class LoginPage extends StatelessWidget {
                     const SizedBox(height: 30.0),
                     PasswordField(),
                     const SizedBox(height: 20.0),
-                    TextButton(
+                    ElevatedButton(
                         onPressed: () => _login(context),
-                        child: AppText(text: "Login", color: Colors.white, weight: FontWeight.bold),
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-                        )),
+                        child: AppText( "Login", color: Colors.white, weight: FontWeight.bold),
+                        ),
                     const SizedBox(height: 10.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        AppText(text: "Don't have an account?"),
+                        AppText( "Don't have an account?"),
                         InkWell(
                             onTap: () => Get.to(() => RegistrationPersonalPage()),
-                            child: AppText(text: " Sign up", color: Colors.blue, weight: FontWeight.normal)),
+                            child: AppText( " Sign up", color: AppColors.primary, weight: FontWeight.normal)),
                       ],
                     ),
                     const SizedBox(height: 20.0),
-                    TextButton(
+                    ElevatedButton(
                         onPressed: () => _loginWithGoogle(),
                         child: Text("Login with Google"),
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(AppColors.buttonBackground),
-                        )),
+                          backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF4285F4)),
+                        ),
+                    ),
                   ],
                 ),
               ),
@@ -99,8 +98,8 @@ class LoginPage extends StatelessWidget {
       } on FirebaseAuthException catch (exception) {
         Loader.hide();
         Get.dialog(AlertDialog(
-          title: AppText(text: "Login"),
-          content: AppText(text: "${exception.message}", size: 14.0),
+          title: AppText("Login"),
+          content: AppText("${exception.message}", size: 14.0),
           actions: [
             TextButton(
               child: Text("Ok"),

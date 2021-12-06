@@ -1,9 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
 
-import '../../pages/login.dart';
 import '../../utils/colors.dart';
 import '../../widgets/large_txt.dart';
 import '../../widgets/simple_txt.dart';
@@ -42,64 +38,47 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     TabController _tabController = TabController(length: _tabs.length, vsync: this);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        iconTheme: IconThemeData(color: Colors.black),
-        elevation: 0.0,
-        actions: [
-          CircleAvatar(backgroundColor: Colors.grey),
-          SizedBox(width: 10.0),
-        ],
-      ),
-      drawer: Drawer(
+      body: SafeArea(
         child: ListView(
           children: [
-            UserAccountsDrawerHeader(accountName: Text("accountName"), accountEmail: Text("accountEmail")),
-            ListTile(
-              leading: Icon(FontAwesomeIcons.signOutAlt),
-              title: AppText(text: "Logout"),
-              onTap: () {
-                FirebaseAuth.instance.signOut();
-                Get.offAll(() => LoginPage());
-              },
-            ),
-          ],
-        ),
-      ),
-      body: ListView(
-        children: [
-          //upper Menu bar icon + image
-          Container(
-            margin: const EdgeInsets.only(left: 20),
-            child: AppLargeText(text: "Discover"),
-          ),
-          SizedBox(height: 20),
-          Container(
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: TabBar(
-                labelPadding: const EdgeInsets.only(left: 20, right: 20),
-                indicatorSize: TabBarIndicatorSize.label,
-                controller: _tabController,
-                labelColor: Colors.black,
-                unselectedLabelColor: Colors.grey,
-                isScrollable: true,
-                indicator: CircleTabIndicator(color: AppColors.mainColor, radius: 4),
-                tabs: _tabs.map((e) => Tab(text: e)).toList(),
+            //upper Menu bar icon + image
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  AppLargeText("Discover"),
+                  CircleAvatar(backgroundColor: Colors.grey),
+                ],
               ),
             ),
-          ),
-          Container(
-            padding: const EdgeInsets.only(left: 20),
-            height: 300,
-            child: TabBarView(controller: _tabController, children: _tabViews),
-          ),
-          SizedBox(height: 20),
-          ExploreSection(title: "Travels", nameImages: travelImages, names: travels),
-          SizedBox(height: 20),
-          ExploreSection(title: "Guiders", nameImages: guiderImages, names: guiders),
-          SizedBox(height: 20),
-        ],
+            Container(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: TabBar(
+                  labelPadding: const EdgeInsets.only(left: 20, right: 20),
+                  indicatorSize: TabBarIndicatorSize.label,
+                  controller: _tabController,
+                  labelColor: Colors.black,
+                  unselectedLabelColor: Colors.grey,
+                  isScrollable: true,
+                  indicator: CircleTabIndicator(color: AppColors.primary, radius: 4),
+                  tabs: _tabs.map((e) => Tab(text: e)).toList(),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.only(top: 2.5, left: 20),
+              height: 300,
+              child: TabBarView(controller: _tabController, children: _tabViews),
+            ),
+            SizedBox(height: 20),
+            ExploreSection(title: "Travels", nameImages: travelImages, names: travels),
+            SizedBox(height: 20),
+            ExploreSection(title: "Guiders", nameImages: guiderImages, names: guiders),
+            SizedBox(height: 20),
+          ],
+        ),
       ),
     );
   }
@@ -126,8 +105,8 @@ class ExploreSection extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              AppLargeText(text: "Explore $title", size: 20),
-              AppText(text: "See all", color: AppColors.textColor1),
+              AppLargeText( "Explore $title", size: 20),
+              AppText( "See all", color: AppColors.textColor1),
             ],
           ),
         ),
@@ -146,21 +125,17 @@ class ExploreSection extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                        width: 80,
-                        height: 80,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.white,
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage("img/" + nameImages[names[index]]!),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 10),
+                          width: 80,
+                          height: 80,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.white,
+                              image: DecorationImage(
+                                  fit: BoxFit.cover, image: AssetImage("img/" + nameImages[names[index]]!)))),
+                      SizedBox(height: 5),
                       Container(
                         child: AppText(
-                          text: names[index],
+                           names[index],
                           size: 10,
                           color: AppColors.textColor2,
                         ),
@@ -186,14 +161,40 @@ class TabView extends StatelessWidget {
       itemCount: data.length,
       scrollDirection: Axis.horizontal,
       itemBuilder: (BuildContext context, int index) {
-        return Container(
-            margin: const EdgeInsets.only(top: 10, right: 15),
-            width: 200,
-            height: 300,
-            decoration: BoxDecoration(
+        return Stack(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(top: 10, right: 15),
+              width: 200,
+              height: 300,
+              decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 color: Colors.white,
-                image: DecorationImage(fit: BoxFit.cover, image: NetworkImage("https://picsum.photos/200"))));
+                image: DecorationImage(fit: BoxFit.cover, image: NetworkImage("https://picsum.photos/200")),
+              ),
+            ),
+            Positioned(
+              right: 10,
+              left: 10,
+              bottom: 15,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AppText( 'Title', maxLines: 2, color: AppColors.white, weight: FontWeight.bold),
+                    SizedBox(height: 5.0),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(Icons.place_outlined,size: 18.0, color: AppColors.white),
+                        SizedBox(width: 4.0),
+                        Expanded(child: AppText( 'Lorem ipsum is a dummy text used for industrial purposes.', maxLines: 2,color: AppColors.white)),
+                      ],
+                    ),
+                  ],
+                ),
+            ),
+          ],
+        );
       },
     );
   }

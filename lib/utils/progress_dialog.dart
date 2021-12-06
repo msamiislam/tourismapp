@@ -22,7 +22,7 @@ abstract class Loader {
               children: [
                 LoadingAnimationWidget.fourRotatingDots(color: Colors.blue, size: 40.0),
                 if (text != null) SizedBox(width: 10.0),
-                if (text != null) AppText(text: text)
+                if (text != null) AppText(text)
               ],
             ),
           ),

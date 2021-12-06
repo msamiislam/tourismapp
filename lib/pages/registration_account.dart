@@ -39,7 +39,7 @@ class RegistrationAccount extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     const SizedBox(height: 50.0),
-                    AppLargeText(text: "Sign Up with your Email"),
+                    AppLargeText("Sign Up with your Email"),
                     const SizedBox(height: 30.0),
                     FormBuilderTextField(
                       name: "email",
@@ -56,7 +56,7 @@ class RegistrationAccount extends StatelessWidget {
                     const SizedBox(height: 30.0),
                     TextButton(
                         onPressed: () => _register(context),
-                        child: AppText(text: "Register", color: Colors.white, weight: FontWeight.bold),
+                        child: AppText("Register", color: Colors.white, weight: FontWeight.bold),
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
                         )),
@@ -95,8 +95,8 @@ class RegistrationAccount extends StatelessWidget {
       } on FirebaseAuthException catch (exception) {
         Loader.hide();
         Get.dialog(AlertDialog(
-          title: AppText(text: "Register"),
-          content: AppText(text: "${exception.message}", size: 14.0),
+          title: AppText("Register"),
+          content: AppText("${exception.message}", size: 14.0),
           actions: [
             TextButton(
               child: Text("Ok"),

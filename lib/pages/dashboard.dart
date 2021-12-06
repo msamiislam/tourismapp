@@ -3,6 +3,7 @@ import '../pages/navpages/bar_item.dart';
 import '../pages/navpages/home.dart';
 import '../pages/navpages/profile.dart';
 import '../pages/navpages/search.dart';
+import '../utils/colors.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -34,7 +35,7 @@ class _DashboardPageState extends State<DashboardPage> {
         backgroundColor: Colors.white,
         onTap: onTapButton,
         currentIndex: cIndex,
-        selectedItemColor: Colors.black45,
+        selectedItemColor: AppColors.primary,
         unselectedItemColor: Colors.blueGrey.withOpacity(0.5),
         showSelectedLabels: true,
         showUnselectedLabels: true,

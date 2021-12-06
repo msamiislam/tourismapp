@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../utils/colors.dart';
 
 class AppLargeText extends StatelessWidget {
   final double size;
@@ -7,11 +8,11 @@ class AppLargeText extends StatelessWidget {
   final Color color;
   final bool centerAlign;
 
-  const AppLargeText({
+  const AppLargeText(
+    this.text, {
     Key? key,
-    this.size = 30,
-    required this.text,
-    this.color = Colors.black,
+    this.size = 28.0,
+    this.color = AppColors.onBackground,
     this.centerAlign = false,
   }) : super(key: key);
 
