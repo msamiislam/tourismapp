@@ -37,7 +37,7 @@ class LoginPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     const SizedBox(height: 50.0),
-                    AppLargeText(text: "Sign In with your Email"),
+                    AppLargeText( "Sign In with your Email"),
                     const SizedBox(height: 30.0),
                     FormBuilderTextField(
                       name: "email",
@@ -54,16 +54,16 @@ class LoginPage extends StatelessWidget {
                     const SizedBox(height: 20.0),
                     ElevatedButton(
                         onPressed: () => _login(context),
-                        child: AppText(text: "Login", color: Colors.white, weight: FontWeight.bold),
+                        child: AppText( "Login", color: Colors.white, weight: FontWeight.bold),
                         ),
                     const SizedBox(height: 10.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        AppText(text: "Don't have an account?"),
+                        AppText( "Don't have an account?"),
                         InkWell(
                             onTap: () => Get.to(() => RegistrationPersonalPage()),
-                            child: AppText(text: " Sign up", color: AppColors.primary, weight: FontWeight.normal)),
+                            child: AppText( " Sign up", color: AppColors.primary, weight: FontWeight.normal)),
                       ],
                     ),
                     const SizedBox(height: 20.0),

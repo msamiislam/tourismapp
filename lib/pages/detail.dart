@@ -60,10 +60,10 @@ class _DetailPageState extends State<DetailPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           AppLargeText(
-                            text: "Lahore",
+                             "Lahore",
                             color: Colors.black,
                           ),
-                          AppLargeText(text: "PKR 8000", color: AppColors.mainTextColor),
+                          AppLargeText( "PKR 8000", color: AppColors.mainTextColor),
                         ],
                       ),
                       SizedBox(
@@ -80,7 +80,7 @@ class _DetailPageState extends State<DetailPage> {
                             width: 5,
                           ),
                           AppText(
-                            text: "Lahore, Pakistan",
+                             "Lahore, Pakistan",
                             color: AppColors.textColor1,
                           ),
                         ],
@@ -101,7 +101,7 @@ class _DetailPageState extends State<DetailPage> {
                           ),
                           SizedBox(width: 10),
                           AppText(
-                            text: "(4.0)",
+                             "(4.0)",
                             color: AppColors.textColor2,
                           )
                         ],
@@ -110,11 +110,11 @@ class _DetailPageState extends State<DetailPage> {
                         height: 25,
                       ),
 
-                      AppLargeText(text: "People"),
+                      AppLargeText( "People"),
                       SizedBox(
                         height: 5,
                       ),
-                      AppText(text: "Number of people in your group"),
+                      AppText( "Number of people in your group"),
                       SizedBox(
                         height: 10,
                       ),
@@ -135,7 +135,7 @@ class _DetailPageState extends State<DetailPage> {
                               backgroundColor: selectedIndex == index ? Colors.black : AppColors.buttonBackground,
                               borderColor: selectedIndex == index ? Colors.black : AppColors.buttonBackground,
                               color: selectedIndex == index ? Colors.white : Colors.black,
-                              text: (index + 1).toString(),
+                              text:  (index + 1).toString(),
                               //for icon use in button
                               //icon: Icons.favourite_border,
                               //isIcon: true,
@@ -147,14 +147,14 @@ class _DetailPageState extends State<DetailPage> {
 
                       //description heading and text
                       AppLargeText(
-                        text: "Description",
+                         "Description",
                         size: 20,
                       ),
                       SizedBox(
                         height: 5,
                       ),
                       AppText(
-                        text:
+
                             "Packed with historic landmarks, bustling eateries, and manicured parks, the vibrant city of Lahore exudes culture at every corner. From soaring minarets and colorful facades to street-level stalls selling flavorful Punjabi favorites, the increasingly cosmopolitan city radiates with energy.",
                         size: 10,
                       ),

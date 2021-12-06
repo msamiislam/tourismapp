@@ -28,7 +28,7 @@ class ResponsiveButton extends StatelessWidget {
             //for show text in button
             isResponsive==true?Container(
               margin: const EdgeInsets.only(left: 20),
-             child: AppText(text: "Book Trip Now", color: Colors.white,)):Container(),
+             child: AppText("Book Trip Now", color: Colors.white,)):Container(),
 
              //for show icon in button
             Image.asset("img/responsivebutton.png"),

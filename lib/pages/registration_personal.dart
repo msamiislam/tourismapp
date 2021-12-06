@@ -41,7 +41,7 @@ class _RegistrationPersonalPageState extends State<RegistrationPersonalPage> {
                 child: Column(
                   children: <Widget>[
                     const SizedBox(height: 50.0),
-                    AppLargeText(text: "Create Your Account"),
+                    AppLargeText( "Create Your Account"),
                     const SizedBox(height: 30.0),
                     Container(
                       width: Get.width / 2,
