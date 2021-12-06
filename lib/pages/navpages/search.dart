@@ -6,6 +6,8 @@ import 'package:tourismapp/utils/colors.dart';
 class SearchPage extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
 
+  SearchPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -24,12 +26,12 @@ class SearchPage extends StatelessWidget {
                     decoration: const InputDecoration(isDense: true, hintText: "Search", border: OutlineInputBorder()),
                   ),
                 ),
-                SizedBox(width: 5.0),
+                SizedBox(width: 10.0),
                 Container(
                   width: 56.0,
                   height: 56.0,
                   decoration: BoxDecoration(color: AppColors.primary,borderRadius: BorderRadius.all(Radius.circular(4.0))),
-                  child: Icon(Icons.filter_alt, color: AppColors.white),
+                  child: Icon(Icons.filter_alt, size: 28.0, color: AppColors.white),
                 ),
               ],
             ),
