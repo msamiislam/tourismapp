@@ -38,22 +38,10 @@ class SearchPage extends StatelessWidget {
             ),
             SizedBox(height: 20.0),
             Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    GridView.builder(
-                      shrinkWrap: true,
-                      itemCount: 3,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 10.0,
-                        mainAxisSpacing: 10.0,
-                        childAspectRatio: 1.65 / 2,
-                      ),
-                      itemBuilder: (context, index) => GuideCard(onTap: () {  }),
-                    ),
-                  ],
-                ),
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: 2,
+                itemBuilder: (context, index) => PlaceCard(),
               ),
             ),
             // Expanded(
