@@ -50,12 +50,10 @@ class LoginPage extends StatelessWidget {
                     const SizedBox(height: 30.0),
                     PasswordField(),
                     const SizedBox(height: 20.0),
-                    TextButton(
+                    ElevatedButton(
                         onPressed: () => _login(context),
                         child: AppText(text: "Login", color: Colors.white, weight: FontWeight.bold),
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-                        )),
+                        ),
                     const SizedBox(height: 10.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -63,16 +61,17 @@ class LoginPage extends StatelessWidget {
                         AppText(text: "Don't have an account?"),
                         InkWell(
                             onTap: () => Get.to(() => RegistrationPersonalPage()),
-                            child: AppText(text: " Sign up", color: Colors.blue, weight: FontWeight.normal)),
+                            child: AppText(text: " Sign up", color: AppColors.primary, weight: FontWeight.normal)),
                       ],
                     ),
                     const SizedBox(height: 20.0),
-                    TextButton(
+                    ElevatedButton(
                         onPressed: () => _loginWithGoogle(),
                         child: Text("Login with Google"),
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(AppColors.buttonBackground),
-                        )),
+                          backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF4285F4)),
+                        ),
+                    ),
                   ],
                 ),
               ),
