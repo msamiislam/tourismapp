@@ -3,7 +3,7 @@ import '../pages/navpages/bar_item.dart';
 import '../pages/navpages/home.dart';
 import '../pages/navpages/profile.dart';
 import '../pages/navpages/search.dart';
-import 'package:tourismapp/utils/colors.dart';
+import '../utils/colors.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);

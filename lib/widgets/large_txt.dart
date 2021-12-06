@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tourismapp/utils/colors.dart';
+import '../utils/colors.dart';
 
 class AppLargeText extends StatelessWidget {
   final double size;

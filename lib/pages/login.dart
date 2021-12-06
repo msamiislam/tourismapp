@@ -98,8 +98,8 @@ class LoginPage extends StatelessWidget {
       } on FirebaseAuthException catch (exception) {
         Loader.hide();
         Get.dialog(AlertDialog(
-          title: AppText(text: "Login"),
-          content: AppText(text: "${exception.message}", size: 14.0),
+          title: AppText("Login"),
+          content: AppText("${exception.message}", size: 14.0),
           actions: [
             TextButton(
               child: Text("Ok"),

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
 
-import '../../pages/login.dart';
 import '../../utils/colors.dart';
 import '../../widgets/large_txt.dart';
 import '../../widgets/simple_txt.dart';
@@ -41,65 +38,47 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     TabController _tabController = TabController(length: _tabs.length, vsync: this);
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        iconTheme: IconThemeData(color: Colors.black),
-        elevation: 0.0,
-        actions: [
-          CircleAvatar(backgroundColor: Colors.grey),
-          SizedBox(width: 10.0),
-        ],
-      ),
-      // drawer: Drawer(
-      //   child: ListView(
-      //     children: [
-      //       UserAccountsDrawerHeader(accountName: Text("accountName"), accountEmail: Text("accountEmail")),
-      //       ListTile(
-      //         leading: Icon(FontAwesomeIcons.signOutAlt),
-      //         title: AppText( "Logout"),
-      //         onTap: () {
-      //           FirebaseAuth.instance.signOut();
-      //           Get.offAll(() => LoginPage());
-      //         },
-      //       ),
-      //     ],
-      //   ),
-      // ),
-      body: ListView(
-        children: [
-          //upper Menu bar icon + image
-          Container(
-            margin: const EdgeInsets.only(left: 20),
-            child: AppLargeText( "Discover"),
-          ),
-          SizedBox(height: 20),
-          Container(
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: TabBar(
-                labelPadding: const EdgeInsets.only(left: 20, right: 20),
-                indicatorSize: TabBarIndicatorSize.label,
-                controller: _tabController,
-                labelColor: Colors.black,
-                unselectedLabelColor: Colors.grey,
-                isScrollable: true,
-                indicator: CircleTabIndicator(color: AppColors.primary, radius: 4),
-                tabs: _tabs.map((e) => Tab(text: e)).toList(),
+      body: SafeArea(
+        child: ListView(
+          children: [
+            //upper Menu bar icon + image
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  AppLargeText("Discover"),
+                  CircleAvatar(backgroundColor: Colors.grey),
+                ],
               ),
             ),
-          ),
-          Container(
-            padding: const EdgeInsets.only(top: 2.5, left: 20),
-            height: 300,
-            child: TabBarView(controller: _tabController, children: _tabViews),
-          ),
-          SizedBox(height: 20),
-          ExploreSection(title: "Travels", nameImages: travelImages, names: travels),
-          SizedBox(height: 20),
-          ExploreSection(title: "Guiders", nameImages: guiderImages, names: guiders),
-          SizedBox(height: 20),
-        ],
+            Container(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: TabBar(
+                  labelPadding: const EdgeInsets.only(left: 20, right: 20),
+                  indicatorSize: TabBarIndicatorSize.label,
+                  controller: _tabController,
+                  labelColor: Colors.black,
+                  unselectedLabelColor: Colors.grey,
+                  isScrollable: true,
+                  indicator: CircleTabIndicator(color: AppColors.primary, radius: 4),
+                  tabs: _tabs.map((e) => Tab(text: e)).toList(),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.only(top: 2.5, left: 20),
+              height: 300,
+              child: TabBarView(controller: _tabController, children: _tabViews),
+            ),
+            SizedBox(height: 20),
+            ExploreSection(title: "Travels", nameImages: travelImages, names: travels),
+            SizedBox(height: 20),
+            ExploreSection(title: "Guiders", nameImages: guiderImages, names: guiders),
+            SizedBox(height: 20),
+          ],
+        ),
       ),
     );
   }
