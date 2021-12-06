@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:lottie/lottie.dart';
-import 'package:tourismapp/utils/colors.dart';
+
+import '../../utils/colors.dart';
 
 class SearchPage extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
