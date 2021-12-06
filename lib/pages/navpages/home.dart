@@ -132,7 +132,7 @@ class ExploreSection extends StatelessWidget {
         ),
         SizedBox(height: 10),
         Container(
-          height: 102,
+          height: 110,
           width: double.maxFinite,
           margin: const EdgeInsets.only(left: 20),
           child: ListView.builder(
@@ -145,13 +145,17 @@ class ExploreSection extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                          width: 80,
-                          height: 80,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Colors.white,
-                              image: DecorationImage(
-                                  fit: BoxFit.cover, image: AssetImage("img/" + nameImages[names[index]]!)))),
+                        width: 80,
+                        height: 80,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white,
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage("img/" + nameImages[names[index]]!),
+                          ),
+                        ),
+                      ),
                       SizedBox(height: 10),
                       Container(
                         child: AppText(

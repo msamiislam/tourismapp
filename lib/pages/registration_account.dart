@@ -10,7 +10,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:tourismapp/model/tourist_model.dart';
 import 'package:tourismapp/pages/login.dart';
+import 'package:tourismapp/utils/database.dart';
 import 'package:tourismapp/utils/progress_dialog.dart';
 import 'package:tourismapp/widgets/large_txt.dart';
 import 'package:tourismapp/widgets/password_field.dart';
@@ -77,14 +79,17 @@ class RegistrationAccount extends StatelessWidget {
       log(_fbKey.currentState!.value.toString());
       Loader.show(context, text: "Registering...");
       try {
-        UserCredential user = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        UserCredential credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
             email: _fbKey.currentState!.value["email"], password: _fbKey.currentState!.value["password"]);
         String? imageUrl;
         if (data["image"] != null && data["image"] is String) {
-          imageUrl = await uploadImage(image: File(data["image"]), id: user.user!.uid);
+          imageUrl = await uploadImage(image: File(data["image"]), id: credential.user!.uid);
         }
+        data["id"] = credential.user!.uid;
+        data["image_url"] = imageUrl;
+        print(data);
+        Database.createTourist(TouristModel.fromJson(data));
         Loader.hide();
-        print(imageUrl);
         FirebaseAuth.instance.signOut();
         Get.to(() => LoginPage());
         Fluttertoast.showToast(msg: "Registered successfully.");

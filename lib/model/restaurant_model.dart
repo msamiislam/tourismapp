@@ -18,23 +18,27 @@ class RestaurantModel {
   });
 
 
-  static fromJson(Map<String, dynamic> json) => RestaurantModel(
+  static RestaurantModel fromJson(Map<String, dynamic> json) {
+    return RestaurantModel(
     id: json["id"],
     name: json["name"],
-    images: List<String>.from(json["images"].map((x) => x)),
+    images: json["images"],
     city: json["city"],
     location: json["location"],
     rating: json["rating"],
     ratedPeople: json["ratedPeople"],
   );
+  }
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() {
+    return {
     "id": id,
     "name": name,
-    "images": List<dynamic>.from(images.map((x) => x)),
+    "images": images,
     "city": city,
     "location": location,
     "rating": rating,
     "ratedPeople": ratedPeople,
   };
+  }
 }

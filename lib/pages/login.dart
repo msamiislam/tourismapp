@@ -6,11 +6,13 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
+import 'package:tourismapp/model/user_model.dart';
 import 'package:tourismapp/pages/dashboard.dart';
 import 'package:tourismapp/pages/registration_personal.dart';
-import 'package:tourismapp/utils/progress_dialog.dart';
 import 'package:tourismapp/services/auth.dart';
 import 'package:tourismapp/utils/colors.dart';
+import 'package:tourismapp/utils/database.dart';
+import 'package:tourismapp/utils/progress_dialog.dart';
 import 'package:tourismapp/widgets/large_txt.dart';
 import 'package:tourismapp/widgets/password_field.dart';
 import 'package:tourismapp/widgets/simple_txt.dart';
@@ -87,8 +89,9 @@ class LoginPage extends StatelessWidget {
       log(_fbKey.currentState!.value.toString());
       Loader.show(context, text: "Logging In...");
       try {
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
+        UserCredential credentials = await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: _fbKey.currentState!.value["email"], password: _fbKey.currentState!.value["password"]);
+        UserModel user = await Database.getTourist(credentials.user!.uid);
         Loader.hide();
         Get.to(() => DashboardPage());
         Fluttertoast.showToast(msg: "Logged in successfully.");

@@ -5,6 +5,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tourismapp/model/enums.dart';
 import 'package:tourismapp/pages/registration_account.dart';
 import 'package:tourismapp/utils/colors.dart';
 import 'package:tourismapp/widgets/large_txt.dart';
@@ -74,7 +75,7 @@ class _RegistrationPersonalPageState extends State<RegistrationPersonalPage> {
                     ),
                     const SizedBox(height: 30.0),
                     FormBuilderTextField(
-                      name: "phone_number",
+                      name: "phone",
                       keyboardType: TextInputType.phone,
                       decoration: const InputDecoration(
                           hintText: "Enter your phone number", labelText: "Phone Number", border: OutlineInputBorder()),
@@ -85,7 +86,7 @@ class _RegistrationPersonalPageState extends State<RegistrationPersonalPage> {
                     ),
                     const SizedBox(height: 30.0),
                     FormBuilderTextField(
-                      name: "address_line",
+                      name: "address",
                       keyboardType: TextInputType.streetAddress,
                       decoration: const InputDecoration(
                           hintText: "Enter your address", labelText: "Address", border: OutlineInputBorder()),
@@ -95,17 +96,8 @@ class _RegistrationPersonalPageState extends State<RegistrationPersonalPage> {
                     ),
                     const SizedBox(height: 30.0),
                     FormBuilderRadioGroup(
-                      name: "blood group",
-                      options: [
-                        FormBuilderFieldOption(value: "A+"),
-                        FormBuilderFieldOption(value: "A-"),
-                        FormBuilderFieldOption(value: "B+"),
-                        FormBuilderFieldOption(value: "B-"),
-                        FormBuilderFieldOption(value: "O+"),
-                        FormBuilderFieldOption(value: "O-"),
-                        FormBuilderFieldOption(value: "AB+"),
-                        FormBuilderFieldOption(value: "AB-"),
-                      ],
+                      name: "blood_group",
+                      options: BloodGroup.values.map((e) => FormBuilderFieldOption(value: e)).toList(),
                       decoration: const InputDecoration(
                           hintText: "Enter your blood group", labelText: "Blood Group", border: OutlineInputBorder()),
                       validator: FormBuilderValidators.compose([
@@ -114,7 +106,7 @@ class _RegistrationPersonalPageState extends State<RegistrationPersonalPage> {
                     ),
                     const SizedBox(height: 30.0),
                     FormBuilderDateTimePicker(
-                      name: "date_of_birth",
+                      name: "dob",
                       inputType: InputType.date,
                       valueTransformer: (value) => value.toString(),
                       decoration: const InputDecoration(
@@ -128,11 +120,11 @@ class _RegistrationPersonalPageState extends State<RegistrationPersonalPage> {
                     const SizedBox(height: 30.0),
                     FormBuilderRadioGroup(
                       name: "gender",
-                      options: [
-                        FormBuilderFieldOption(value: "male", child: Text("Male")),
-                        FormBuilderFieldOption(value: "female", child: Text("Female")),
-                        FormBuilderFieldOption(value: "none", child: Text("None")),
-                      ],
+                      options: Gender.values
+                          .map(
+                            (e) => FormBuilderFieldOption(value: e),
+                          )
+                          .toList(),
                       decoration: const InputDecoration(
                           hintText: "Select your gender", labelText: "Gender", border: OutlineInputBorder()),
                       validator: FormBuilderValidators.compose([
@@ -164,6 +156,7 @@ class _RegistrationPersonalPageState extends State<RegistrationPersonalPage> {
       print(data.toString());
       data["image"] = profileImage?.path;
       log(data.toString());
+
       Get.to(() => RegistrationAccount(data));
     }
   }

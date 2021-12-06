@@ -13,13 +13,15 @@ class HotelModel {
   final String city;
   final String location;
 
-  static fromJson(Map<String, dynamic> json) => HotelModel(
+  static HotelModel fromJson(Map<String, dynamic> json) {
+    return HotelModel(
     id: json["id"],
     name: json["name"],
     images: List<String>.from(json["images"].map((x) => x)),
     city: json["city"],
     location: json["location"],
   );
+  }
 
   Map<String, dynamic> toJson() => {
     "id": id,
