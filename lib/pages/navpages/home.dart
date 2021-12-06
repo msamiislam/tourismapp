@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tourismapp/pages/detail.dart';
 
 import '../../utils/colors.dart';
 import '../../widgets/large_txt.dart';
@@ -161,39 +163,44 @@ class TabView extends StatelessWidget {
       itemCount: data.length,
       scrollDirection: Axis.horizontal,
       itemBuilder: (BuildContext context, int index) {
-        return Stack(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(top: 10, right: 15),
-              width: 200,
-              height: 300,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.white,
-                image: DecorationImage(fit: BoxFit.cover, image: NetworkImage("https://picsum.photos/200")),
+        return InkWell(
+          onTap: () => Get.to(() => DetailPage()),
+          child: Stack(
+            children: [
+              Container(
+                margin: const EdgeInsets.only(top: 10, right: 15),
+                width: 200,
+                height: 300,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.white,
+                  image: DecorationImage(fit: BoxFit.cover, image: NetworkImage("https://picsum.photos/200")),
+                ),
               ),
-            ),
-            Positioned(
-              right: 10,
-              left: 10,
-              bottom: 15,
+              Positioned(
+                right: 10,
+                left: 10,
+                bottom: 15,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    AppText( 'Title', maxLines: 2, color: AppColors.white, weight: FontWeight.bold),
+                    AppText('Title', maxLines: 2, color: AppColors.white, weight: FontWeight.bold),
                     SizedBox(height: 5.0),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(Icons.place_outlined,size: 18.0, color: AppColors.white),
+                        Icon(Icons.place_outlined, size: 18.0, color: AppColors.white),
                         SizedBox(width: 4.0),
-                        Expanded(child: AppText( 'Lorem ipsum is a dummy text used for industrial purposes.', maxLines: 2,color: AppColors.white)),
+                        Expanded(
+                            child: AppText('Lorem ipsum is a dummy text used for industrial purposes.',
+                                maxLines: 2, color: AppColors.white)),
                       ],
                     ),
                   ],
                 ),
-            ),
-          ],
+              ),
+            ],
+          ),
         );
       },
     );
