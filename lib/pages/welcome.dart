@@ -58,13 +58,13 @@ class _WelcomePageState extends State<WelcomePage> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        AppLargeText(text: text[index]),
-                        AppText(text: "Northern Areas", size: 30),
+                        AppLargeText( text[index]),
+                        AppText( "Northern Areas", size: 30),
                         SizedBox(height: 22),
                         SizedBox(
                           width: 260,
                           child: AppText(
-                            text:
+
                                 "We will provide you the best experience in northern areas of Pakistan. Once you try, you will book in sequence. This is our promise.",
                             color: AppColors.textColor2,
                             size: 14,

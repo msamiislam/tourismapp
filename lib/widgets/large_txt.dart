@@ -7,10 +7,11 @@ class AppLargeText extends StatelessWidget {
   final Color color;
   final bool centerAlign;
 
-  const AppLargeText({
+  const AppLargeText(
+      this.text,
+      {
     Key? key,
     this.size = 30,
-    required this.text,
     this.color = Colors.black,
     this.centerAlign = false,
   }) : super(key: key);

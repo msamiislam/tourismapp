@@ -32,7 +32,7 @@ class RegistrationPersonalPage extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     const SizedBox(height: 50.0),
-                    AppLargeText(text: "Create Your Account"),
+                    AppLargeText( "Create Your Account"),
                     const SizedBox(height: 30.0),
                     Container(
                       clipBehavior: Clip.hardEdge,

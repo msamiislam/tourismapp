@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             UserAccountsDrawerHeader(accountName: Text("accountName"), accountEmail: Text("accountEmail")),
             ListTile(
               leading: Icon(FontAwesomeIcons.signOutAlt),
-              title: AppText(text: "Logout"),
+              title: AppText( "Logout"),
               onTap: () {
                 FirebaseAuth.instance.signOut();
                 Get.offAll(() => LoginPage());
@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           //upper Menu bar icon + image
           Container(
             margin: const EdgeInsets.only(left: 20),
-            child: AppLargeText(text: "Discover"),
+            child: AppLargeText( "Discover"),
           ),
           SizedBox(height: 20),
           Container(
@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ),
           ),
           Container(
-            padding: const EdgeInsets.only(left: 20),
+            padding: const EdgeInsets.only(top: 2.5, left: 20),
             height: 300,
             child: TabBarView(controller: _tabController, children: _tabViews),
           ),
@@ -125,8 +125,8 @@ class ExploreSection extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              AppLargeText(text: "Explore $title", size: 20),
-              AppText(text: "See all", color: AppColors.textColor1),
+              AppLargeText( "Explore $title", size: 20),
+              AppText( "See all", color: AppColors.textColor1),
             ],
           ),
         ),
@@ -155,7 +155,7 @@ class ExploreSection extends StatelessWidget {
                       SizedBox(height: 5),
                       Container(
                         child: AppText(
-                          text: names[index],
+                           names[index],
                           size: 10,
                           color: AppColors.textColor2,
                         ),
@@ -181,14 +181,40 @@ class TabView extends StatelessWidget {
       itemCount: data.length,
       scrollDirection: Axis.horizontal,
       itemBuilder: (BuildContext context, int index) {
-        return Container(
-            margin: const EdgeInsets.only(top: 10, right: 15),
-            width: 200,
-            height: 300,
-            decoration: BoxDecoration(
+        return Stack(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(top: 10, right: 15),
+              width: 200,
+              height: 300,
+              decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 color: Colors.white,
-                image: DecorationImage(fit: BoxFit.cover, image: NetworkImage("https://picsum.photos/200"))));
+                image: DecorationImage(fit: BoxFit.cover, image: NetworkImage("https://picsum.photos/200")),
+              ),
+            ),
+            Positioned(
+              right: 10,
+              left: 10,
+              bottom: 15,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AppText( 'Title', maxLines: 2, color: AppColors.white, weight: FontWeight.bold),
+                    SizedBox(height: 5.0),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(Icons.place_outlined,size: 18.0, color: AppColors.white),
+                        SizedBox(width: 4.0),
+                        Expanded(child: AppText( 'Lorem ipsum is a dummy text used for industrial purposes.', maxLines: 2,color: AppColors.white)),
+                      ],
+                    ),
+                  ],
+                ),
+            ),
+          ],
+        );
       },
     );
   }
