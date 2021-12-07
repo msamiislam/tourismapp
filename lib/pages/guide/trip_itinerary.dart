@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:intl/intl.dart';
 import 'package:tourismapp/widgets/simple_txt.dart';
 
 class TripItineraryPage extends StatefulWidget {
@@ -35,24 +36,28 @@ class _TripItineraryPageState extends State<TripItineraryPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     AppText('Day ${day + 1}', size: 16.0, weight: FontWeight.w600),
-                    SizedBox(height: 10.0),
-                    // FormBuilderDateTimePicker(
-                    //   name: 'time',
-                    //   inputType: InputType.time,
-                    //   decoration: InputDecoration(
-                    //     hintText: '09:00 am',
-                    //     border: OutlineInputBorder(),
-                    //   ),
-                    //   valueTransformer: (time) {
-                    //     return time!.hour + time.minute;
-                    //   },
-                    //   validator: FormBuilderValidators.compose([
-                    //     FormBuilderValidators.required(context),
-                    //   ]),
-                    // ),
+                    SizedBox(height: 15.0),
+                    SizedBox(
+                      width: 90.0,
+                      child: FormBuilderDateTimePicker(
+                        name: 'time',
+                        inputType: InputType.time,
+                        decoration: InputDecoration(
+                          hintText: '9:00 am',
+                          border: OutlineInputBorder(),
+                        ),
+                        format: DateFormat.jm(),
+                        alwaysUse24HourFormat: false,
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(context),
+                        ]),
+                      ),
+                    ),
                     SizedBox(height: 10.0),
                     FormBuilderTextField(
                       name: 'desc',
+                      minLines: 1,
+                      maxLines: 3,
                       decoration: InputDecoration(
                         hintText: 'Description',
                         border: OutlineInputBorder(),
