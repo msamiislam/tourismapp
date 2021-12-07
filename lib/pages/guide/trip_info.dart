@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:get/get.dart';
+import 'package:tourismapp/pages/guide/trip_days.dart';
 import 'package:tourismapp/widgets/profile_image.dart';
 import 'package:tourismapp/widgets/simple_txt.dart';
 
@@ -82,7 +84,7 @@ class TripInfoPage extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerRight,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () => Get.to(() => TripDaysPage(3)),
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: AppText('Next'),

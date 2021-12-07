@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:tourismapp/pages/guide/trip_itinerary.dart';
+import 'package:tourismapp/pages/guide/trip_info.dart';
 
 import '../utils/colors.dart';
 
@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
             onError: AppColors.white,
             brightness: Brightness.light,
           )),
-      home: TripItineraryPage(),
+      home: TripInfoPage(),
     );
   }
 }
