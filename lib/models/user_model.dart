@@ -52,4 +52,6 @@ abstract class UserModel {
   }
 
   bool get isGuide => userType == UserType.guide;
+
+  String get initials => firstName.substring(0, 1).toUpperCase() + lastName.substring(0, 1).toUpperCase();
 }

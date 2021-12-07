@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:get_storage/get_storage.dart';
-import '../pages/registration_personal.dart';
+
 import '../utils/colors.dart';
 import '../widgets/large_txt.dart';
 import '../widgets/simple_txt.dart';
+import 'login.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);
@@ -27,12 +27,6 @@ class _WelcomePageState extends State<WelcomePage> {
   ];
 
   @override
-  void initState() {
-    GetStorage().write("opened_app", true);
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView.builder(
@@ -42,7 +36,7 @@ class _WelcomePageState extends State<WelcomePage> {
         onPageChanged: (index) => setState(() => this.index = index),
         itemBuilder: (_, index) {
           if (index == images.length) {
-            return RegistrationPersonalPage();
+            return LoginPage();
           } else {
             return Container(
               width: double.maxFinite,

@@ -1,8 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tourismapp/pages/detail.dart';
 
+import '../../controllers/login_controller.dart';
+import '../../pages/detail.dart';
 import '../../utils/colors.dart';
+import '../../widgets/image_place_holder.dart';
 import '../../widgets/large_txt.dart';
 import '../../widgets/simple_txt.dart';
 
@@ -16,6 +19,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   List<String> travels = ["Cab", "Train", "Plane", "Bus"];
   List<String> guiders = ["Kareem Dad", "Saif ur Rehman", "Arooj Fatima", "Phola Cheeda"];
+  late final TabController _tabController;
+  final LoginController _login = LoginController();
+
   Map<String, String> travelImages = {
     "Cab": "cab.png",
     "Train": "train.png",
@@ -28,6 +34,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     "Arooj Fatima": "airplane.png",
     "Phola Cheeda": "bus.png",
   };
+
+  @override
+  void initState() {
+    _tabController = TabController(length: _tabs.length, vsync: this);
+    super.initState();
+  }
+
   final List<String> _tabs = ["Places", "Hotels", "Restaurants", "Malls"];
   final List<Widget> _tabViews = [
     TabView([1, 2, 3]),
@@ -38,7 +51,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    TabController _tabController = TabController(length: _tabs.length, vsync: this);
     return Scaffold(
       body: SafeArea(
         child: ListView(
@@ -50,7 +62,20 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   AppLargeText("Discover"),
-                  CircleAvatar(backgroundColor: Colors.grey),
+                  Material(
+                    clipBehavior: Clip.antiAlias,
+                    elevation: 4.0,
+                    color: AppColors.grey,
+                    borderRadius: BorderRadius.circular(25.0),
+                    child: CachedNetworkImage(
+                      imageUrl: _login.user!.imageUrl,
+                      width: 50.0,
+                      height: 50.0,
+                      fit: BoxFit.cover,
+                      progressIndicatorBuilder: (context, url, progress) => ImagePlaceHolder(_login.user!.initials),
+                      errorWidget: (context, url, error) => ImagePlaceHolder(_login.user!.initials),
+                    ),
+                  ),
                 ],
               ),
             ),

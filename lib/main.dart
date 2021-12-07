@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:tourismapp/pages/guide/trip_info.dart';
-
+import '../pages/splash.dart';
 import '../utils/colors.dart';
 
 Future<void> main() async {
@@ -17,7 +16,6 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -25,25 +23,26 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: [FormBuilderLocalizations.delegate],
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          fontFamily: 'Poppins',
-          scaffoldBackgroundColor: AppColors.scaffoldBg,
-          primarySwatch: AppColors.primarySwatch,
-          colorScheme: ColorScheme(
-            primary: AppColors.primary,
-            onPrimary: AppColors.onPrimary,
-            primaryVariant: AppColors.primaryVariant,
-            secondary: AppColors.secondary,
-            onSecondary: AppColors.onSecondary,
-            secondaryVariant: AppColors.secondaryVariant,
-            background: AppColors.background,
-            onBackground: AppColors.onBackground,
-            surface: AppColors.surface,
-            onSurface: AppColors.onSurface,
-            error: Theme.of(context).errorColor,
-            onError: AppColors.white,
-            brightness: Brightness.light,
-          )),
-      home: TripInfoPage(),
+        fontFamily: 'Poppins',
+        scaffoldBackgroundColor: AppColors.scaffoldBg,
+        primarySwatch: AppColors.primarySwatch,
+        colorScheme: ColorScheme(
+          primary: AppColors.primary,
+          onPrimary: AppColors.onPrimary,
+          primaryVariant: AppColors.primaryVariant,
+          secondary: AppColors.secondary,
+          onSecondary: AppColors.onSecondary,
+          secondaryVariant: AppColors.secondaryVariant,
+          background: AppColors.background,
+          onBackground: AppColors.onBackground,
+          surface: AppColors.surface,
+          onSurface: AppColors.onSurface,
+          error: Theme.of(context).errorColor,
+          onError: AppColors.white,
+          brightness: Brightness.light,
+        ),
+      ),
+      home: SplashPage(),
     );
   }
 }

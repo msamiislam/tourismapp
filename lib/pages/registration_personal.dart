@@ -5,6 +5,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+
 import '../models/enums.dart';
 import '../pages/registration_account.dart';
 import '../utils/colors.dart';
@@ -40,7 +41,6 @@ class _RegistrationPersonalPageState extends State<RegistrationPersonalPage> {
                 key: _fbKey,
                 child: Column(
                   children: <Widget>[
-                    const SizedBox(height: 50.0),
                     AppLargeText( "Create Your Account"),
                     const SizedBox(height: 30.0),
                     Container(
