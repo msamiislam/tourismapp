@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tourismapp/utils/colors.dart';
 
 import '../controllers/login_controller.dart';
+import '../utils/colors.dart';
 import '../widgets/image_place_holder.dart';
+import '../widgets/simple_txt.dart';
 
 typedef OnPicked = void Function(XFile file);
 typedef OnPickedImages = void Function(List<XFile> file);
@@ -112,30 +113,39 @@ class _MultiImageState extends State<MultiImage> {
 
   @override
   Widget build(BuildContext context) {
-double width = MediaQuery.of(context).size.width;
-
-    return InkWell(
-      onTap: () => getImage(ImageSource.gallery),
-      child: Container(
-        width: width,
-        height: 180.0,
-        decoration: BoxDecoration(color: Colors.black26),
-        child: images == null || images!.isEmpty
-            ? Icon(
-                Icons.image,
-                size: 32.0,
-                color: AppColors.onBackground,
-              )
-            : SizedBox(),
-        // : Stack(
-        //     alignment: Alignment.center,
-        //     children: [
-        //       Image.file(
-        //         File(images![0].path),
-        //         fit: BoxFit.cover,
-        //       ),
-        //     ],
-        //   ),
+    return Material(
+      borderRadius: BorderRadius.circular(10.0),
+      clipBehavior: Clip.hardEdge,
+      child: InkWell(
+        onTap: () => getImage(ImageSource.gallery),
+        child: Container(
+          width: Get.width,
+          height: 180.0,
+          decoration: BoxDecoration(color: Colors.black26),
+          child: images == null || images!.isEmpty
+              ? Icon(
+                  Icons.image,
+                  size: 32.0,
+                  color: AppColors.onBackground,
+                )
+              : Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Image.file(File(images![0].path), fit: BoxFit.cover),
+                    if (images!.length > 1)
+                      Positioned.fill(
+                        child: Container(
+                            color: AppColors.black.withOpacity(0.5),
+                            child: Center(
+                              child: AppText(
+                                " + ${images!.length - 1} More ",
+                                color: AppColors.white,
+                              ),
+                            )),
+                      ),
+                  ],
+                ),
+        ),
       ),
     );
   }

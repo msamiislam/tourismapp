@@ -178,7 +178,6 @@ class ExploreSection extends StatelessWidget {
               return InkWell(
                 onTap: () {
                   if (title == "Travels") {
-                    print("wow");
                     LaunchApp.openApp(
                       androidPackageName: nameImages.values.elementAt(index)["link"]!,
                       openStore: true,
@@ -244,7 +243,7 @@ class TabView extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.white,
-                  image: DecorationImage(fit: BoxFit.cover, image: NetworkImage("https://picsum.photos/200")),
+                  image: DecorationImage(fit: BoxFit.cover, image: NetworkImage("https://picsum.photos/600")),
                 ),
               ),
               Positioned(

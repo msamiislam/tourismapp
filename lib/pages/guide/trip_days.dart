@@ -29,7 +29,6 @@ class _TripDaysPageState extends State<TripDaysPage> {
       body: PageView.builder(
         controller: _controller,
         itemCount: widget.totalPages,
-        onPageChanged: (val) => print(_map),
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) => TripItineraryPage(
             initialValues: _map["day$index"] ?? {},

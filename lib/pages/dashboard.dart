@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../pages/navpages/bar_item.dart';
+import '../pages/guide/trip_info.dart';
 import '../pages/navpages/home.dart';
 import '../pages/navpages/search.dart';
-import '../pages/profile.dart';
+import '../pages/navpages/settings.dart';
 import '../utils/colors.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -16,9 +16,9 @@ class DashboardPage extends StatefulWidget {
 class _DashboardPageState extends State<DashboardPage> {
   List pages = [
     HomePage(),
-    BarItemPage(),
+    TripInfoPage(),
     SearchPage(),
-    ProfilePage(),
+    SettingsPage(),
   ];
   int cIndex = 0;
 
