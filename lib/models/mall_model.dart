@@ -1,17 +1,25 @@
-class MallModel {
-  MallModel({
-    required this.id,
-    required this.name,
-    required this.images,
-    required this.city,
-    required this.location,
-  });
+import '../models/attraction_model.dart';
 
-  final String id;
-  final String name;
-  final List<String> images;
-  final String city;
-  final String location;
+class MallModel extends AttractionModel {
+  final String phone;
+  final String link;
+
+  MallModel({
+    required String id,
+    required String name,
+    required String city,
+    required String address,
+    required List<String> images,
+    required this.phone,
+    required this.link,
+  }) : super(
+          id: id,
+          name: name,
+          city: city,
+          address: address,
+          type: AttractionType.mall,
+          images: images,
+        );
 
   static MallModel fromJson(Map<String, dynamic> json) {
     return MallModel(
@@ -19,7 +27,9 @@ class MallModel {
       name: json["name"],
       images: json["images"],
       city: json["city"],
-      location: json["location"],
+      address: json["address"],
+      phone: json["phone"],
+      link: json["link"],
     );
   }
 
@@ -29,7 +39,10 @@ class MallModel {
       "name": name,
       "images": images,
       "city": city,
-      "location": location,
+      "address": address,
+      "phone": phone,
+      "link": link,
+      "type": type,
     };
   }
 }
