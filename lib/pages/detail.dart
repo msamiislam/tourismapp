@@ -4,11 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:like_button/like_button.dart';
-import 'package:get/get.dart';
+
 import '../utils/colors.dart';
-import '../widgets/app_button.dart';
 import '../widgets/large_txt.dart';
-import '../widgets/responsive_button.dart';
 import '../widgets/simple_txt.dart';
 
 class DetailPage extends StatefulWidget {
@@ -130,7 +128,7 @@ class _DetailPageState extends State<DetailPage> {
                         size: 10.0),
                     SizedBox(height: 20.0),
 
-                    Center(child: AppLargeText("Itenary", size: 20.0)),
+                    Center(child: AppLargeText("Itinerary", size: 20.0)),
                     // SizedBox(height: 5.0),
                     ListView.builder(
                       primary: false,
@@ -146,7 +144,8 @@ class _DetailPageState extends State<DetailPage> {
                             AppText('Day ${index + 1}', weight: FontWeight.w600),
                             SizedBox(height: 10.0),
                             Table(
-                              border: TableBorder.all(color: index % 2 == 0 ? AppColors.primary : AppColors.secondaryVariant),
+                              border: TableBorder.all(
+                                  color: index % 2 == 0 ? AppColors.primary : AppColors.secondaryVariant),
                               columnWidths: {0: FlexColumnWidth(0.35)},
                               children: [
                                 TableRow(
@@ -192,7 +191,8 @@ class _DetailPageState extends State<DetailPage> {
                         LikeButton(
                           size: 40.0,
                           circleColor: CircleColor(start: AppColors.primary, end: AppColors.secondary),
-                          bubblesColor: BubblesColor(dotPrimaryColor: AppColors.primary, dotSecondaryColor: AppColors.secondary),
+                          bubblesColor:
+                              BubblesColor(dotPrimaryColor: AppColors.primary, dotSecondaryColor: AppColors.secondary),
                           likeBuilder: (bool isLiked) {
                             return Icon(
                               Icons.favorite,
