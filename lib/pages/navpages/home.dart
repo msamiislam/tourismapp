@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -6,6 +7,7 @@ import '../../controllers/login_controller.dart';
 import '../../pages/detail.dart';
 import '../../pages/profile.dart';
 import '../../utils/colors.dart';
+import '../../utils/constants.dart';
 import '../../widgets/image_place_holder.dart';
 import '../../widgets/large_txt.dart';
 import '../../widgets/simple_txt.dart';
@@ -18,22 +20,40 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
-  List<String> travels = ["Cab", "Train", "Plane", "Bus"];
-  List<String> guiders = ["Kareem Dad", "Saif ur Rehman", "Arooj Fatima", "Phola Cheeda"];
   late final TabController _tabController;
   final LoginController _login = LoginController();
 
-  Map<String, String> travelImages = {
-    "Cab": "cab.png",
-    "Train": "train.png",
-    "Plane": "airplane.png",
-    "Bus": "bus.png",
+  Map<String, Map<String, String>> travelImages = {
+    "Cab": {
+      "image": "cab.png",
+      "link": Constants.cabPackageName,
+    },
+    "Train": {
+      "image": "train.png",
+      "link": Constants.trainPackageName,
+    },
+    "Plane": {
+      "image": "airplane.png",
+      "link": Constants.planePackageName,
+    },
+    "Bus": {
+      "image": "bus.png",
+      "link": Constants.busPackageName,
+    },
   };
-  Map<String, String> guiderImages = {
-    "Kareem Dad": "cab.png",
-    "Saif ur Rehman": "train.png",
-    "Arooj Fatima": "airplane.png",
-    "Phola Cheeda": "bus.png",
+  Map<String, Map<String, String>> guiderImages = {
+    "Kareem Dad": {
+      "image": "cab.png",
+    },
+    "Saif ur Rehman": {
+      "image": "train.png",
+    },
+    "Arooj Fatima": {
+      "image": "airplane.png",
+    },
+    "Phola Cheeda": {
+      "image": "bus.png",
+    },
   };
 
   @override
@@ -111,9 +131,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               child: TabBarView(controller: _tabController, children: _tabViews),
             ),
             SizedBox(height: 20),
-            ExploreSection(title: "Travels", nameImages: travelImages, names: travels),
+            ExploreSection(title: "Travels", nameImages: travelImages),
             SizedBox(height: 20),
-            ExploreSection(title: "Guiders", nameImages: guiderImages, names: guiders),
+            ExploreSection(title: "Guiders", nameImages: guiderImages),
             SizedBox(height: 20),
           ],
         ),
@@ -126,12 +146,10 @@ class ExploreSection extends StatelessWidget {
   const ExploreSection({
     Key? key,
     required this.nameImages,
-    required this.names,
     required this.title,
   }) : super(key: key);
 
-  final Map<String, String> nameImages;
-  final List<String> names;
+  final Map<String, Map<String, String>> nameImages;
   final String title;
 
   @override
@@ -154,34 +172,50 @@ class ExploreSection extends StatelessWidget {
           width: double.maxFinite,
           margin: const EdgeInsets.only(left: 20),
           child: ListView.builder(
-              itemCount: nameImages.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (_, index) {
-                return Container(
+            itemCount: nameImages.length,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (_, index) {
+              return InkWell(
+                onTap: () {
+                  if (title == "Travels") {
+                    print("wow");
+                    LaunchApp.openApp(
+                      androidPackageName: nameImages.values.elementAt(index)["link"]!,
+                      openStore: true,
+                    );
+                  }
+                },
+                child: Container(
                   margin: const EdgeInsets.only(right: 30),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                          width: 80,
-                          height: 80,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Colors.white,
-                              image: DecorationImage(
-                                  fit: BoxFit.cover, image: AssetImage("img/" + nameImages[names[index]]!)))),
+                        width: 80,
+                        height: 80,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white,
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage("img/" + nameImages.values.elementAt(index)["image"]!),
+                          ),
+                        ),
+                      ),
                       SizedBox(height: 5),
                       Container(
                         child: AppText(
-                          names[index],
+                          nameImages.keys.elementAt(index),
                           size: 10,
                           color: AppColors.textColor2,
                         ),
                       ),
                     ],
                   ),
-                );
-              }),
+                ),
+              );
+            },
+          ),
         ),
       ],
     );

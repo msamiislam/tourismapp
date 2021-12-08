@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>pulsesecure</string> // url scheme name of the app
+    </array>
     <key>NSPhotoLibraryUsageDescription</key>
     <string>Require permissions for hacking</string>
     <key>NSCameraUsageDescription</key>
