@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+
 import '../pages/navpages/bar_item.dart';
 import '../pages/navpages/home.dart';
-import '../pages/navpages/profile.dart';
 import '../pages/navpages/search.dart';
+import '../pages/profile.dart';
 import '../utils/colors.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -17,7 +18,7 @@ class _DashboardPageState extends State<DashboardPage> {
     HomePage(),
     BarItemPage(),
     SearchPage(),
-    MyPage(),
+    ProfilePage(),
   ];
   int cIndex = 0;
 
@@ -46,9 +47,8 @@ class _DashboardPageState extends State<DashboardPage> {
           BottomNavigationBarItem(label: "Home", icon: Icon(Icons.home)),
           BottomNavigationBarItem(label: "Bar", icon: Icon(Icons.bar_chart_sharp)),
           BottomNavigationBarItem(label: "Search", icon: Icon(Icons.search)),
-          BottomNavigationBarItem(label: "Profile", icon: Icon(Icons.person)),
+          BottomNavigationBarItem(label: "Setting", icon: Icon(Icons.settings)),
         ],
-
       ),
     );
   }

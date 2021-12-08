@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../controllers/login_controller.dart';
 import '../../pages/detail.dart';
+import '../../pages/profile.dart';
 import '../../utils/colors.dart';
 import '../../widgets/image_place_holder.dart';
 import '../../widgets/large_txt.dart';
@@ -62,18 +63,28 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   AppLargeText("Discover"),
-                  Material(
-                    clipBehavior: Clip.antiAlias,
-                    elevation: 4.0,
-                    color: AppColors.grey,
-                    borderRadius: BorderRadius.circular(25.0),
-                    child: CachedNetworkImage(
-                      imageUrl: _login.user!.imageUrl,
-                      width: 50.0,
-                      height: 50.0,
-                      fit: BoxFit.cover,
-                      progressIndicatorBuilder: (context, url, progress) => ImagePlaceHolder(_login.user!.initials),
-                      errorWidget: (context, url, error) => ImagePlaceHolder(_login.user!.initials),
+                  InkWell(
+                    onTap: () {
+                      Get.to(() => ProfilePage());
+                    },
+                    child: Material(
+                      clipBehavior: Clip.antiAlias,
+                      elevation: 4.0,
+                      color: AppColors.grey,
+                      borderRadius: BorderRadius.circular(25.0),
+                      child: GetBuilder<LoginController>(
+                        builder: (context) {
+                          return CachedNetworkImage(
+                            imageUrl: _login.user!.imageUrl,
+                            width: 50.0,
+                            height: 50.0,
+                            fit: BoxFit.cover,
+                            progressIndicatorBuilder: (context, url, progress) =>
+                                ImagePlaceHolder(_login.user!.initials),
+                            errorWidget: (context, url, error) => ImagePlaceHolder(_login.user!.initials),
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ],

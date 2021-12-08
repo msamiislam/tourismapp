@@ -14,6 +14,10 @@ abstract class Database {
     await _usersCollection.doc(tourist.id).set(tourist.toJson());
   }
 
+  static Future<void> updateTourist(TouristModel tourist) async {
+    await _usersCollection.doc(tourist.id).update(tourist.toJson());
+  }
+
   static Future<UserModel> getUser(String id) async {
     DocumentSnapshot doc = await _usersCollection.doc(id).get();
     Map<String, dynamic> json = doc.data() as Map<String, dynamic>;

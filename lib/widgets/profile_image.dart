@@ -1,18 +1,24 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tourismapp/utils/colors.dart';
+
+import '../controllers/login_controller.dart';
+import '../widgets/image_place_holder.dart';
 
 typedef OnPicked = void Function(XFile file);
 typedef OnPickedImages = void Function(List<XFile> file);
 
 class ProfileImage extends StatefulWidget {
+  final String? imageUrl;
   final OnPicked onPicked;
   final double radius;
 
-  const ProfileImage({Key? key, required this.onPicked, this.radius = 75.0}) : super(key: key);
+  const ProfileImage({Key? key, required this.onPicked, this.radius = 75.0, this.imageUrl}) : super(key: key);
 
   @override
   _ProfileImageState createState() => _ProfileImageState();
@@ -20,6 +26,7 @@ class ProfileImage extends StatefulWidget {
 
 class _ProfileImageState extends State<ProfileImage> {
   final ImagePicker _picker = ImagePicker();
+  final LoginController _login = Get.find();
   XFile? image;
 
   Future<void> getImage(ImageSource source) async {
@@ -58,11 +65,13 @@ class _ProfileImageState extends State<ProfileImage> {
         child: Container(
           decoration: BoxDecoration(color: Colors.black26),
           child: image == null || image?.path == null
-              ? Icon(
-                  Icons.image,
-                  size: 32.0,
-                  color: Colors.white,
-                )
+              ? widget.imageUrl == null
+                  ? Icon(Icons.image, size: 32.0, color: Colors.white)
+                  : CachedNetworkImage(
+                      imageUrl: _login.user!.imageUrl,
+                      progressIndicatorBuilder: (context, url, progress) => ImagePlaceHolder(_login.user!.initials),
+                      errorWidget: (context, url, error) => Icon(Icons.image, size: 32.0, color: Colors.white),
+                    )
               : Stack(
                   alignment: Alignment.center,
                   children: [

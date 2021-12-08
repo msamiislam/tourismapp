@@ -2,8 +2,6 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -13,7 +11,8 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 
 import '../models/tourist_model.dart';
 import '../pages/login.dart';
-import '../utils/database.dart';
+import '../services/database.dart';
+import '../services/storage.dart';
 import '../utils/progress_dialog.dart';
 import '../widgets/large_txt.dart';
 import '../widgets/password_field.dart';
@@ -83,7 +82,7 @@ class RegistrationAccount extends StatelessWidget {
             email: _fbKey.currentState!.value["email"], password: _fbKey.currentState!.value["password"]);
         String? imageUrl;
         if (data["image"] != null && data["image"] is String) {
-          imageUrl = await uploadImage(image: File(data["image"]), id: credential.user!.uid);
+          imageUrl = await Storage.uploadImage(image: File(data["image"]), id: credential.user!.uid);
         }
         data["id"] = credential.user!.uid;
         data["image_url"] = imageUrl;
@@ -106,15 +105,5 @@ class RegistrationAccount extends StatelessWidget {
         ));
       }
     }
-  }
-
-  Future<String> uploadImage({
-    required File image,
-    required String id,
-  }) async {
-    final Reference firebaseStorageRef = FirebaseStorage.instance.ref().child(id);
-    UploadTask uploadTask = firebaseStorageRef.putFile(image);
-    TaskSnapshot storageSnapshot = await uploadTask;
-    return await storageSnapshot.ref.getDownloadURL();
   }
 }

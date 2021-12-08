@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../controllers/login_controller.dart';
@@ -8,7 +7,7 @@ import '../models/user_model.dart';
 import '../pages/dashboard.dart';
 import '../pages/login.dart';
 import '../pages/welcome.dart';
-import '../utils/database.dart';
+import '../services/database.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -44,11 +43,10 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-      child: SvgPicture.asset(
-        "img/illustration.svg",
-        fit: BoxFit.contain,
-      ),
+        body: SizedBox(
+      width: Get.width,
+      height: Get.height,
+      child: Image.asset("img/splash.png", fit: BoxFit.cover),
     ));
   }
 }

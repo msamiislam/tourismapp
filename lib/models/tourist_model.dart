@@ -44,7 +44,7 @@ class TouristModel extends UserModel {
   static TouristModel fromJson(Map<String, dynamic> json) {
     return TouristModel(
       id: json['id'],
-      imageUrl: json["image_url"],
+      imageUrl: json["image_url"] ?? "",
       firstName: json['first_name'],
       lastName: json['last_name'],
       email: json['email'],

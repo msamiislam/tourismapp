@@ -13,7 +13,7 @@ import '../pages/dashboard.dart';
 import '../pages/registration_personal.dart';
 import '../services/auth.dart';
 import '../utils/colors.dart';
-import '../utils/database.dart';
+import '../services/database.dart';
 import '../utils/progress_dialog.dart';
 import '../widgets/large_txt.dart';
 import '../widgets/password_field.dart';
