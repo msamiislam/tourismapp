@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tourismapp/pages/guide/navpages/notifications.dart';
+import 'package:tourismapp/pages/guide/navpages/bookings.dart';
 
 import 'navpages/home.dart';
 
@@ -13,7 +13,7 @@ class GuideDashbboardPage extends StatefulWidget {
 class _GuideDashbboardPageState extends State<GuideDashbboardPage> {
   List pages = [
     GuideHomePage(),
-    GuideNotificationsPage(),
+    GuideBookingsPage(),
     Container(),
   ];
   int cIndex = 0;

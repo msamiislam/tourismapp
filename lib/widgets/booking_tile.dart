@@ -6,11 +6,17 @@ import 'simple_txt.dart';
 class BookingTile extends StatelessWidget {
   final String touristImage;
   final String touristName;
+  final String touristPhone;
   final String tripTitle;
   final VoidCallback onTap;
 
   const BookingTile(
-      {Key? key, required this.touristImage, required this.touristName, required this.tripTitle, required this.onTap})
+      {Key? key,
+      required this.touristImage,
+      required this.touristName,
+      required this.touristPhone,
+      required this.tripTitle,
+      required this.onTap})
       : super(key: key);
 
   @override
@@ -30,20 +36,17 @@ class BookingTile extends StatelessWidget {
                 errorWidget: (context, url, error) => Icon(Icons.person, color: Theme.of(context).colorScheme.onPrimary),
               ),
             ),
-            title: AppText(
-              touristName,
-              maxLines: 1,
-              overflow: TextOverflow.fade,
-            ),
-            subtitle: AppText(
-              tripTitle,
-              size: 12.0,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+            title: AppText(touristName, maxLines: 1, overflow: TextOverflow.fade),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AppText(touristPhone, size: 12.0, maxLines: 1, overflow: TextOverflow.ellipsis),
+                AppText(tripTitle, size: 12.0, maxLines: 1, overflow: TextOverflow.ellipsis),
+              ],
             ),
             trailing: Icon(Icons.arrow_right, color: Theme.of(context).colorScheme.primary),
           ),
-          Divider(height: 0.0, color: Theme.of(context).colorScheme.primary),
+          Divider(height: 10.0, color: Theme.of(context).colorScheme.primary),
         ],
       ),
     );

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tourismapp/widgets/booking_tile.dart';
 import 'package:tourismapp/widgets/simple_txt.dart';
 
-class GuideNotificationsPage extends StatelessWidget {
-  const GuideNotificationsPage({Key? key}) : super(key: key);
+class GuideBookingsPage extends StatelessWidget {
+  const GuideBookingsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +24,7 @@ class GuideNotificationsPage extends StatelessWidget {
               onTap: () {},
               touristImage: '',
               touristName: 'John Mendes',
+              touristPhone: '03312566535',
               tripTitle: '5 days full taillored Hunza trip',
             ),
           ),
