@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tourismapp/pages/guide/navpages/bookings.dart';
+import 'package:tourismapp/pages/profile.dart';
 
 import 'navpages/home.dart';
 
@@ -14,7 +15,7 @@ class _GuideDashbboardPageState extends State<GuideDashbboardPage> {
   List pages = [
     GuideHomePage(),
     GuideBookingsPage(),
-    Container(),
+    ProfilePage(),
   ];
   int cIndex = 0;
 
