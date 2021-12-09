@@ -6,6 +6,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:tourismapp/pages/splash.dart';
 
 import '../utils/colors.dart';
+import 'pages/guide/dashboard.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.light,
         ),
       ),
-      home: SplashPage(),
+      home: GuideDashbboardPage(),
     );
   }
 }
