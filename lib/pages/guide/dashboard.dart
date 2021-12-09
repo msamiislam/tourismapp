@@ -1,4 +1,8 @@
-import 'package:flutter/material.dart';class GuideDashbboardPage extends StatefulWidget {
+import 'package:flutter/material.dart';
+
+import 'navpages/home.dart';
+
+class GuideDashbboardPage extends StatefulWidget {
   const GuideDashbboardPage({Key? key}) : super(key: key);
 
   @override
@@ -7,8 +11,7 @@ import 'package:flutter/material.dart';class GuideDashbboardPage extends Statefu
 
 class _GuideDashbboardPageState extends State<GuideDashbboardPage> {
   List pages = [
-    Container(),
-    Container(),
+    GuideHomePage(),
     Container(),
     Container(),
   ];
@@ -37,11 +40,10 @@ class _GuideDashbboardPageState extends State<GuideDashbboardPage> {
         elevation: 0.0,
         items: [
           BottomNavigationBarItem(label: "Home", icon: Icon(Icons.home)),
-          BottomNavigationBarItem(label: "Bar", icon: Icon(Icons.bar_chart_sharp)),
-          BottomNavigationBarItem(label: "Search", icon: Icon(Icons.search)),
+          BottomNavigationBarItem(label: "Bar", icon: Icon(Icons.notifications)),
+          // BottomNavigationBarItem(label: "Search", icon: Icon(Icons.search)),
           BottomNavigationBarItem(label: "Profile", icon: Icon(Icons.person)),
         ],
-
       ),
     );
   }

@@ -1,18 +1,16 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:like_button/like_button.dart';
-import 'package:get/get.dart';
+
 import '../utils/colors.dart';
-import '../widgets/app_button.dart';
 import '../widgets/large_txt.dart';
-import '../widgets/responsive_button.dart';
 import '../widgets/simple_txt.dart';
 
 class DetailPage extends StatefulWidget {
-  const DetailPage({Key? key}) : super(key: key);
+  final bool isGuide;
+  const DetailPage({Key? key, this.isGuide = false}) : super(key: key);
 
   @override
   _DetailPageState createState() => _DetailPageState();
@@ -36,9 +34,19 @@ class _DetailPageState extends State<DetailPage> {
                       itemCount: 3,
                       pagination: SwiperPagination(),
                       itemBuilder: (BuildContext context, int index) {
-                        return Image.network(
-                          "https://archaeology.punjab.gov.pk/system/files/2_36.jpg",
-                          fit: BoxFit.fill,
+                        return CachedNetworkImage(
+                          imageUrl: "https://archaeology.punjab.gov.pk/system/files/2_36.jpg",
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => Center(
+                            widthFactor: 1,
+                            heightFactor: 1,
+                            child: CircularProgressIndicator(),
+                          ),
+                          errorWidget: (context, url, error) => Icon(
+                            Icons.image_not_supported,
+                            size: 60.0,
+                            color: Theme.of(context).colorScheme.secondary.withOpacity(0.75),
+                          ),
                         );
                       },
                     ),
@@ -56,28 +64,28 @@ class _DetailPageState extends State<DetailPage> {
                       children: [
                         Expanded(child: AppLargeText("Badshahi Masjid", color: AppColors.onBackground)),
                         SizedBox(width: 10.0),
-                        Column(
-                          children: [
-                            AppLargeText("PKR 8,000", size: 24.0, color: AppColors.secondary),
-                            Row(
-                              children: [
-                                RatingBar.builder(
-                                  initialRating: 3,
-                                  minRating: 0,
-                                  direction: Axis.horizontal,
-                                  allowHalfRating: true,
-                                  itemCount: 5,
-                                  itemSize: 20.0,
-                                  itemPadding: EdgeInsets.symmetric(horizontal: 0.5),
-                                  itemBuilder: (context, _) => Icon(Icons.star, color: AppColors.starColor),
-                                  onRatingUpdate: (double value) {},
-                                ),
-                                SizedBox(width: 5.0),
-                                AppText("(4.0)", color: AppColors.primary)
-                              ],
-                            ),
-                          ],
-                        ),
+                        // Column(
+                        //   children: [
+                        AppLargeText("PKR 8,000", size: 24.0, color: AppColors.secondary),
+                        //     Row(
+                        //       children: [
+                        //         RatingBar.builder(
+                        //           initialRating: 3,
+                        //           minRating: 0,
+                        //           direction: Axis.horizontal,
+                        //           allowHalfRating: true,
+                        //           itemCount: 5,
+                        //           itemSize: 20.0,
+                        //           itemPadding: EdgeInsets.symmetric(horizontal: 0.5),
+                        //           itemBuilder: (context, _) => Icon(Icons.star, color: AppColors.starColor),
+                        //           onRatingUpdate: (double value) {},
+                        //         ),
+                        //         SizedBox(width: 5.0),
+                        //         AppText("(4.0)", color: AppColors.primary)
+                        //       ],
+                        //     ),
+                        //   ],
+                        // ),
                       ],
                     ),
                     SizedBox(height: 15.0),
@@ -187,32 +195,33 @@ class _DetailPageState extends State<DetailPage> {
                         ),
                       ),
                     ),
-                    Row(
-                      children: [
-                        LikeButton(
-                          size: 40.0,
-                          circleColor: CircleColor(start: AppColors.primary, end: AppColors.secondary),
-                          bubblesColor: BubblesColor(dotPrimaryColor: AppColors.primary, dotSecondaryColor: AppColors.secondary),
-                          likeBuilder: (bool isLiked) {
-                            return Icon(
-                              Icons.favorite,
-                              color: isLiked ? AppColors.secondary : AppColors.secondary.withOpacity(0.45),
-                              size: 40.0,
-                            );
-                          },
-                        ),
-                        SizedBox(width: 10.0),
-                        Expanded(
-                          child: SizedBox(
-                            height: 40.0,
-                            child: ElevatedButton(
-                              onPressed: () {},
-                              child: AppText('Book Now', weight: FontWeight.w700),
-                            ),
+                    // Row(
+                    //   children: [
+                    // LikeButton(
+                    //   size: 40.0,
+                    //   circleColor: CircleColor(start: AppColors.primary, end: AppColors.secondary),
+                    //   bubblesColor: BubblesColor(dotPrimaryColor: AppColors.primary, dotSecondaryColor: AppColors.secondary),
+                    //   likeBuilder: (bool isLiked) {
+                    //     return Icon(
+                    //       Icons.favorite,
+                    //       color: isLiked ? AppColors.secondary : AppColors.secondary.withOpacity(0.45),
+                    //       size: 40.0,
+                    //     );
+                    //   },
+                    // ),
+                    // SizedBox(width: 10.0),
+                    if (!widget.isGuide)
+                      Expanded(
+                        child: SizedBox(
+                          height: 40.0,
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            child: AppText('Book Now', weight: FontWeight.w700),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    //   ],
+                    // ),
                   ],
                 ),
               ),
