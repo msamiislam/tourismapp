@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:tourismapp/pages/splash.dart';
+import 'package:tourismapp/pages/sign_up.dart';
 
 import '../utils/colors.dart';
-import 'pages/guide/dashboard.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,7 +43,7 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.light,
         ),
       ),
-      home: GuideDashbboardPage(),
+      home: SignUpPage(),
     );
   }
 }
