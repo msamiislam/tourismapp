@@ -9,14 +9,18 @@ class RestaurantModel extends AttractionModel {
     required String name,
     required String city,
     required String address,
+    required String description,
+    required double rating,
     required List<String> images,
     required this.phone,
     required this.link,
   }) : super(
-          id: id,
+    id: id,
           name: name,
           city: city,
           address: address,
+          description: description,
+          rating: rating,
           type: AttractionType.restaurant,
           images: images,
         );
@@ -25,13 +29,16 @@ class RestaurantModel extends AttractionModel {
     return RestaurantModel(
         id: json["id"],
         name: json["name"],
-        images: json["images"],
+        images: (json["images"] as List).map((e) => e.toString()).toList(),
         city: json["city"],
         address: json["address"],
+        description: json["description"],
+        rating: json["rating"],
         phone: json["phone"],
         link: json["link"]);
   }
 
+  @override
   Map<String, dynamic> toJson() {
     return {
       "id": id,
@@ -39,6 +46,8 @@ class RestaurantModel extends AttractionModel {
       "images": images,
       "city": city,
       "address": address,
+      "description": description,
+      "rating": rating,
       "phone": phone,
       "link": link,
       "type": type,

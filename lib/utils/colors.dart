@@ -10,12 +10,12 @@ class AppColors {
   static final Color mainTextColor = Color(0xFFababad);
   static final Color buttonBackground = Color(0xFFf1f2f9);
 
-  // Color Scheme
-
   static const Color black = Colors.black;
   static const Color white = Colors.white;
   static const Color grey = Colors.grey;
+  static const Color red = Colors.red;
 
+  // Color Scheme
   static const Color scaffoldBg = Colors.white;
 
   static const _kPrimaryVal = 0xFFed672e;
@@ -32,6 +32,55 @@ class AppColors {
 
   static const Color surface = Colors.white;
   static const Color onSurface = Colors.black;
+  static ColorScheme lightTheme = ColorScheme(
+    primary: AppColors.primary,
+    onPrimary: AppColors.onPrimary,
+    primaryVariant: AppColors.primaryVariant,
+    secondary: AppColors.secondary,
+    onSecondary: AppColors.onSecondary,
+    secondaryVariant: AppColors.secondaryVariant,
+    background: AppColors.background,
+    onBackground: AppColors.onBackground,
+    surface: AppColors.surface,
+    onSurface: AppColors.onSurface,
+    error: AppColors.red,
+    onError: AppColors.white,
+    brightness: Brightness.light,
+  );
+
+  // Color Scheme Dark
+
+  static const Color scaffoldBgDark = Colors.black;
+
+  static const Color primaryDark = Color(_kPrimaryVal);
+  static const Color onPrimaryDark = Colors.black;
+  static const Color primaryVariantDark = Color(0xFFa64820); //30%
+
+  static const Color secondaryDark = Color(0xFFab8372);
+  static const Color onSecondaryDark = Colors.black;
+  static const Color secondaryVariantDark = Color(0xFF785c50); //30%
+
+  static const Color backgroundDark = Colors.black;
+  static const Color onBackgroundDark = Colors.white;
+
+  static const Color surfaceDark = Colors.black;
+  static const Color onSurfaceDark = Colors.white;
+
+  static ColorScheme darkTheme = ColorScheme(
+    primary: AppColors.primaryDark,
+    onPrimary: AppColors.onPrimaryDark,
+    primaryVariant: AppColors.primaryVariantDark,
+    secondary: AppColors.secondaryDark,
+    onSecondary: AppColors.onSecondaryDark,
+    secondaryVariant: AppColors.secondaryVariantDark,
+    background: AppColors.backgroundDark,
+    onBackground: AppColors.onBackgroundDark,
+    surface: AppColors.surfaceDark,
+    onSurface: AppColors.onSurfaceDark,
+    error: AppColors.red,
+    onError: AppColors.black,
+    brightness: Brightness.dark,
+  );
 
   static MaterialColor primarySwatch = generateMaterialColorFromColor(primary);
 

@@ -10,6 +10,8 @@ class HotelModel extends AttractionModel {
     required String name,
     required String city,
     required String address,
+    required String description,
+    required double rating,
     required List<String> images,
     required this.phone,
     required this.link,
@@ -19,6 +21,8 @@ class HotelModel extends AttractionModel {
           name: name,
           city: city,
           address: address,
+          description: description,
+          rating: rating,
           type: AttractionType.hotel,
           images: images,
         );
@@ -27,15 +31,18 @@ class HotelModel extends AttractionModel {
     return HotelModel(
       id: json["id"],
       name: json["name"],
-      images: json["images"],
+      images: (json["images"] as List).map((e) => e.toString()).toList(),
       city: json["city"],
       address: json["address"],
+      description: json["description"],
+      rating: json["rating"],
       link: json["link"],
       phone: json["phone"],
       stars: json["stars"],
     );
   }
 
+  @override
   Map<String, dynamic> toJson() {
     return {
       "id": id,
@@ -43,6 +50,8 @@ class HotelModel extends AttractionModel {
       "images": images,
       "city": city,
       "address": address,
+      "description": description,
+      "rating": rating,
       "link": link,
       "phone": phone,
       "stars": stars,

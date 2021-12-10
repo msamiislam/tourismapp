@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tourismapp/models/attraction_model.dart';
 
 import '../controllers/login_controller.dart';
 import '../models/user_model.dart';
@@ -22,6 +23,8 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     Future.delayed(Duration(seconds: 2)).then((value) async {
+      List<AttractionModel> attractions = await Database.getTopAttractions();
+      Get.put(attractions, tag: "attractions");
       if (_login.isAppOpened) {
         if (FirebaseAuth.instance.currentUser == null) {
           Get.offAll(() => LoginPage());
