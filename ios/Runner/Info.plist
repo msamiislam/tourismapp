@@ -4,7 +4,7 @@
 <dict>
     <key>LSApplicationQueriesSchemes</key>
     <array>
-      <string>pulsesecure</string> // url scheme name of the app
+        <string>pulsesecure</string>
     </array>
     <key>NSPhotoLibraryUsageDescription</key>
     <string>Require permissions for hacking</string>

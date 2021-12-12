@@ -1,10 +1,11 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:tourismapp/pages/sign_up.dart';
 
+import '../pages/splash.dart';
 import '../utils/colors.dart';
 
 Future<void> main() async {
@@ -19,31 +20,28 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Adventuree',
-      localizationsDelegates: [FormBuilderLocalizations.delegate],
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
+    return AdaptiveTheme(
+      light: ThemeData(
         fontFamily: 'Poppins',
         scaffoldBackgroundColor: AppColors.scaffoldBg,
         primarySwatch: AppColors.primarySwatch,
-        colorScheme: ColorScheme(
-          primary: AppColors.primary,
-          onPrimary: AppColors.onPrimary,
-          primaryVariant: AppColors.primaryVariant,
-          secondary: AppColors.secondary,
-          onSecondary: AppColors.onSecondary,
-          secondaryVariant: AppColors.secondaryVariant,
-          background: AppColors.background,
-          onBackground: AppColors.onBackground,
-          surface: AppColors.surface,
-          onSurface: AppColors.onSurface,
-          error: Theme.of(context).errorColor,
-          onError: AppColors.white,
-          brightness: Brightness.light,
-        ),
+        colorScheme: AppColors.lightTheme,
       ),
-      home: SignUpPage(),
+      dark: ThemeData(
+        fontFamily: 'Poppins',
+        scaffoldBackgroundColor: AppColors.scaffoldBgDark,
+        primarySwatch: AppColors.primarySwatch,
+        colorScheme: AppColors.darkTheme,
+      ),
+      initial: AdaptiveThemeMode.system,
+      builder: (ThemeData light, ThemeData dark) => GetMaterialApp(
+        title: 'Adventuree',
+        localizationsDelegates: [FormBuilderLocalizations.delegate],
+        debugShowCheckedModeBanner: false,
+        theme: light,
+        darkTheme: dark,
+        home: SplashPage(),
+      ),
     );
   }
 }

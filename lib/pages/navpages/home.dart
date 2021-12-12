@@ -1,16 +1,26 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:tourismapp/models/attraction_model.dart';
+import 'package:tourismapp/models/hotel_model.dart';
+import 'package:tourismapp/models/mall_model.dart';
+import 'package:tourismapp/models/place_model.dart';
+import 'package:tourismapp/models/restaurant_model.dart';
+import 'package:tourismapp/pages/all_guides.dart';
+import 'package:tourismapp/services/database.dart';
 
 import '../../controllers/login_controller.dart';
-import '../../pages/detail.dart';
 import '../../pages/profile.dart';
 import '../../utils/colors.dart';
 import '../../utils/constants.dart';
 import '../../widgets/image_place_holder.dart';
 import '../../widgets/large_txt.dart';
 import '../../widgets/simple_txt.dart';
+import '../attraction.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -22,22 +32,23 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late final TabController _tabController;
   final LoginController _login = LoginController();
+  final List<AttractionModel> attractions = Get.find(tag: "attractions");
 
   Map<String, Map<String, String>> travelImages = {
-    "Cab": {
-      "image": "cab.png",
+    "Uber": {
+      "image": "uber.png",
       "link": Constants.cabPackageName,
     },
-    "Train": {
-      "image": "train.png",
+    "Pakistan Railways": {
+      "image": "railway.jpeg",
       "link": Constants.trainPackageName,
     },
-    "Plane": {
-      "image": "airplane.png",
+    "PIA": {
+      "image": "pia.png",
       "link": Constants.planePackageName,
     },
-    "Bus": {
-      "image": "bus.png",
+    "Daewoo": {
+      "image": "daewoo.gif",
       "link": Constants.busPackageName,
     },
   };
@@ -58,17 +69,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    _tabController = TabController(length: _tabs.length, vsync: this);
+    _tabController = TabController(length: AttractionType.values.length, vsync: this);
     super.initState();
   }
-
-  final List<String> _tabs = ["Places", "Hotels", "Restaurants", "Malls"];
-  final List<Widget> _tabViews = [
-    TabView([1, 2, 3]),
-    TabView([1, 2, 3]),
-    TabView([1]),
-    TabView([1, 3]),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -82,11 +85,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  AppLargeText("Discover"),
+                  InkWell(onTap: addItems, child: AppLargeText("Discover")),
                   InkWell(
-                    onTap: () {
-                      Get.to(() => ProfilePage());
-                    },
+                    onTap: () => Get.to(() => ProfilePage()),
                     child: Material(
                       clipBehavior: Clip.antiAlias,
                       elevation: 4.0,
@@ -116,126 +117,201 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   labelPadding: const EdgeInsets.only(left: 20, right: 20),
                   indicatorSize: TabBarIndicatorSize.label,
                   controller: _tabController,
-                  labelColor: Colors.black,
+                  labelColor: Theme.of(context).colorScheme.onBackground,
                   unselectedLabelColor: Colors.grey,
                   isScrollable: true,
                   indicator: CircleTabIndicator(color: AppColors.primary, radius: 4),
-                  tabs: _tabs.map((e) => Tab(text: e)).toList(),
+                  tabs: AttractionType.values.map((e) => Tab(text: "${e}s")).toList(),
                 ),
               ),
             ),
             Container(
               padding: const EdgeInsets.only(top: 2.5, left: 20),
               height: 300,
-              child: TabBarView(controller: _tabController, children: _tabViews),
+              child: TabBarView(
+                  controller: _tabController,
+                  children: AttractionType.values
+                      .map((e) => TabView(attractions.where((element) => element.type == e).toList()))
+                      .toList()),
             ),
             SizedBox(height: 20),
-            ExploreSection(title: "Travels", nameImages: travelImages),
-            SizedBox(height: 20),
-            ExploreSection(title: "Guiders", nameImages: guiderImages),
-            SizedBox(height: 20),
+            Container(
+              margin: const EdgeInsets.only(right: 20, left: 20),
+              child: AppLargeText("Explore Travels", size: 20),
+            ),
+            Container(
+              height: 110,
+              width: double.maxFinite,
+              margin: const EdgeInsets.only(left: 20, top: 10),
+              child: ListView.builder(
+                itemCount: travelImages.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (_, index) {
+                  return InkWell(
+                    onTap: () {
+                      LaunchApp.openApp(
+                        androidPackageName: travelImages.values.elementAt(index)["link"]!,
+                        openStore: true,
+                      );
+                    },
+                    child: ExploreItem(
+                        image: travelImages.values.elementAt(index)["image"]!,
+                        text: travelImages.keys.elementAt(index)),
+                  );
+                },
+              ),
+            ),
+            SizedBox(height: 10),
+            Container(
+              margin: const EdgeInsets.only(right: 20, left: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  AppLargeText("Explore Guiders", size: 20),
+                  InkWell(
+                      onTap: () => Get.to(() => AllGuidesPage()),
+                      child: AppText("See all", color: AppColors.textColor1)),
+                ],
+              ),
+            ),
+            Container(
+              height: 110,
+              width: double.maxFinite,
+              margin: const EdgeInsets.only(left: 20, top: 10),
+              child: ListView.builder(
+                itemCount: guiderImages.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (_, index) {
+                  return InkWell(
+                    onTap: () {},
+                    child: ExploreItem(
+                        image: guiderImages.values.elementAt(index)["image"]!,
+                        text: guiderImages.keys.elementAt(index)),
+                  );
+                },
+              ),
+            ),
+            SizedBox(height: 10),
           ],
         ),
       ),
     );
   }
+
+  void addItems() async {
+    await Database.addAttractions([
+      ...List.generate(
+          10,
+          (i) => PlaceModel(
+                id: "id$i${DateTime.now().microsecondsSinceEpoch}",
+                name: "name$i",
+                city: "city$i",
+                address: "address$i",
+                description: "description$i",
+                images: List.generate(3, (index) => "https://picsum.photos/600?random=$index"),
+                rating: (Random().nextInt(5) + ((i % 2 == 0) ? 0.5 : 0)),
+              )),
+      ...List.generate(
+          10,
+          (i) => MallModel(
+                id: "id$i${DateTime.now().microsecondsSinceEpoch}",
+                name: "name$i",
+                city: "city$i",
+                address: "address$i",
+                description: "description$i",
+                images: List.generate(3, (index) => "https://picsum.photos/600?random=$index"),
+                phone: 'phone$i',
+                link: 'link$i',
+                rating: (Random().nextInt(5) + i % 2 == 0 ? 0.5 : 0),
+              )),
+      ...List.generate(
+          10,
+          (i) => RestaurantModel(
+                id: "id$i${DateTime.now().microsecondsSinceEpoch}",
+                name: "name$i",
+                city: "city$i",
+                address: "address$i",
+                description: "description$i",
+                images: List.generate(3, (index) => "https://picsum.photos/600?random=$index"),
+                phone: 'phone$i',
+                link: 'link$i',
+                rating: (Random().nextInt(5) + i % 2 == 0 ? 0.5 : 0),
+              )),
+      ...List.generate(
+          10,
+          (i) => HotelModel(
+                id: "id$i${DateTime.now().microsecondsSinceEpoch}",
+                name: "name$i",
+                city: "city$i",
+                address: "address$i",
+                description: "description$i",
+                images: List.generate(3, (index) => "https://picsum.photos/600?random=$index"),
+                phone: 'phone$i',
+                link: 'link$i',
+                stars: i + 1,
+                rating: (Random().nextInt(5) + i % 2 == 0 ? 0.5 : 0),
+              )),
+    ]);
+    Fluttertoast.showToast(msg: "Attractions sent");
+  }
 }
 
-class ExploreSection extends StatelessWidget {
-  const ExploreSection({
-    Key? key,
-    required this.nameImages,
-    required this.title,
-  }) : super(key: key);
+class ExploreItem extends StatelessWidget {
+  final String image;
+  final String text;
 
-  final Map<String, Map<String, String>> nameImages;
-  final String title;
+  const ExploreItem({Key? key, required this.image, required this.text}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          margin: const EdgeInsets.only(right: 20, left: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              AppLargeText("Explore $title", size: 20),
-              AppText("See all", color: AppColors.textColor1),
-            ],
+    return Container(
+      margin: const EdgeInsets.only(right: 30),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            width: 70,
+            height: 70,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: Colors.white,
+              image: DecorationImage(
+                fit: BoxFit.contain,
+                image: AssetImage("img/" + image),
+              ),
+            ),
           ),
-        ),
-        SizedBox(height: 10),
-        Container(
-          height: 110,
-          width: double.maxFinite,
-          margin: const EdgeInsets.only(left: 20),
-          child: ListView.builder(
-            itemCount: nameImages.length,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (_, index) {
-              return InkWell(
-                onTap: () {
-                  if (title == "Travels") {
-                    LaunchApp.openApp(
-                      androidPackageName: nameImages.values.elementAt(index)["link"]!,
-                      openStore: true,
-                    );
-                  }
-                },
-                child: Container(
-                  margin: const EdgeInsets.only(right: 30),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 80,
-                        height: 80,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.white,
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage("img/" + nameImages.values.elementAt(index)["image"]!),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 5),
-                      Container(
-                        child: AppText(
-                          nameImages.keys.elementAt(index),
-                          size: 10,
-                          color: AppColors.textColor2,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
+          SizedBox(height: 5),
+          SizedBox(
+            width: 60.0,
+            height: 35.0,
+            child: AppText(
+              text,
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              size: 12,
+              color: Theme.of(context).colorScheme.onBackground,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
 
 class TabView extends StatelessWidget {
-  final List data;
+  final List<AttractionModel> attractions;
 
-  const TabView(this.data, {Key? key}) : super(key: key);
+  const TabView(this.attractions, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: data.length,
+      itemCount: attractions.length,
       scrollDirection: Axis.horizontal,
       itemBuilder: (BuildContext context, int index) {
         return InkWell(
-          onTap: () {
-            print('0d etdryftugyhknj');
-            Get.to(() => DetailPage());
-          },
+          onTap: () => Get.to(() => AttractionPage(attractions[index])),
           child: Stack(
             children: [
               Container(
@@ -245,7 +321,7 @@ class TabView extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.white,
-                  image: DecorationImage(fit: BoxFit.cover, image: NetworkImage("https://picsum.photos/600")),
+                  image: DecorationImage(fit: BoxFit.cover, image: NetworkImage(attractions[index].images.first)),
                 ),
               ),
               Positioned(
@@ -255,16 +331,14 @@ class TabView extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    AppText('Title', maxLines: 2, color: AppColors.white, weight: FontWeight.bold),
+                    AppText(attractions[index].name, maxLines: 2, color: AppColors.white, weight: FontWeight.bold),
                     SizedBox(height: 5.0),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Icon(Icons.place_outlined, size: 18.0, color: AppColors.white),
                         SizedBox(width: 4.0),
-                        Expanded(
-                            child: AppText('Lorem ipsum is a dummy text used for industrial purposes.',
-                                maxLines: 2, color: AppColors.white)),
+                        Expanded(child: AppText(attractions[index].address, maxLines: 2, color: AppColors.white)),
                       ],
                     ),
                   ],

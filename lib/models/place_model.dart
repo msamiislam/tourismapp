@@ -1,10 +1,7 @@
-import '../models/attraction_model.dart';
+import 'package:tourismapp/models/attraction_model.dart';
 
-class MallModel extends AttractionModel {
-  final String phone;
-  final String link;
-
-  MallModel({
+class PlaceModel extends AttractionModel {
+  PlaceModel({
     required String id,
     required String name,
     required String city,
@@ -12,21 +9,19 @@ class MallModel extends AttractionModel {
     required String description,
     required double rating,
     required List<String> images,
-    required this.phone,
-    required this.link,
   }) : super(
-          id: id,
+    id: id,
           name: name,
           city: city,
           address: address,
           description: description,
           rating: rating,
-          type: AttractionType.mall,
+          type: AttractionType.place,
           images: images,
         );
 
-  static MallModel fromJson(Map<String, dynamic> json) {
-    return MallModel(
+  static PlaceModel fromJson(Map<String, dynamic> json) {
+    return PlaceModel(
       id: json["id"],
       name: json["name"],
       images: (json["images"] as List).map((e) => e.toString()).toList(),
@@ -34,8 +29,6 @@ class MallModel extends AttractionModel {
       address: json["address"],
       description: json["description"],
       rating: json["rating"],
-      phone: json["phone"],
-      link: json["link"],
     );
   }
 
@@ -49,8 +42,6 @@ class MallModel extends AttractionModel {
       "address": address,
       "description": description,
       "rating": rating,
-      "phone": phone,
-      "link": link,
       "type": type,
     };
   }

@@ -1,33 +1,61 @@
-class HotelModel {
-  HotelModel({
-    required this.id,
-    required this.name,
-    required this.images,
-    required this.city,
-    required this.location,
-  });
+import '../models/attraction_model.dart';
 
-  final String id;
-  final String name;
-  final List<String> images;
-  final String city;
-  final String location;
+class HotelModel extends AttractionModel {
+  final String phone;
+  final String link;
+  final int stars;
+
+  HotelModel({
+    required String id,
+    required String name,
+    required String city,
+    required String address,
+    required String description,
+    required double rating,
+    required List<String> images,
+    required this.phone,
+    required this.link,
+    required this.stars,
+  }) : super(
+          id: id,
+          name: name,
+          city: city,
+          address: address,
+          description: description,
+          rating: rating,
+          type: AttractionType.hotel,
+          images: images,
+        );
 
   static HotelModel fromJson(Map<String, dynamic> json) {
     return HotelModel(
-    id: json["id"],
-    name: json["name"],
-    images: List<String>.from(json["images"].map((x) => x)),
-    city: json["city"],
-    location: json["location"],
-  );
+      id: json["id"],
+      name: json["name"],
+      images: (json["images"] as List).map((e) => e.toString()).toList(),
+      city: json["city"],
+      address: json["address"],
+      description: json["description"],
+      rating: json["rating"],
+      link: json["link"],
+      phone: json["phone"],
+      stars: json["stars"],
+    );
   }
 
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "images": List<dynamic>.from(images.map((x) => x)),
-    "city": city,
-    "location": location,
-  };
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "id": id,
+      "name": name,
+      "images": images,
+      "city": city,
+      "address": address,
+      "description": description,
+      "rating": rating,
+      "link": link,
+      "phone": phone,
+      "stars": stars,
+      "type": type,
+    };
+  }
 }

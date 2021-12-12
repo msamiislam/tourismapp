@@ -9,6 +9,7 @@ class AppText extends StatelessWidget {
   final Color? color;
   final TextOverflow? overflow;
   final FontWeight weight;
+  final TextAlign? textAlign;
 
   const AppText(
     this.text, {
@@ -18,6 +19,7 @@ class AppText extends StatelessWidget {
     this.maxLines,
     this.height,
     this.overflow,
+    this.textAlign,
     this.weight = FontWeight.normal,
   }) : super(key: key);
 
@@ -26,6 +28,7 @@ class AppText extends StatelessWidget {
     return Text(
       text,
       maxLines: maxLines,
+      textAlign: textAlign,
       style: TextStyle(
         color: color,
         height: height,
