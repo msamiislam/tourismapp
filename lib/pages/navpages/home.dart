@@ -100,8 +100,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             width: 50.0,
                             height: 50.0,
                             fit: BoxFit.cover,
-                            progressIndicatorBuilder: (context, url, progress) =>
-                                ImagePlaceHolder(_login.user!.initials),
+                            progressIndicatorBuilder: (context, url, progress) => ImagePlaceHolder(_login.user!.initials),
                             errorWidget: (context, url, error) => ImagePlaceHolder(_login.user!.initials),
                           );
                         },
