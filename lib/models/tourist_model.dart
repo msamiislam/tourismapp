@@ -38,7 +38,7 @@ class TouristModel extends UserModel {
   static TouristModel fromJson(Map<String, dynamic> json) {
     return TouristModel(
       id: json['id'],
-      imageUrl: json["image_url"] ?? "",
+      imageUrl: json["image_url"],
       firstName: json['first_name'],
       lastName: json['last_name'],
       email: json['email'],
@@ -55,7 +55,18 @@ class TouristModel extends UserModel {
   @override
   Map<String, dynamic> toJson() {
     return {
-      ...super.toJson(),
+      'id': id,
+      'image_url': imageUrl,
+      'user_type': userType,
+      'first_name': firstName,
+      'last_name': lastName,
+      'email': email,
+      'phone': phone,
+      'address': address,
+      'blood_group': bloodGroup,
+      'dob': dob.toString(),
+      'gender': gender,
+      'trips': trips.map((e) => e.toJson()).toList(),
       'fav_hotels': favAttractions.map((e) => e.toJson()).toList(),
     };
   }

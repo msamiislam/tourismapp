@@ -306,6 +306,9 @@ class TabView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (attractions.isEmpty) {
+      return Center(child: AppText("Empty List"));
+    }
     return ListView.builder(
       itemCount: attractions.length,
       scrollDirection: Axis.horizontal,

@@ -7,7 +7,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tourismapp/models/tourist_model.dart';
+import 'package:tourismapp/models/guide_model.dart';
+import 'package:tourismapp/models/user_model.dart';
 import 'package:tourismapp/services/database.dart';
 import 'package:tourismapp/services/storage.dart';
 import 'package:tourismapp/utils/progress_dialog.dart';
@@ -61,7 +62,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     const SizedBox(height: 30.0),
                     FormBuilderTextField(
                       name: "email",
-                      initialValue: _login.user?.email,
+                      initialValue: _login.user!.email,
                       enabled: false,
                       keyboardType: TextInputType.name,
                       decoration: const InputDecoration(
@@ -73,7 +74,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     const SizedBox(height: 30.0),
                     FormBuilderTextField(
                       name: "first_name",
-                      initialValue: _login.user?.firstName,
+                      initialValue: _login.user!.firstName,
                       keyboardType: TextInputType.name,
                       decoration: const InputDecoration(
                           hintText: "Enter your first name", labelText: "First Name", border: OutlineInputBorder()),
@@ -84,7 +85,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     const SizedBox(height: 30.0),
                     FormBuilderTextField(
                       name: "last_name",
-                      initialValue: _login.user?.lastName,
+                      initialValue: _login.user!.lastName,
                       keyboardType: TextInputType.name,
                       decoration: const InputDecoration(
                           hintText: "Enter your last name", labelText: "Last Name", border: OutlineInputBorder()),
@@ -95,7 +96,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     const SizedBox(height: 30.0),
                     FormBuilderTextField(
                       name: "phone",
-                      initialValue: _login.user?.phone,
+                      initialValue: _login.user!.phone,
                       keyboardType: TextInputType.phone,
                       decoration: const InputDecoration(
                           hintText: "Enter your phone number", labelText: "Phone Number", border: OutlineInputBorder()),
@@ -107,7 +108,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     const SizedBox(height: 30.0),
                     FormBuilderTextField(
                       name: "address",
-                      initialValue: _login.user?.address,
+                      initialValue: _login.user!.address,
                       keyboardType: TextInputType.streetAddress,
                       decoration: const InputDecoration(
                           hintText: "Enter your address", labelText: "Address", border: OutlineInputBorder()),
@@ -143,7 +144,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     const SizedBox(height: 30.0),
                     FormBuilderRadioGroup(
                       name: "gender",
-                      initialValue: _login.user?.gender,
+                      initialValue: _login.user!.gender,
                       options: Gender.values
                           .map(
                             (e) => FormBuilderFieldOption(value: e),
@@ -156,6 +157,41 @@ class _ProfilePageState extends State<ProfilePage> {
                       ]),
                     ),
                     const SizedBox(height: 30.0),
+                    if (!_login.isTourist!) ...[
+                      FormBuilderTextField(
+                        name: "city",
+                        initialValue: (_login.user! as GuideModel).city,
+                        keyboardType: TextInputType.streetAddress,
+                        decoration: const InputDecoration(
+                            hintText: "Enter your city", labelText: "City", border: OutlineInputBorder()),
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(context),
+                        ]),
+                      ),
+                      const SizedBox(height: 30.0),
+                      FormBuilderTextField(
+                        name: "state",
+                        initialValue: (_login.user! as GuideModel).state,
+                        keyboardType: TextInputType.streetAddress,
+                        decoration: const InputDecoration(
+                            hintText: "Enter your state", labelText: "State", border: OutlineInputBorder()),
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(context),
+                        ]),
+                      ),
+                      const SizedBox(height: 30.0),
+                      FormBuilderTextField(
+                        name: "company_name",
+                        initialValue: (_login.user! as GuideModel).companyName,
+                        keyboardType: TextInputType.streetAddress,
+                        decoration: const InputDecoration(
+                            hintText: "Enter your company name", labelText: "Company", border: OutlineInputBorder()),
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(context),
+                        ]),
+                      ),
+                      const SizedBox(height: 30.0),
+                    ],
                     TextButton(
                       onPressed: _update,
                       child: Text("Update"),
@@ -178,6 +214,7 @@ class _ProfilePageState extends State<ProfilePage> {
     if (_fbKey.currentState!.saveAndValidate()) {
       Map<String, dynamic> data = {}..addAll(_fbKey.currentState!.value);
       data["id"] = _login.user!.id;
+      data["user_type"] = _login.user!.userType;
       Loader.show(context, text: "Updating...");
       String imageUrl = _login.user!.imageUrl;
       if (profileImage != null) {
@@ -185,7 +222,9 @@ class _ProfilePageState extends State<ProfilePage> {
       }
       data["image_url"] = imageUrl;
       log(data.toString());
-      await Database.updateTourist(TouristModel.fromJson(data));
+      UserModel user = UserModel.fromJson(data);
+      await Database.updateUser(user);
+      _login.updateUser(user);
       Loader.hide();
       Fluttertoast.showToast(msg: "Profile updated successfully.");
     }

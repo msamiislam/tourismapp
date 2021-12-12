@@ -5,6 +5,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tourismapp/pages/guide_registration.dart';
 
 import '../models/enums.dart';
 import '../pages/registration_account.dart';
@@ -41,7 +42,7 @@ class _RegistrationPersonalPageState extends State<RegistrationPersonalPage> {
                 key: _fbKey,
                 child: Column(
                   children: <Widget>[
-                    AppLargeText( "Create Your Account"),
+                    AppLargeText("Create Your Account"),
                     const SizedBox(height: 30.0),
                     Container(
                       width: Get.width / 2,
@@ -132,6 +133,19 @@ class _RegistrationPersonalPageState extends State<RegistrationPersonalPage> {
                       ]),
                     ),
                     const SizedBox(height: 30.0),
+                    FormBuilderRadioGroup(
+                      name: "user_type",
+                      options: UserType.values.map((e) => FormBuilderFieldOption(value: e)).toList(),
+                      decoration: const InputDecoration(
+                        hintText: "Select account type",
+                        labelText: "Account Type",
+                        border: OutlineInputBorder(),
+                      ),
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(context),
+                      ]),
+                    ),
+                    const SizedBox(height: 30.0),
                     TextButton(
                       onPressed: _next,
                       child: Text("Next"),
@@ -155,8 +169,11 @@ class _RegistrationPersonalPageState extends State<RegistrationPersonalPage> {
       Map<String, dynamic> data = {}..addAll(_fbKey.currentState!.value);
       data["image"] = profileImage?.path;
       log(data.toString());
-
-      Get.to(() => RegistrationAccount(data));
+      if (data["user_type"] == UserType.guide) {
+        Get.to(() => GuideRegistrationPage(data));
+      } else {
+        Get.to(() => RegistrationAccountPage(data));
+      }
     }
   }
 }

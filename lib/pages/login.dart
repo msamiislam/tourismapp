@@ -12,12 +12,13 @@ import '../models/user_model.dart';
 import '../pages/dashboard.dart';
 import '../pages/registration_personal.dart';
 import '../services/auth.dart';
-import '../utils/colors.dart';
 import '../services/database.dart';
+import '../utils/colors.dart';
 import '../utils/progress_dialog.dart';
 import '../widgets/large_txt.dart';
 import '../widgets/password_field.dart';
 import '../widgets/simple_txt.dart';
+import 'guide/dashboard.dart';
 
 class LoginPage extends StatelessWidget {
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
@@ -96,7 +97,11 @@ class LoginPage extends StatelessWidget {
         final LoginController login = Get.find();
         login.updateUser(user);
         Loader.hide();
-        Get.off(() => DashboardPage());
+        if (user.isGuide) {
+          Get.off(() => GuideDashboardPage());
+        } else {
+          Get.off(() => DashboardPage());
+        }
         Fluttertoast.showToast(msg: "Logged in successfully.");
       } on FirebaseAuthException catch (exception) {
         Loader.hide();

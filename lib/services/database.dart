@@ -1,13 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tourismapp/models/attraction_model.dart';
-import 'package:tourismapp/models/hotel_model.dart';
-import 'package:tourismapp/models/mall_model.dart';
-import 'package:tourismapp/models/place_model.dart';
-import 'package:tourismapp/models/restaurant_model.dart';
 
-import '../models/guide_model.dart';
-import '../models/tourist_model.dart';
 import '../models/user_model.dart';
 
 abstract class Database {
@@ -16,32 +10,24 @@ abstract class Database {
 
   static String? _getId() => FirebaseAuth.instance.currentUser != null ? FirebaseAuth.instance.currentUser!.uid : null;
 
-  static Future<void> createTourist(TouristModel tourist) async {
-    await _usersCollection.doc(tourist.id).set(tourist.toJson());
+  static Future<void> createUser(UserModel user) async {
+    await _usersCollection.doc(user.id).set(user.toJson());
   }
 
-  static Future<void> updateTourist(TouristModel tourist) async {
-    await _usersCollection.doc(tourist.id).update(tourist.toJson());
+  static Future<void> updateUser(UserModel user) async {
+    await _usersCollection.doc(user.id).update(user.toJson());
   }
 
   static Future<UserModel> getUser(String id) async {
     DocumentSnapshot doc = await _usersCollection.doc(id).get();
     Map<String, dynamic> json = doc.data() as Map<String, dynamic>;
-    return UserModel.isTourist(json) ? TouristModel.fromJson(json) : GuideModel.fromJson(json);
+    return UserModel.fromJson(json);
   }
 
   static Future<void> addAttractions(List<AttractionModel> attractions) async {
     print("started adding attractions");
     for (AttractionModel attraction in attractions) {
-      if (attraction.type == AttractionType.mall) {
-        await _attractionCollection.doc(attraction.id).set((attraction as MallModel).toJson());
-      } else if (attraction.type == AttractionType.place) {
-        await _attractionCollection.doc(attraction.id).set((attraction as PlaceModel).toJson());
-      } else if (attraction.type == AttractionType.restaurant) {
-        await _attractionCollection.doc(attraction.id).set((attraction as RestaurantModel).toJson());
-      } else if (attraction.type == AttractionType.hotel) {
-        await _attractionCollection.doc(attraction.id).set((attraction as HotelModel).toJson());
-      }
+      await _attractionCollection.doc(attraction.id).set(attraction.toJson());
     }
     print("ended adding attractions");
   }

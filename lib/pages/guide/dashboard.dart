@@ -4,14 +4,14 @@ import 'package:tourismapp/pages/profile.dart';
 
 import 'navpages/home.dart';
 
-class GuideDashbboardPage extends StatefulWidget {
-  const GuideDashbboardPage({Key? key}) : super(key: key);
+class GuideDashboardPage extends StatefulWidget {
+  const GuideDashboardPage({Key? key}) : super(key: key);
 
   @override
-  _GuideDashbboardPageState createState() => _GuideDashbboardPageState();
+  _GuideDashboardPageState createState() => _GuideDashboardPageState();
 }
 
-class _GuideDashbboardPageState extends State<GuideDashbboardPage> {
+class _GuideDashboardPageState extends State<GuideDashboardPage> {
   List pages = [
     GuideHomePage(),
     GuideBookingsPage(),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tourismapp/pages/navpages/favourite.dart';
 
-import '../pages/guide/trip_info.dart';
 import '../pages/navpages/home.dart';
 import '../pages/navpages/search.dart';
 import '../pages/navpages/settings.dart';
@@ -16,7 +16,7 @@ class DashboardPage extends StatefulWidget {
 class _DashboardPageState extends State<DashboardPage> {
   List pages = [
     HomePage(),
-    TripInfoPage(),
+    FavouritePage(),
     SearchPage(),
     SettingsPage(),
   ];
@@ -45,7 +45,7 @@ class _DashboardPageState extends State<DashboardPage> {
         elevation: 0.0,
         items: [
           BottomNavigationBarItem(label: "Home", icon: Icon(Icons.home)),
-          BottomNavigationBarItem(label: "Bar", icon: Icon(Icons.bar_chart_sharp)),
+          BottomNavigationBarItem(label: "Favourite", icon: Icon(Icons.favorite)),
           BottomNavigationBarItem(label: "Search", icon: Icon(Icons.search)),
           BottomNavigationBarItem(label: "Setting", icon: Icon(Icons.settings)),
         ],

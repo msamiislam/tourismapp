@@ -9,6 +9,7 @@ import '../pages/dashboard.dart';
 import '../pages/login.dart';
 import '../pages/welcome.dart';
 import '../services/database.dart';
+import 'guide/dashboard.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -33,7 +34,11 @@ class _SplashPageState extends State<SplashPage> {
             UserModel user = await Database.getUser(FirebaseAuth.instance.currentUser!.uid);
             _login.updateUser(user);
           }
-          Get.off(() => DashboardPage());
+          if (_login.user!.isGuide) {
+            Get.off(() => GuideDashboardPage());
+          } else {
+            Get.off(() => DashboardPage());
+          }
         }
       } else {
         _login.appOpened();

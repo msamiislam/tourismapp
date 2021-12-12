@@ -8,8 +8,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:tourismapp/models/user_model.dart';
 
-import '../models/tourist_model.dart';
 import '../pages/login.dart';
 import '../services/database.dart';
 import '../services/storage.dart';
@@ -18,11 +18,11 @@ import '../widgets/large_txt.dart';
 import '../widgets/password_field.dart';
 import '../widgets/simple_txt.dart';
 
-class RegistrationAccount extends StatelessWidget {
+class RegistrationAccountPage extends StatelessWidget {
   final Map<String, dynamic> personalDetails;
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
 
-  RegistrationAccount(this.personalDetails, {Key? key}) : super(key: key);
+  RegistrationAccountPage(this.personalDetails, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -85,8 +85,8 @@ class RegistrationAccount extends StatelessWidget {
           imageUrl = await Storage.uploadImage(image: File(data["image"]), id: credential.user!.uid);
         }
         data["id"] = credential.user!.uid;
-        data["image_url"] = imageUrl;
-        Database.createTourist(TouristModel.fromJson(data));
+        data["image_url"] = imageUrl ?? "";
+        Database.createUser(UserModel.fromJson(data));
         Loader.hide();
         FirebaseAuth.instance.signOut();
         Get.offAll(() => LoginPage());

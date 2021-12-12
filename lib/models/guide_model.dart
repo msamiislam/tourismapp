@@ -1,6 +1,5 @@
 import '../models/trip_model.dart';
 import '../models/user_model.dart';
-
 import 'enums.dart';
 
 class GuideModel extends UserModel {
@@ -42,7 +41,7 @@ class GuideModel extends UserModel {
 
   static GuideModel fromJson(Map<String, dynamic> json) {
     return GuideModel(
-      id: json["uid"],
+      id: json["id"],
       imageUrl: json["image_url"],
       firstName: json["first_name"],
       lastName: json["last_name"],
@@ -50,20 +49,31 @@ class GuideModel extends UserModel {
       phone: json["phone"],
       address: json["address"],
       bloodGroup: json["blood_group"],
-      dob: json["dob"],
+      dob: DateTime.parse(json["dob"]),
       gender: json["gender"],
+      trips: ((json['trips'] as List?) ?? []).map((e) => TripModel.fromJson(e)).toList(),
       city: json["city"],
       state: json["state"],
       companyName: json["company_name"],
-      services: json["services"],
-      trips: (json["trip"] as List).map((e) => TripModel.fromJson(e)).toList(),
+      services: ((json['services'] as List?) ?? []).map((e) => e.toString()).toList(),
     );
   }
 
   @override
   Map<String, dynamic> toJson() {
     return {
-      ...super.toJson(),
+      'id': id,
+      'image_url': imageUrl,
+      'user_type': userType,
+      'first_name': firstName,
+      'last_name': lastName,
+      'email': email,
+      'phone': phone,
+      'address': address,
+      'blood_group': bloodGroup,
+      'dob': dob.toString(),
+      'gender': gender,
+      'trips': trips.map((e) => e.toJson()).toList(),
       "city": city,
       "state": state,
       "company_name": companyName,

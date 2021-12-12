@@ -1,4 +1,6 @@
 import '../models/enums.dart';
+import '../models/guide_model.dart';
+import '../models/tourist_model.dart';
 import '../models/trip_model.dart';
 
 abstract class UserModel {
@@ -35,20 +37,20 @@ abstract class UserModel {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'image_url': imageUrl,
-      'user_type': userType,
-      'first_name': firstName,
-      'last_name': lastName,
-      'email': email,
-      'phone': phone,
-      'address': address,
-      'blood_group': bloodGroup,
-      'dob': dob.toString(),
-      'gender': gender,
-      'trips': trips.map((e) => e.toJson()).toList(),
-    };
+    if (userType == UserType.guide) {
+      return (this as GuideModel).toJson();
+    } else {
+      return (this as TouristModel).toJson();
+    }
+  }
+
+  static UserModel fromJson(Map<String, dynamic> json) {
+    String userType = json["user_type"];
+    if (userType == UserType.guide) {
+      return GuideModel.fromJson(json);
+    } else {
+      return TouristModel.fromJson(json);
+    }
   }
 
   bool get isGuide => userType == UserType.guide;
