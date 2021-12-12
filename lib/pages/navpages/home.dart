@@ -35,20 +35,20 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   final List<AttractionModel> attractions = Get.find(tag: "attractions");
 
   Map<String, Map<String, String>> travelImages = {
-    "Cab": {
-      "image": "cab.png",
+    "Uber": {
+      "image": "uber.png",
       "link": Constants.cabPackageName,
     },
-    "Train": {
-      "image": "train.png",
+    "Pakistan Railways": {
+      "image": "railway.jpeg",
       "link": Constants.trainPackageName,
     },
-    "Plane": {
-      "image": "airplane.png",
+    "PIA": {
+      "image": "pia.png",
       "link": Constants.planePackageName,
     },
-    "Bus": {
-      "image": "bus.png",
+    "Daewoo": {
+      "image": "daewoo.gif",
       "link": Constants.busPackageName,
     },
   };
@@ -118,7 +118,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   labelPadding: const EdgeInsets.only(left: 20, right: 20),
                   indicatorSize: TabBarIndicatorSize.label,
                   controller: _tabController,
-                  labelColor: Colors.black,
+                  labelColor: Theme.of(context).colorScheme.onBackground,
                   unselectedLabelColor: Colors.grey,
                   isScrollable: true,
                   indicator: CircleTabIndicator(color: AppColors.primary, radius: 4),
@@ -143,7 +143,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             Container(
               height: 110,
               width: double.maxFinite,
-              margin: const EdgeInsets.only(left: 20),
+              margin: const EdgeInsets.only(left: 20, top: 10),
               child: ListView.builder(
                 itemCount: travelImages.length,
                 scrollDirection: Axis.horizontal,
@@ -178,7 +178,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             Container(
               height: 110,
               width: double.maxFinite,
-              margin: const EdgeInsets.only(left: 20),
+              margin: const EdgeInsets.only(left: 20, top: 10),
               child: ListView.builder(
                 itemCount: guiderImages.length,
                 scrollDirection: Axis.horizontal,
@@ -271,23 +271,27 @@ class ExploreItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            width: 80,
-            height: 80,
+            width: 70,
+            height: 70,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               color: Colors.white,
               image: DecorationImage(
-                fit: BoxFit.cover,
+                fit: BoxFit.contain,
                 image: AssetImage("img/" + image),
               ),
             ),
           ),
           SizedBox(height: 5),
-          Container(
+          SizedBox(
+            width: 60.0,
+            height: 35.0,
             child: AppText(
               text,
-              size: 10,
-              color: AppColors.textColor2,
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              size: 12,
+              color: Theme.of(context).colorScheme.onBackground,
             ),
           ),
         ],

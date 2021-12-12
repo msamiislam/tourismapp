@@ -15,12 +15,12 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  List<String> currencies = ["pkr", "usd"];
-  List<String> distances = ["km", "mi"];
-  List<String> temperatures = ["c", "f"];
-  String currency = GetStorage().read("currency") ?? "pkr";
-  String distance = GetStorage().read("distance") ?? "km";
-  String temperature = GetStorage().read("temperature") ?? "c";
+  List<String> currencies = ["PKR", "USD"];
+  List<String> distances = ["KM", "MI"];
+  List<String> temperatures = ["C", "F"];
+  String currency = GetStorage().read("currency") ?? "PKR";
+  String distance = GetStorage().read("distance") ?? "KM";
+  String temperature = GetStorage().read("temperature") ?? "C";
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,7 @@ class _SettingsPageState extends State<SettingsPage> {
           SizedBox(height: 10.0),
           SizedBox(height: 10.0),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               AppText(
                 "Theme",
@@ -71,7 +71,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           SizedBox(height: 10.0),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               AppText(
                 "Currency",
@@ -85,7 +85,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     setState(() => currency = value ?? currency);
                     await GetStorage().write("currency", currency);
                   },
-                  items: ["pkr", "usd"]
+                  items: currencies
                       .map((e) => DropdownMenuItem(
                             child: Text(e),
                             value: e,
@@ -95,7 +95,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           SizedBox(height: 10.0),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               AppText(
                 "Distance",
@@ -109,7 +109,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     setState(() => distance = value ?? distance);
                     await GetStorage().write("distance", distance);
                   },
-                  items: ["km", "mi"]
+                  items: distances
                       .map((e) => DropdownMenuItem(
                             child: Text(e),
                             value: e,
@@ -119,7 +119,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           SizedBox(height: 10.0),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               AppText(
                 "Temperature",
@@ -133,7 +133,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     setState(() => temperature = value ?? temperature);
                     await GetStorage().write("temperature", temperature);
                   },
-                  items: ["c", "f"]
+                  items: temperatures
                       .map((e) => DropdownMenuItem(
                             child: Text(e),
                             value: e,
