@@ -1,15 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tourismapp/models/trip_model.dart';
 import 'package:tourismapp/pages/detail.dart';
 import 'package:tourismapp/widgets/simple_txt.dart';
 
-class PackageCard extends StatelessWidget {
-  final String title;
-  final String price;
-  final String image;
+class TripCard extends StatelessWidget {
+  final TripModel trip;
 
-  const PackageCard({Key? key, required this.title, required this.price, required this.image}) : super(key: key);
+  const TripCard(this.trip, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +25,7 @@ class PackageCard extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(5.0)),
             ),
             child: CachedNetworkImage(
-              imageUrl: image,
+              imageUrl: trip.images.first,
               fit: BoxFit.cover,
               placeholder: (context, url) => Center(
                 widthFactor: 1,
@@ -59,11 +58,11 @@ class PackageCard extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 AppText(
-                  title,
+                  trip.title,
                   color: Theme.of(context).colorScheme.onPrimary,
                   weight: FontWeight.bold,
                 ),
-                AppText(price, color: Theme.of(context).colorScheme.onPrimary),
+                AppText(trip.estimatedCost.toString(), color: Theme.of(context).colorScheme.onPrimary),
               ],
             ),
           ),

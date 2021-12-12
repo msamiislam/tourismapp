@@ -5,7 +5,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tourismapp/pages/guide_registration.dart';
+import 'package:tourismapp/pages/guide/guide_registration.dart';
 
 import '../models/enums.dart';
 import '../pages/registration_account.dart';

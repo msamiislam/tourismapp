@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 
 import '../controllers/login_controller.dart';
 import '../models/user_model.dart';
-import '../pages/dashboard.dart';
+import 'tourist/dashboard.dart';
 import '../pages/registration_personal.dart';
 import '../services/auth.dart';
 import '../services/database.dart';
@@ -95,7 +95,7 @@ class LoginPage extends StatelessWidget {
             email: _fbKey.currentState!.value["email"], password: _fbKey.currentState!.value["password"]);
         UserModel user = await Database.getUser(credentials.user!.uid);
         final LoginController login = Get.find();
-        login.updateUser(user);
+        login.login(user);
         Loader.hide();
         if (user.isGuide) {
           Get.off(() => GuideDashboardPage());

@@ -5,7 +5,7 @@ import 'package:tourismapp/models/attraction_model.dart';
 
 import '../controllers/login_controller.dart';
 import '../models/user_model.dart';
-import '../pages/dashboard.dart';
+import 'tourist/dashboard.dart';
 import '../pages/login.dart';
 import '../pages/welcome.dart';
 import '../services/database.dart';

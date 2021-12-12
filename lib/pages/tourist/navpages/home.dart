@@ -5,22 +5,22 @@ import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:tourismapp/controllers/login_controller.dart';
 import 'package:tourismapp/models/attraction_model.dart';
 import 'package:tourismapp/models/hotel_model.dart';
 import 'package:tourismapp/models/mall_model.dart';
 import 'package:tourismapp/models/place_model.dart';
 import 'package:tourismapp/models/restaurant_model.dart';
-import 'package:tourismapp/pages/all_guides.dart';
+import 'package:tourismapp/pages/tourist/all_guides.dart';
 import 'package:tourismapp/services/database.dart';
+import 'package:tourismapp/utils/colors.dart';
+import 'package:tourismapp/utils/constants.dart';
+import 'package:tourismapp/widgets/image_place_holder.dart';
+import 'package:tourismapp/widgets/large_txt.dart';
+import 'package:tourismapp/widgets/simple_txt.dart';
 
-import '../../controllers/login_controller.dart';
-import '../../pages/profile.dart';
-import '../../utils/colors.dart';
-import '../../utils/constants.dart';
-import '../../widgets/image_place_holder.dart';
-import '../../widgets/large_txt.dart';
-import '../../widgets/simple_txt.dart';
-import '../attraction.dart';
+import '../../attraction.dart';
+import '../../profile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

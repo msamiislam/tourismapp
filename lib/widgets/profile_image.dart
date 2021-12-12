@@ -66,7 +66,7 @@ class _ProfileImageState extends State<ProfileImage> {
         child: Container(
           decoration: BoxDecoration(color: Colors.black26),
           child: image == null || image?.path == null
-              ? widget.imageUrl == null
+              ? widget.imageUrl == null || widget.imageUrl!.isEmpty
                   ? Icon(Icons.image, size: 32.0, color: Colors.white)
                   : CachedNetworkImage(
                       imageUrl: _login.user!.imageUrl,

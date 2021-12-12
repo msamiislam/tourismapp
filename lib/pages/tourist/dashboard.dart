@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tourismapp/pages/navpages/favourite.dart';
+import 'package:tourismapp/utils/colors.dart';
 
-import '../pages/navpages/home.dart';
-import '../pages/navpages/search.dart';
-import '../pages/navpages/settings.dart';
-import '../utils/colors.dart';
+import 'navpages/favourite.dart';
+import 'navpages/home.dart';
+import 'navpages/search.dart';
+import '../settings.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);

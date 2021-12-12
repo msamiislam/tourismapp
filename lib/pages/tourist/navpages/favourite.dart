@@ -5,6 +5,7 @@ import 'package:tourismapp/controllers/login_controller.dart';
 import 'package:tourismapp/models/attraction_model.dart';
 import 'package:tourismapp/models/tourist_model.dart';
 import 'package:tourismapp/models/trip_model.dart';
+import 'package:tourismapp/services/database.dart';
 import 'package:tourismapp/utils/colors.dart';
 import 'package:tourismapp/widgets/large_txt.dart';
 import 'package:tourismapp/widgets/simple_txt.dart';
@@ -20,7 +21,7 @@ class FavouritePage extends StatefulWidget {
 
 class _FavouritePageState extends State<FavouritePage> with SingleTickerProviderStateMixin {
   late final TabController _tabController;
-  final LoginController _loginController = Get.find();
+  final LoginController _login = Get.find();
 
   @override
   void initState() {
@@ -58,29 +59,49 @@ class _FavouritePageState extends State<FavouritePage> with SingleTickerProvider
             Container(
               padding: const EdgeInsets.only(top: 2.5),
               height: 300,
-              child: TabBarView(
-                  controller: _tabController,
-                  children: AttractionType.values
-                      .map((e) => TabView((_loginController.user! as TouristModel)
-                          .favAttractions
-                          .where((element) => element.type == e)
-                          .toList()))
-                      .toList()),
+              child: FutureBuilder<List<AttractionModel>>(
+                  future: Database.getAttractions((_login.user! as TouristModel).favAttractionsIds),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(child: AppText(snapshot.error.toString()));
+                    }
+                    if (!snapshot.hasData) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                    List<AttractionModel> trips = snapshot.data!;
+                    if (trips.isEmpty) {
+                      return Center(child: AppText("No Attractions found."));
+                    }
+                    return TabBarView(
+                        controller: _tabController,
+                        children: AttractionType.values
+                            .map((e) => TabView(trips.where((element) => element.type == e).toList()))
+                            .toList());
+                  }),
             ),
             SizedBox(height: 20.0),
             Divider(height: 1.0,thickness: 1.0),
             AppLargeText("Trips", centerAlign: false, size: 18.0),
             SizedBox(height: 20.0),
             Expanded(
-              child: _loginController.user!.trips.isEmpty
-                  ? Center(child: AppText("No trips found."))
-                  : ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: _loginController.user!.trips.length,
-                      itemBuilder: (context, index) {
-                        TripModel trip = _loginController.user!.trips[index];
-                        return TripTile(trip);
-                      }),
+              child: FutureBuilder<List<TripModel>>(
+                  future: Database.getTrips(_login.user!.tripsIds),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(child: AppText(snapshot.error.toString()));
+                    }
+                    if (!snapshot.hasData) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                    List<TripModel> trips = snapshot.data!;
+                    if (trips.isEmpty) {
+                      return Center(child: AppText("No trips found."));
+                    }
+                    return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: _login.user!.tripsIds.length,
+                        itemBuilder: (context, index) => TripTile(trips[index]));
+                  }),
             ),
           ],
         ),

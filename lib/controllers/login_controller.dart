@@ -37,6 +37,18 @@ class LoginController extends GetxController {
     await _storage.write(_isAppOpenedKey, _isAppOpened);
   }
 
+  void login(UserModel user) {
+    _user = user;
+    write();
+    update();
+  }
+
+  void logout() {
+    _user = null;
+    write();
+    update();
+  }
+
   void updateUser(UserModel? user) {
     _user = user;
     write();

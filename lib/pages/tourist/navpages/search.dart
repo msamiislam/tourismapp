@@ -5,14 +5,14 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:tourismapp/models/attraction_model.dart';
 import 'package:tourismapp/services/database.dart';
+import 'package:tourismapp/utils/colors.dart';
 import 'package:tourismapp/utils/progress_dialog.dart';
 import 'package:tourismapp/widgets/card.dart';
 import 'package:tourismapp/widgets/simple_txt.dart';
 
-import '../../utils/colors.dart';
 
 class SearchPage extends StatefulWidget {
-  SearchPage({Key? key}) : super(key: key);
+  const SearchPage({Key? key}) : super(key: key);
 
   @override
   State<SearchPage> createState() => _SearchPageState();

@@ -1,11 +1,8 @@
-import '../models/hotel_model.dart';
-import '../models/trip_model.dart';
 import '../models/user_model.dart';
-import 'attraction_model.dart';
 import 'enums.dart';
 
 class TouristModel extends UserModel {
-  final List<AttractionModel> favAttractions;
+  final List<String> favAttractionsIds;
 
   TouristModel({
     required String id,
@@ -18,8 +15,8 @@ class TouristModel extends UserModel {
     required String address,
     required DateTime dob,
     required String gender,
-    List<TripModel> trips = const [],
-    this.favAttractions = const [],
+    List<String> tripsIds = const [],
+    this.favAttractionsIds = const [],
   }) : super(
           id: id,
           imageUrl: imageUrl,
@@ -32,7 +29,7 @@ class TouristModel extends UserModel {
           bloodGroup: bloodGroup,
           dob: dob,
           gender: gender,
-          trips: trips,
+          tripsIds: tripsIds,
         );
 
   static TouristModel fromJson(Map<String, dynamic> json) {
@@ -47,8 +44,8 @@ class TouristModel extends UserModel {
       bloodGroup: json['blood_group'],
       dob: DateTime.parse(json['dob']),
       gender: json['gender'],
-      trips: ((json['trips'] as List?) ?? []).map((e) => TripModel.fromJson(e)).toList(),
-      favAttractions: ((json['fav_attractions'] as List?) ?? []).map((e) => HotelModel.fromJson(e)).toList(),
+      tripsIds: ((json['trips_ids'] as List?) ?? []).map((e) => e.toString()).toList(),
+      favAttractionsIds: ((json['fav_attractions_ids'] as List?) ?? []).map((e) => e.toString()).toList(),
     );
   }
 
@@ -66,8 +63,8 @@ class TouristModel extends UserModel {
       'blood_group': bloodGroup,
       'dob': dob.toString(),
       'gender': gender,
-      'trips': trips.map((e) => e.toJson()).toList(),
-      'fav_hotels': favAttractions.map((e) => e.toJson()).toList(),
+      'trips_ids': tripsIds,
+      'fav_attractions_ids': favAttractionsIds,
     };
   }
 }

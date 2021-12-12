@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tourismapp/pages/guide/navpages/bookings.dart';
-import 'package:tourismapp/pages/profile.dart';
+import 'package:tourismapp/pages/settings.dart';
 
 import 'navpages/home.dart';
 
@@ -15,7 +15,7 @@ class _GuideDashboardPageState extends State<GuideDashboardPage> {
   List pages = [
     GuideHomePage(),
     GuideBookingsPage(),
-    ProfilePage(),
+    SettingsPage(),
   ];
   int cIndex = 0;
 
@@ -44,7 +44,7 @@ class _GuideDashboardPageState extends State<GuideDashboardPage> {
           BottomNavigationBarItem(label: "Trips", icon: Icon(Icons.home)),
           BottomNavigationBarItem(label: "Bookings", icon: Icon(Icons.notifications)),
           // BottomNavigationBarItem(label: "Search", icon: Icon(Icons.search)),
-          BottomNavigationBarItem(label: "Profile", icon: Icon(Icons.person)),
+          BottomNavigationBarItem(label: "Setting", icon: Icon(Icons.settings)),
         ],
       ),
     );

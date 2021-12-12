@@ -1,4 +1,3 @@
-import '../models/trip_model.dart';
 import '../models/user_model.dart';
 import 'enums.dart';
 
@@ -19,11 +18,11 @@ class GuideModel extends UserModel {
     required String bloodGroup,
     required DateTime dob,
     required String gender,
-    List<TripModel> trips = const [],
+    List<String> tripsIds = const [],
     required this.city,
     required this.state,
     required this.companyName,
-    required this.services,
+    this.services = const [],
   }) : super(
           id: id,
           imageUrl: imageUrl,
@@ -36,7 +35,7 @@ class GuideModel extends UserModel {
           bloodGroup: bloodGroup,
           dob: dob,
           gender: gender,
-          trips: trips,
+          tripsIds: tripsIds,
         );
 
   static GuideModel fromJson(Map<String, dynamic> json) {
@@ -51,7 +50,7 @@ class GuideModel extends UserModel {
       bloodGroup: json["blood_group"],
       dob: DateTime.parse(json["dob"]),
       gender: json["gender"],
-      trips: ((json['trips'] as List?) ?? []).map((e) => TripModel.fromJson(e)).toList(),
+      tripsIds: ((json['trips_ids'] as List?) ?? []).map((e) => e.toString()).toList(),
       city: json["city"],
       state: json["state"],
       companyName: json["company_name"],
@@ -73,7 +72,7 @@ class GuideModel extends UserModel {
       'blood_group': bloodGroup,
       'dob': dob.toString(),
       'gender': gender,
-      'trips': trips.map((e) => e.toJson()).toList(),
+      'trips_ids': tripsIds,
       "city": city,
       "state": state,
       "company_name": companyName,

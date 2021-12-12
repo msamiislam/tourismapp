@@ -7,8 +7,8 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:tourismapp/pages/registration_account.dart';
 
-import '../widgets/large_txt.dart';
-import '../widgets/simple_txt.dart';
+import '../../widgets/large_txt.dart';
+import '../../widgets/simple_txt.dart';
 
 class GuideRegistrationPage extends StatelessWidget {
   final Map<String, dynamic> personalDetails;

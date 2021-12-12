@@ -1,7 +1,6 @@
 import '../models/enums.dart';
 import '../models/guide_model.dart';
 import '../models/tourist_model.dart';
-import '../models/trip_model.dart';
 
 abstract class UserModel {
   final String id;
@@ -15,7 +14,7 @@ abstract class UserModel {
   final String bloodGroup;
   final DateTime dob;
   final String gender;
-  final List<TripModel> trips;
+  final List<String> tripsIds;
 
   UserModel({
     required this.id,
@@ -29,7 +28,7 @@ abstract class UserModel {
     required this.bloodGroup,
     required this.dob,
     required this.gender,
-    required this.trips,
+    required this.tripsIds,
   });
 
   static bool isTourist(Map<String, dynamic> json) {
@@ -54,6 +53,12 @@ abstract class UserModel {
   }
 
   bool get isGuide => userType == UserType.guide;
+
+  String get name =>
+      firstName.substring(0, 1).toUpperCase() +
+      firstName.substring(1).toLowerCase() +
+      lastName.substring(0, 1).toUpperCase() +
+      lastName.substring(1).toLowerCase();
 
   String get initials => firstName.substring(0, 1).toUpperCase() + lastName.substring(0, 1).toUpperCase();
 }
