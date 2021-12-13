@@ -1,65 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:tourismapp/widgets/simple_txt.dart';
 
-class TripItineraryPage extends StatefulWidget {
-  final void Function(Map<String, dynamic> map) onSaved;
-  final VoidCallback? onPrevious;
-  final int totalPages;
-  final int currentPage;
-  final Map<String, dynamic> initialValues;
+import 'add_trip_controller.dart';
 
-  const TripItineraryPage({
-    Key? key,
-    required this.currentPage,
-    required this.onSaved,
-    required this.totalPages,
-    required this.initialValues,
-    this.onPrevious,
-  }) : super(key: key);
-
-  @override
-  State<TripItineraryPage> createState() => _TripItineraryPageState();
-}
-
-class _TripItineraryPageState extends State<TripItineraryPage> {
+class TripItineraryPage extends StatelessWidget {
+  final AddTripController _tripController = Get.find();
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
-  List<String> timings = [];
-  List<String> descriptions = [];
-  List<Widget> activities = [];
 
-  @override
-  void initState() {
-    super.initState();
-    int index = activities.length;
-    int fields = widget.initialValues.length ~/ 2;
-    for (int i = 0; i < fields; i++) {
-      activities.add(
-        ActivityFields(
-          timeName: 'time$i',
-          time: widget.initialValues["time$i"],
-          descName: "desc$i",
-          desc: widget.initialValues["desc$i"],
-        ),
-      );
-    }
-    if (activities.isEmpty) {
-      activities.add(
-        ActivityFields(timeName: 'time$index', descName: 'desc$index'),
-      );
-    }
-  }
-
-  void addActivity() {
-    int index = activities.length;
-    setState(() {
-      activities.add(
-        ActivityFields(timeName: 'time$index', descName: 'desc$index'),
-      );
-    });
-  }
+  TripItineraryPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -74,17 +26,40 @@ class _TripItineraryPageState extends State<TripItineraryPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    AppText('Day ${widget.currentPage + 1}', size: 16.0, weight: FontWeight.w600),
+                    AppText(
+                      'Day ${_tripController.currentPage + 1}',
+                      size: 16.0,
+                      weight: FontWeight.w600,
+                    ),
                     SizedBox(height: 15.0),
-                    if (activities.isNotEmpty)
-                      ListView.builder(
-                        primary: false,
-                        shrinkWrap: true,
-                        itemCount: activities.length,
-                        itemBuilder: (context, index) => activities[index],
-                      ),
+                    GetBuilder<AddTripController>(
+                      didUpdateWidget: (oldWidget, state) => state.controller!.currentDay == _tripController.currentDay,
+                      builder: (context) => ListView.builder(
+                          primary: false,
+                          shrinkWrap: true,
+                          itemCount: _tripController.currentDay.activitiesCount,
+                          itemBuilder: (context, index) {
+                            return Stack(
+                              alignment: Alignment.topRight,
+                              children: [
+                                ActivityFields(
+                                  time: _tripController.currentDay.activities[index].time,
+                                  desc: _tripController.currentDay.activities[index].description,
+                                  onTimeChanged: _tripController.currentDay.activities[index].updateTime,
+                                  onDescriptionChanged: _tripController.currentDay.activities[index].updateDescription,
+                                ),
+                                if (index != 0 && index == _tripController.currentDay.activitiesCount - 1)
+                                  IconButton(
+                                    onPressed: _tripController.removeActivityFromCurrentDay,
+                                    icon: Icon(Icons.delete, color: Theme.of(context).colorScheme.primary),
+                                  ),
+                              ],
+                            );
+                          },
+                        )
+                    ),
                     AddButton(
-                      onTap: () => addActivity(),
+                      onTap: _tripController.addActivityToCurrentDay,
                       title: 'Add Activity',
                     ),
                   ],
@@ -98,13 +73,10 @@ class _TripItineraryPageState extends State<TripItineraryPage> {
         padding: const EdgeInsets.all(10.0),
         child: Row(
           children: [
-            if (widget.currentPage != 0)
+            if (!_tripController.isFirstPage) ...[
               Expanded(
                 child: ElevatedButton(
-                  onPressed: () {
-                    _fbKey.currentState!.save();
-                    widget.onPrevious?.call();
-                  },
+                  onPressed: _tripController.goToPreviousPage,
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.secondary),
                   ),
@@ -114,22 +86,19 @@ class _TripItineraryPageState extends State<TripItineraryPage> {
                   ),
                 ),
               ),
-            if (widget.currentPage != 0) SizedBox(width: 10.0),
+              SizedBox(width: 10.0),
+            ],
             Expanded(
               child: ElevatedButton(
-                onPressed: () {
-                  if (_fbKey.currentState!.saveAndValidate()) {
-                    widget.onSaved.call(_fbKey.currentState!.value);
-                  }
-                },
+                onPressed: _tripController.goToNextPage,
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(widget.currentPage == widget.totalPages - 1
+                  backgroundColor: MaterialStateProperty.all<Color>(_tripController.isLastPage
                       ? Theme.of(context).colorScheme.primary
                       : Theme.of(context).colorScheme.secondary),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: AppText(widget.currentPage == widget.totalPages - 1 ? 'Save' : "Next"),
+                  child: AppText(_tripController.isLastPage ? 'Save' : "Next"),
                 ),
               ),
             ),
@@ -140,14 +109,21 @@ class _TripItineraryPageState extends State<TripItineraryPage> {
   }
 }
 
-class ActivityFields extends StatelessWidget {
-  final String timeName;
+class ActivityFields extends StatefulWidget {
   final DateTime? time;
-  final String descName;
   final String? desc;
+  final void Function(DateTime? time) onTimeChanged;
+  final void Function(String? time) onDescriptionChanged;
 
-  const ActivityFields({Key? key, this.time, this.desc, required this.timeName, required this.descName}) : super(key: key);
+  const ActivityFields(
+      {Key? key, this.time, this.desc, required this.onTimeChanged, required this.onDescriptionChanged})
+      : super(key: key);
 
+  @override
+  State<ActivityFields> createState() => _ActivityFieldsState();
+}
+
+class _ActivityFieldsState extends State<ActivityFields> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -156,13 +132,17 @@ class ActivityFields extends StatelessWidget {
         SizedBox(
           width: 90.0,
           child: FormBuilderDateTimePicker(
-            name: timeName,
-            initialValue: time,
+            name: "time",
+            initialValue: widget.time,
             inputType: InputType.time,
             decoration: InputDecoration(
               hintText: '9:00 am',
               border: OutlineInputBorder(),
             ),
+            onChanged: (time) {
+              print(time);
+              widget.onTimeChanged(time);
+              },
             format: DateFormat.jm(),
             alwaysUse24HourFormat: false,
             validator: FormBuilderValidators.compose([
@@ -172,14 +152,15 @@ class ActivityFields extends StatelessWidget {
         ),
         SizedBox(height: 10.0),
         FormBuilderTextField(
-          name: descName,
-          initialValue: desc,
+          name: "description",
+          initialValue: widget.desc,
           minLines: 1,
           maxLines: 3,
           decoration: InputDecoration(
             hintText: 'Description',
             border: OutlineInputBorder(),
           ),
+          onChanged: widget.onDescriptionChanged,
           validator: FormBuilderValidators.compose([
             FormBuilderValidators.required(context),
           ]),

@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tourismapp/controllers/login_controller.dart';
 import 'package:tourismapp/models/trip_model.dart';
+import 'package:tourismapp/pages/guide/add_trip/add_trip.dart';
 import 'package:tourismapp/services/database.dart';
 import 'package:tourismapp/utils/colors.dart';
 import 'package:tourismapp/widgets/image_place_holder.dart';
 import 'package:tourismapp/widgets/large_txt.dart';
-import 'package:tourismapp/widgets/package_card.dart';
 import 'package:tourismapp/widgets/simple_txt.dart';
+import 'package:tourismapp/widgets/trip_card.dart';
 
 import '../../profile.dart';
 
@@ -25,6 +26,10 @@ class _GuideHomePageState extends State<GuideHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Get.to(() => AddTripPage()),
+        child: Icon(Icons.add),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -43,13 +48,13 @@ class _GuideHomePageState extends State<GuideHomePage> {
                       borderRadius: BorderRadius.circular(25.0),
                       child: GetBuilder<LoginController>(
                         builder: (context) {
+                          if (_login.user!.imageUrl.isEmpty) return SizedBox(width: 50.0,height:50.0,child: ImagePlaceHolder(_login.user!.initials));
                           return CachedNetworkImage(
                             imageUrl: _login.user!.imageUrl,
                             width: 50.0,
                             height: 50.0,
                             fit: BoxFit.cover,
-                            progressIndicatorBuilder: (context, url, progress) =>
-                                ImagePlaceHolder(_login.user!.initials),
+                            placeholder: (context, url) => ImagePlaceHolder(_login.user!.initials),
                             errorWidget: (context, url, error) => ImagePlaceHolder(_login.user!.initials),
                           );
                         },

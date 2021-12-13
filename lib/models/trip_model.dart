@@ -1,3 +1,5 @@
+import 'package:tourismapp/models/activity_model.dart';
+
 class TripModel {
   final String id;
   final String guideId;
@@ -9,7 +11,7 @@ class TripModel {
   final List<String> images;
   final int estimatedCost;
   final List<String> touristIds;
-  final Map<String, String> itinerary;
+  final List<List<ActivityModel>> itinerary;
 
   TripModel({
     required this.id,
@@ -26,7 +28,7 @@ class TripModel {
   });
 
   static TripModel fromJson(Map<String, dynamic> json) => TripModel(
-        id: json["id"],
+    id: json["id"],
         guideId: json["guide_id"],
         guideName: json["guide_name"],
         guideNumber: json["guide_number"],
@@ -35,7 +37,9 @@ class TripModel {
         description: json["description"],
         images: json["images"],
         estimatedCost: json["estimated_cost"],
-        itinerary: json["itinerary"],
+        itinerary: ((json["itinerary"] as List?) ?? [])
+            .map((e) => ((json["itinerary"] as List?) ?? []).map((_e) => ActivityModel.fromJson(_e)).toList())
+            .toList(),
         touristIds: json["tourist_ids"],
       );
 
@@ -50,7 +54,7 @@ class TripModel {
         "description": description,
         "images": images,
         "estimated_cost": estimatedCost,
-        "itinerary": itinerary,
+        "itinerary": itinerary.map((e) => e.map((e) => e.toJson())),
         "tourists_ids": touristIds,
       };
 }
