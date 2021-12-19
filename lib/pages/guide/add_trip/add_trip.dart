@@ -3,12 +3,12 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
+import 'package:tourismapp/pages/guide/add_trip/trip_itinerary.dart';
 
 import '../../../utils/colors.dart';
 import '../../../widgets/profile_image.dart';
 import '../../../widgets/simple_txt.dart';
 import 'add_trip_controller.dart';
-import 'trip_days.dart';
 
 class AddTripPage extends StatelessWidget {
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
@@ -102,17 +102,11 @@ class AddTripPage extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                InkWell(
-                                    onTap: _tripController.decrementDaysCount,
-                                    child: Icon(FontAwesomeIcons.minusCircle)),
-                                GetBuilder<AddTripController>(
-                                  builder: (context) {
-                                    return Text("${_tripController.daysCount}");
-                                  }
-                                ),
-                                InkWell(
-                                    onTap: _tripController.incrementDaysCount,
-                                    child: Icon(FontAwesomeIcons.plusCircle)),
+                                InkWell(onTap: _tripController.decrementDaysCount, child: Icon(FontAwesomeIcons.minusCircle)),
+                                GetBuilder<AddTripController>(builder: (context) {
+                                  return Text("${_tripController.daysCount}");
+                                }),
+                                InkWell(onTap: _tripController.incrementDaysCount, child: Icon(FontAwesomeIcons.plusCircle)),
                               ],
                             ),
                           ),
@@ -125,7 +119,7 @@ class AddTripPage extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () {
                           if (_fbKey.currentState!.saveAndValidate()) {
-                            Get.to(() => TripDaysPage());
+                            Get.to(() => TripItineraryPage(days: _tripController.daysCount));
                           }
                         },
                         child: Padding(
