@@ -7,11 +7,15 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:tourismapp/controllers/login_controller.dart';
 import 'package:tourismapp/models/attraction_model.dart';
+import 'package:tourismapp/models/enums.dart';
+import 'package:tourismapp/models/guide_model.dart';
 import 'package:tourismapp/models/hotel_model.dart';
 import 'package:tourismapp/models/mall_model.dart';
 import 'package:tourismapp/models/place_model.dart';
 import 'package:tourismapp/models/restaurant_model.dart';
+import 'package:tourismapp/models/user_model.dart';
 import 'package:tourismapp/pages/tourist/all_guides.dart';
+import 'package:tourismapp/pages/tourist/guide.dart';
 import 'package:tourismapp/services/database.dart';
 import 'package:tourismapp/utils/colors.dart';
 import 'package:tourismapp/utils/constants.dart';
@@ -50,20 +54,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     "Daewoo": {
       "image": "daewoo.gif",
       "link": Constants.busPackageName,
-    },
-  };
-  Map<String, Map<String, String>> guiderImages = {
-    "Kareem Dad": {
-      "image": "cab.png",
-    },
-    "Saif ur Rehman": {
-      "image": "train.png",
-    },
-    "Arooj Fatima": {
-      "image": "airplane.png",
-    },
-    "Phola Cheeda": {
-      "image": "bus.png",
     },
   };
 
@@ -178,18 +168,31 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               height: 110,
               width: double.maxFinite,
               margin: const EdgeInsets.only(left: 20, top: 10),
-              child: ListView.builder(
-                itemCount: guiderImages.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (_, index) {
-                  return InkWell(
-                    onTap: () {},
-                    child: ExploreItem(
-                        image: guiderImages.values.elementAt(index)["image"]!,
-                        text: guiderImages.keys.elementAt(index)),
-                  );
-                },
-              ),
+              child: FutureBuilder<List<UserModel>>(
+                  future: Database.getUsers(UserType.guide, limit: 4),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(child: Text(snapshot.error.toString()));
+                    }
+                    if (!snapshot.hasData) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    List<UserModel> users = snapshot.data!;
+                    return ListView.builder(
+                      itemCount: users.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (_, index) {
+                        return InkWell(
+                          onTap: () => Get.to(() => GuidePage(users[index] as GuideModel)),
+                          child: ExploreItem(
+                            image: users[index].imageUrl,
+                            text: users[index].name,
+                            isGuide: true,
+                          ),
+                        );
+                      },
+                    );
+                  }),
             ),
             SizedBox(height: 10),
           ],
@@ -259,8 +262,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 class ExploreItem extends StatelessWidget {
   final String image;
   final String text;
+  final bool isGuide;
 
-  const ExploreItem({Key? key, required this.image, required this.text}) : super(key: key);
+  const ExploreItem({Key? key, required this.image, required this.text, this.isGuide = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -270,17 +274,38 @@ class ExploreItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            width: 70,
-            height: 70,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: Colors.white,
-              image: DecorationImage(
-                fit: BoxFit.contain,
-                image: AssetImage("img/" + image),
+              width: 70,
+              height: 70,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.white,
+                image: isGuide
+                    ? null
+                    : DecorationImage(
+                        fit: BoxFit.contain,
+                        image: AssetImage("img/" + image),
+                      ),
               ),
-            ),
-          ),
+              child: isGuide
+                  ? Material(
+                      clipBehavior: Clip.antiAlias,
+                      elevation: 4.0,
+                      color: AppColors.grey,
+                      borderRadius: BorderRadius.circular(25.0),
+                      child: CachedNetworkImage(
+                        imageUrl: image,
+                        width: 70.0,
+                        height: 70.0,
+                        fit: BoxFit.cover,
+                        progressIndicatorBuilder: (context, url, progress) => ImagePlaceHolder(
+                            text.split(" ").first.substring(0, 1).toUpperCase() +
+                                text.split(" ").last.substring(0, 1).toUpperCase()),
+                        errorWidget: (context, url, error) => ImagePlaceHolder(
+                            text.split(" ").first.substring(0, 1).toUpperCase() +
+                                text.split(" ").last.substring(0, 1).toUpperCase()),
+                      ),
+                    )
+                  : null),
           SizedBox(height: 5),
           SizedBox(
             width: 60.0,

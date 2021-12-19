@@ -6,6 +6,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:tourismapp/pages/registration_account.dart';
+import 'package:tourismapp/utils/constants.dart';
 
 import '../../widgets/large_txt.dart';
 import '../../widgets/simple_txt.dart';
@@ -32,19 +33,24 @@ class GuideRegistrationPage extends StatelessWidget {
                     const SizedBox(height: 50.0),
                     AppLargeText("Enter your Professional Information"),
                     const SizedBox(height: 30.0),
-                    FormBuilderTextField(
+                    FormBuilderDropdown<String>(
                       name: "city",
-                      keyboardType: TextInputType.emailAddress,
+                      items:
+                          Constants.cityContacts.keys.map((e) => DropdownMenuItem(child: Text(e), value: e),).toList(),
                       decoration: const InputDecoration(
-                          hintText: "Enter your city", labelText: "City", border: OutlineInputBorder()),
+                        hintText: "Select your city",
+                        labelText: "City",
+                        border: OutlineInputBorder(),
+                      ),
                       validator: FormBuilderValidators.compose([
                         FormBuilderValidators.required(context),
                       ]),
                     ),
                     const SizedBox(height: 30.0),
-                    FormBuilderTextField(
+                    FormBuilderDropdown<String>(
                       name: "state",
-                      keyboardType: TextInputType.emailAddress,
+                      items:
+                          Constants.states.map((e) => DropdownMenuItem(child: Text(e), value: e)).toList(),
                       decoration: const InputDecoration(
                           hintText: "Enter your state", labelText: "State", border: OutlineInputBorder()),
                       validator: FormBuilderValidators.compose([

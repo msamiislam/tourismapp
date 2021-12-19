@@ -1,21 +1,25 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:tourismapp/models/attraction_model.dart';
+import 'package:tourismapp/models/guide_model.dart';
 import 'package:tourismapp/pages/attraction.dart';
+import 'package:tourismapp/pages/tourist/guide.dart';
 
 import '../utils/colors.dart';
 import '../widgets/simple_txt.dart';
+import 'image_place_holder.dart';
 
 class GuideCard extends StatelessWidget {
-  final VoidCallback onTap;
+  final GuideModel guide;
 
-  const GuideCard({Key? key, required this.onTap}) : super(key: key);
+  const GuideCard(this.guide, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: () => Get.to(() => GuidePage(guide)),
       child: Stack(
         children: [
           Container(
@@ -24,10 +28,15 @@ class GuideCard extends StatelessWidget {
               children: [
                 Expanded(
                   flex: 2,
-                  child: Image.network(
-                    'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YSUyMHBlcnNvbnxlbnwwfHwwfHw%3D&w=1000&q=80',
-                    fit: BoxFit.cover,),
-
+                  child: guide.imageUrl.isURL
+                      ? CachedNetworkImage(
+                          imageUrl: guide.imageUrl,
+                          fit: BoxFit.cover,
+                          progressIndicatorBuilder: (context, url, progress) =>
+                              ImagePlaceHolder(guide.initials, fontSize: 20.0),
+                          errorWidget: (context, url, error) => ImagePlaceHolder(guide.initials, fontSize: 20.0),
+                        )
+                      : ImagePlaceHolder(guide.initials, fontSize: 20.0),
                 ),
                 SizedBox(height: 5.0),
                 Expanded(
@@ -35,14 +44,23 @@ class GuideCard extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        AppText('Rachel Rose Robert Junior', maxLines: 1, height: 1.0,size: 16.0,weight: FontWeight.w600, overflow: TextOverflow.fade,),
+                        AppText(
+                          guide.name,
+                          maxLines: 1,
+                          height: 1.0,
+                          size: 16.0,
+                          weight: FontWeight.w600,
+                          overflow: TextOverflow.fade,
+                          textAlign: TextAlign.left,
+                        ),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Icon(Icons.place_outlined, size: 16.0, color: AppColors.secondary),
                             SizedBox(width: 5.0),
-                            Expanded(child: AppText('Lahore', size: 14.0, maxLines: 2,color: AppColors.secondary)),
+                            Expanded(child: AppText(guide.city, size: 14.0, maxLines: 2, color: AppColors.secondary)),
                           ],
                         ),
                       ],
@@ -52,16 +70,17 @@ class GuideCard extends StatelessWidget {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 5.0, left: 5.0),
-            child: Row(
-              children: [
-                Icon(Icons.star, size: 18.0, color: AppColors.primary),
-                SizedBox(width: 2.5),
-                Expanded(child: AppText('2.4', size: 14.0,color: AppColors.primary, weight: FontWeight.w600)),
-              ],
+          if (false)
+            Padding(
+              padding: const EdgeInsets.only(top: 5.0, left: 5.0),
+              child: Row(
+                children: [
+                  Icon(Icons.star, size: 18.0, color: AppColors.primary),
+                  SizedBox(width: 2.5),
+                  Expanded(child: AppText('2.4', size: 14.0, color: AppColors.primary, weight: FontWeight.w600)),
+                ],
+              ),
             ),
-          ),
         ],
       ),
     );

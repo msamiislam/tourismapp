@@ -11,6 +11,7 @@ import 'package:tourismapp/models/guide_model.dart';
 import 'package:tourismapp/models/user_model.dart';
 import 'package:tourismapp/services/database.dart';
 import 'package:tourismapp/services/storage.dart';
+import 'package:tourismapp/utils/constants.dart';
 import 'package:tourismapp/utils/progress_dialog.dart';
 
 import '../controllers/login_controller.dart';
@@ -158,28 +159,30 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     const SizedBox(height: 30.0),
                     if (!_login.isTourist!) ...[
-                      FormBuilderTextField(
+                      FormBuilderDropdown<String>(
                         name: "city",
-                        initialValue: (_login.user! as GuideModel).city,
-                        keyboardType: TextInputType.streetAddress,
+                        items:
+                        Constants.cityContacts.keys.map((e) => DropdownMenuItem(child: Text(e), value: e),).toList(),
                         decoration: const InputDecoration(
-                            hintText: "Enter your city", labelText: "City", border: OutlineInputBorder()),
+                          hintText: "Select your city",
+                          labelText: "City",
+                          border: OutlineInputBorder(),
+                        ),
                         validator: FormBuilderValidators.compose([
                           FormBuilderValidators.required(context),
                         ]),
                       ),
                       const SizedBox(height: 30.0),
-                      FormBuilderTextField(
+                      FormBuilderDropdown<String>(
                         name: "state",
-                        initialValue: (_login.user! as GuideModel).state,
-                        keyboardType: TextInputType.streetAddress,
+                        items:
+                        Constants.states.map((e) => DropdownMenuItem(child: Text(e), value: e)).toList(),
                         decoration: const InputDecoration(
                             hintText: "Enter your state", labelText: "State", border: OutlineInputBorder()),
                         validator: FormBuilderValidators.compose([
                           FormBuilderValidators.required(context),
                         ]),
-                      ),
-                      const SizedBox(height: 30.0),
+                      ),                      const SizedBox(height: 30.0),
                       FormBuilderTextField(
                         name: "company_name",
                         initialValue: (_login.user! as GuideModel).companyName,

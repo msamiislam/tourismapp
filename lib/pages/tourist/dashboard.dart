@@ -1,10 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:tourismapp/utils/colors.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
+import '../settings.dart';
 import 'navpages/favourite.dart';
 import 'navpages/home.dart';
 import 'navpages/search.dart';
-import '../settings.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -14,13 +17,27 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
-  List pages = [
-    HomePage(),
-    FavouritePage(),
-    SearchPage(),
-    SettingsPage(),
-  ];
+  final WebView eShop = WebView(javascriptMode: JavascriptMode.unrestricted, initialUrl: 'https://decentshops.com/');
+
+  late final List<Widget> pages;
   int cIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    if (Platform.isAndroid) {
+      WebView.platform = AndroidWebView();
+    } else {
+      WebView.platform = CupertinoWebView();
+    }
+    pages = [
+      HomePage(),
+      FavouritePage(),
+      SearchPage(),
+      SafeArea(child: eShop),
+      SettingsPage(),
+    ];
+  }
 
   void onTapButton(int index) {
     setState(() => cIndex = index);
@@ -47,6 +64,7 @@ class _DashboardPageState extends State<DashboardPage> {
           BottomNavigationBarItem(label: "Home", icon: Icon(Icons.home)),
           BottomNavigationBarItem(label: "Favourite", icon: Icon(Icons.favorite)),
           BottomNavigationBarItem(label: "Search", icon: Icon(Icons.search)),
+          BottomNavigationBarItem(label: "E-Shop", icon: Icon(Icons.local_mall)),
           BottomNavigationBarItem(label: "Setting", icon: Icon(Icons.settings)),
         ],
       ),

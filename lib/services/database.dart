@@ -28,6 +28,20 @@ abstract class Database {
     return UserModel.fromJson(json);
   }
 
+  static Future<List<UserModel>> getUsers(String userType, {int? limit}) async {
+    List<UserModel> users = [];
+    Query query = _usersCollection.where('user_type', isEqualTo: userType);
+    if (limit != null) {
+      query = query.limit(limit);
+    }
+    QuerySnapshot snap = await query.get();
+    for (QueryDocumentSnapshot doc in snap.docs) {
+      Map<String, dynamic> json = doc.data() as Map<String, dynamic>;
+      users.add(UserModel.fromJson(json));
+    }
+    return users;
+  }
+
   static Future<void> addAttractions(List<AttractionModel> attractions) async {
     print("started adding attractions");
     for (AttractionModel attraction in attractions) {

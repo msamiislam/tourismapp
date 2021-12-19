@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:tourismapp/controllers/login_controller.dart';
+import 'package:tourismapp/pages/emergency_contacts.dart';
 import 'package:tourismapp/pages/login.dart';
 import 'package:tourismapp/widgets/simple_txt.dart';
 
@@ -126,7 +127,13 @@ class _SettingsPageState extends State<SettingsPage> {
                     items: temperatures.map((e) => DropdownMenuItem(child: Text(e), value: e)).toList()),
               ],
             ),
-            SizedBox(height: 30.0),
+            Expanded(child: SizedBox()),
+            ElevatedButton(
+              style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.red)),
+              onPressed: () => Get.to(() => EmergencyContactsPage()),
+              child: AppText("Emergency Contacts"),
+            ),
+            SizedBox(height: 10.0),
             ElevatedButton(
                 onPressed: () {
                   FirebaseAuth.instance.signOut();
@@ -134,7 +141,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   login.logout();
                   Get.offAll(() => LoginPage());
                 },
-                child: AppText("Logout"))
+                child: AppText("Logout")),
           ],
         ),
       ),
