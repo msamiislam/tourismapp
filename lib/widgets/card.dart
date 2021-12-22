@@ -32,8 +32,7 @@ class GuideCard extends StatelessWidget {
                       ? CachedNetworkImage(
                           imageUrl: guide.imageUrl,
                           fit: BoxFit.cover,
-                          progressIndicatorBuilder: (context, url, progress) =>
-                              ImagePlaceHolder(guide.initials, fontSize: 20.0),
+                          progressIndicatorBuilder: (context, url, progress) => ImagePlaceHolder(guide.initials, fontSize: 20.0),
                           errorWidget: (context, url, error) => ImagePlaceHolder(guide.initials, fontSize: 20.0),
                         )
                       : ImagePlaceHolder(guide.initials, fontSize: 20.0),

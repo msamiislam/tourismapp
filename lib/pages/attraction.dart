@@ -1,13 +1,18 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:like_button/like_button.dart';
+import 'package:tourismapp/controllers/login_controller.dart';
 import 'package:tourismapp/models/attraction_model.dart';
 import 'package:tourismapp/models/hotel_model.dart';
 import 'package:tourismapp/models/mall_model.dart';
 import 'package:tourismapp/models/restaurant_model.dart';
+import 'package:tourismapp/models/tourist_model.dart';
+import 'package:tourismapp/services/database.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../utils/colors.dart';
@@ -24,6 +29,7 @@ class AttractionPage extends StatefulWidget {
 }
 
 class _AttractionPageState extends State<AttractionPage> {
+  final LoginController _login = Get.find();
   int selectedIndex = -1;
 
   String getPhone() {
@@ -41,13 +47,13 @@ class _AttractionPageState extends State<AttractionPage> {
 
   String getLink() {
     if (widget.attraction.type == AttractionType.mall) {
-      return (widget.attraction as MallModel).phone;
+      return (widget.attraction as MallModel).link;
     }
     if (widget.attraction.type == AttractionType.hotel) {
-      return (widget.attraction as HotelModel).phone;
+      return (widget.attraction as HotelModel).link;
     }
     if (widget.attraction.type == AttractionType.restaurant) {
-      return (widget.attraction as RestaurantModel).phone;
+      return (widget.attraction as RestaurantModel).link;
     }
     return "";
   }
@@ -67,8 +73,8 @@ class _AttractionPageState extends State<AttractionPage> {
                       itemCount: widget.attraction.images.length,
                       pagination: SwiperPagination(),
                       itemBuilder: (BuildContext context, int index) {
-                        return Image.network(
-                          widget.attraction.images[index],
+                        return CachedNetworkImage(
+                          imageUrl: widget.attraction.images[index],
                           fit: BoxFit.fill,
                         );
                       },
@@ -121,7 +127,44 @@ class _AttractionPageState extends State<AttractionPage> {
                       ],
                     ),
                     SizedBox(height: 20.0),
-                    AppLargeText("Description", size: 20.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        AppLargeText("Description", size: 20.0),
+                        LikeButton(
+                          isLiked: (_login.user as TouristModel).favAttractionsIds.contains(widget.attraction.id),
+                          size: 30.0,
+                          circleColor: CircleColor(start: AppColors.primary, end: AppColors.secondary),
+                          bubblesColor: BubblesColor(dotPrimaryColor: AppColors.primary, dotSecondaryColor: AppColors.secondary),
+                          onTap: (liked) async {
+                            TouristModel tourist = (_login.user as TouristModel);
+                            List<String> ids = tourist.favAttractionsIds;
+                            !liked ? ids.add(widget.attraction.id) : ids.remove(widget.attraction.id);
+                            _login.updateUser(TouristModel(
+                                id: tourist.id,
+                                imageUrl: tourist.imageUrl,
+                                firstName: tourist.firstName,
+                                lastName: tourist.lastName,
+                                email: tourist.email,
+                                bloodGroup: tourist.bloodGroup,
+                                phone: tourist.phone,
+                                address: tourist.address,
+                                dob: tourist.dob,
+                                gender: tourist.gender,
+                                favAttractionsIds: ids));
+                            await Database.updateFavAttraction(tourist);
+                            return !liked;
+                          },
+                          likeBuilder: (bool isLiked) {
+                            return Icon(
+                              Icons.favorite,
+                              color: isLiked ? AppColors.secondary : AppColors.secondary.withOpacity(0.45),
+                              size: 30.0,
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                     SizedBox(height: 5.0),
                     AppText(widget.attraction.description, size: 10.0),
                     SizedBox(height: 20.0),

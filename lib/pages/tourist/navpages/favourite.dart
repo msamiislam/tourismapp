@@ -80,7 +80,7 @@ class _FavouritePageState extends State<FavouritePage> with SingleTickerProvider
                   }),
             ),
             SizedBox(height: 20.0),
-            Divider(height: 1.0,thickness: 1.0),
+            Divider(height: 1.0, thickness: 1.0),
             AppLargeText("Trips", centerAlign: false, size: 18.0),
             SizedBox(height: 20.0),
             Expanded(
@@ -129,8 +129,7 @@ class TripTile extends StatelessWidget {
                 imageUrl: trip.images.first,
                 imageBuilder: (context, imageProvider) => CircleAvatar(backgroundImage: imageProvider),
                 placeholder: (context, url) => CircularProgressIndicator(strokeWidth: 0.5),
-                errorWidget: (context, url, error) =>
-                    Icon(Icons.person, color: Theme.of(context).colorScheme.onPrimary),
+                errorWidget: (context, url, error) => Icon(Icons.person, color: Theme.of(context).colorScheme.onPrimary),
               ),
             ),
             title: AppText(trip.title, maxLines: 1, overflow: TextOverflow.fade),

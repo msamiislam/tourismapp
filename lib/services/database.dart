@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tourismapp/models/attraction_model.dart';
@@ -58,10 +60,14 @@ abstract class Database {
   }
 
   static Future<List<AttractionModel>> getAttractions(List<String> attractionsIds) async {
+    log(attractionsIds.length.toString());
     List<AttractionModel> attractions = [];
     if (attractionsIds.isEmpty) return attractions;
-    QuerySnapshot snap = await _tripsCollection.where("id", arrayContainsAny: attractionsIds).get();
-    attractions.addAll(snap.docs.map((e) => AttractionModel.fromJson((e.data() as Map<String, dynamic>))));
+    for (String id in attractionsIds) {
+      DocumentSnapshot doc = await _attractionCollection.doc(id).get();
+      attractions.add(AttractionModel.fromJson(doc.data() as Map<String, dynamic>));
+    }
+    log(attractions.length.toString());
     return attractions;
   }
 
@@ -78,8 +84,7 @@ abstract class Database {
     QuerySnapshot snap = await _attractionCollection.limit(20).get();
     attractions.addAll(snap.docs.map((e) => AttractionModel.fromJson((e.data() as Map<String, dynamic>))));
     attractions.retainWhere((element) =>
-        element.name.toLowerCase().contains(query.toLowerCase()) ||
-        query.toLowerCase().contains(element.name.toLowerCase()));
+        element.name.toLowerCase().contains(query.toLowerCase()) || query.toLowerCase().contains(element.name.toLowerCase()));
     return attractions;
   }
 
@@ -99,5 +104,9 @@ abstract class Database {
       });
     }
     return bookings;
+  }
+
+  static Future<void> updateFavAttraction(TouristModel tourist) async {
+    await _usersCollection.doc(tourist.id).update(tourist.toJson());
   }
 }

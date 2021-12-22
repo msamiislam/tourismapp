@@ -67,4 +67,12 @@ class TouristModel extends UserModel {
       'fav_attractions_ids': favAttractionsIds,
     };
   }
+
+  void likeAttraction(String attractionId) {
+    favAttractionsIds.add(attractionId);
+  }
+
+  void unlikeAttraction(String attractionId) {
+    favAttractionsIds.remove(attractionId);
+  }
 }

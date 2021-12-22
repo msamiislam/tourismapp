@@ -56,7 +56,8 @@ abstract class UserModel {
 
   String get name =>
       firstName.substring(0, 1).toUpperCase() +
-      firstName.substring(1).toLowerCase() + " " +
+      firstName.substring(1).toLowerCase() +
+      " " +
       lastName.substring(0, 1).toUpperCase() +
       lastName.substring(1).toLowerCase();
 
