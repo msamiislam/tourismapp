@@ -41,7 +41,14 @@ abstract class Database {
   static Future<void> addTrips(TripModel model) async {
     log("started adding trip");
     log(model.id.toString());
-    await _tripsCollection.doc(model.id).set(model.toJson());
+    await _tripsCollection.doc(model.id).set(model.toJsonWithoutItinerary());
+    for (int i = 0; i < model.itinerary.length; i++) {
+      await _tripsCollection
+          .doc(model.id)
+          .collection('itinerary')
+          .doc("$i")
+          .set({"$i": model.itinerary[i].map((e) => e.toJson()).toList()});
+    }
     log("ended adding trip");
   }
 

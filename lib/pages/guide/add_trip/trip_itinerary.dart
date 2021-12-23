@@ -9,14 +9,27 @@ import 'package:tourismapp/models/trip_model.dart';
 import 'package:tourismapp/services/database.dart';
 import 'package:tourismapp/widgets/simple_txt.dart';
 
-class TripItineraryPage extends StatelessWidget {
+class TripItineraryPage extends StatefulWidget {
   final int days;
   final Map<String, dynamic> tripInfo;
 
-  TripItineraryPage({Key? key, required this.days, required this.tripInfo}) : super(key: key);
+  const TripItineraryPage({Key? key, required this.days, required this.tripInfo}) : super(key: key);
 
+  @override
+  State<TripItineraryPage> createState() => _TripItineraryPageState();
+}
+
+class _TripItineraryPageState extends State<TripItineraryPage> {
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
+
   List<Map> tripItinerary = [];
+  late final List<int> dayActivities;
+
+  @override
+  void initState() {
+    dayActivities = List.generate(widget.days, (index) => 1);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +51,23 @@ class TripItineraryPage extends StatelessWidget {
                 child: ListView.separated(
                   primary: false,
                   shrinkWrap: true,
-                  itemCount: days,
+                  itemCount: widget.days,
                   itemBuilder: (context, index) => DayActivities(
                     day: index + 1,
                     onActivityChanged: (int activities) {
-                      tripItinerary.add({'day': index + 1, 'activities': activities});
+                      dayActivities[index] = activities;
+                      // if (tripItinerary.isEmpty) {
+                      //   tripItinerary.add({'day': index + 1, 'activities': activities});
+                      // }
+                      // for (int i = 0; i < tripItinerary.length; i++) {
+                      //   print(index + 1);
+                      //   print(tripItinerary);
+                      //   if (tripItinerary[i]['day'] == index + 1) {
+                      //     tripItinerary[i]['activities'] = activities;
+                      //   } else {
+                      //     tripItinerary.add({'day': index + 1, 'activities': activities});
+                      //   }
+                      // }
                     },
                   ),
                   separatorBuilder: (BuildContext context, int index) => SizedBox(height: 15.0),
@@ -70,11 +95,13 @@ class TripItineraryPage extends StatelessWidget {
     if (_fbKey.currentState!.saveAndValidate()) {
       List<List<ActivityModel>> itinerary = [];
       List<ActivityModel> activities;
-      for (var map in tripItinerary) {
+      print(tripItinerary);
+      // return;
+      for (int i = 0; i < dayActivities.length; i++) {
+        int theDay = i + 1;
         activities = [];
-        int theDay = map['day'];
-        for (int i = 0; i < map['activities']; i++) {
-          int theActivity = i + 1;
+        for (int j = 0; j < dayActivities[i]; j++) {
+          int theActivity = j + 1;
           activities.add(
             ActivityModel()
               ..updateTime(_fbKey.currentState!.value['time$theActivity-$theDay'])
@@ -85,21 +112,19 @@ class TripItineraryPage extends StatelessWidget {
         }
         itinerary.add(activities);
       }
-      Map<int, List<ActivityModel>> its = {};
-      for (int i = 0; i < itinerary.length; i++) {
-        its[i] = itinerary[i];
-      }
+      print(itinerary);
+      // return;
       TripModel model = TripModel(
         id: 'id${DateTime.now().microsecondsSinceEpoch}',
         guideId: loginController.user!.id,
         guideName: loginController.user!.name,
         guideNumber: loginController.user!.phone,
-        title: tripInfo['title'],
-        location: tripInfo['loc'],
-        description: tripInfo['desc'],
-        images: [],
-        estimatedCost: int.parse(tripInfo['price']),
-        itinerary: {},
+        title: widget.tripInfo['title'],
+        location: widget.tripInfo['loc'],
+        description: widget.tripInfo['desc'],
+        images: widget.tripInfo['images'],
+        estimatedCost: int.parse(widget.tripInfo['price']),
+        itinerary: itinerary,
         touristIds: [],
       );
       Database.addTrips(model);
