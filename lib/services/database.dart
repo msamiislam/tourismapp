@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tourismapp/models/attraction_model.dart';
@@ -36,6 +38,13 @@ abstract class Database {
     print("ended adding attractions");
   }
 
+  static Future<void> addTrips(TripModel model) async {
+    log("started adding trip");
+    log(model.id.toString());
+    await _tripsCollection.doc(model.id).set(model.toJson());
+    log("ended adding trip");
+  }
+
   static Future<List<AttractionModel>> getTopAttractions() async {
     List<AttractionModel> attractions = [];
     QuerySnapshot snap = await _attractionCollection.limit(10).get();
@@ -64,8 +73,7 @@ abstract class Database {
     QuerySnapshot snap = await _attractionCollection.limit(20).get();
     attractions.addAll(snap.docs.map((e) => AttractionModel.fromJson((e.data() as Map<String, dynamic>))));
     attractions.retainWhere((element) =>
-        element.name.toLowerCase().contains(query.toLowerCase()) ||
-        query.toLowerCase().contains(element.name.toLowerCase()));
+        element.name.toLowerCase().contains(query.toLowerCase()) || query.toLowerCase().contains(element.name.toLowerCase()));
     return attractions;
   }
 

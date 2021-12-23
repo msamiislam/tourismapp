@@ -11,7 +11,7 @@ class TripModel {
   final List<String> images;
   final int estimatedCost;
   final List<String> touristIds;
-  final List<List<ActivityModel>> itinerary;
+  final Map<int, List<ActivityModel>> itinerary;
 
   TripModel({
     required this.id,
@@ -28,7 +28,7 @@ class TripModel {
   });
 
   static TripModel fromJson(Map<String, dynamic> json) => TripModel(
-    id: json["id"],
+        id: json["id"],
         guideId: json["guide_id"],
         guideName: json["guide_name"],
         guideNumber: json["guide_number"],
@@ -37,14 +37,12 @@ class TripModel {
         description: json["description"],
         images: json["images"],
         estimatedCost: json["estimated_cost"],
-        itinerary: ((json["itinerary"] as List?) ?? [])
-            .map((e) => ((json["itinerary"] as List?) ?? []).map((_e) => ActivityModel.fromJson(_e)).toList())
-            .toList(),
+        itinerary: ((json["itinerary"] as Map?) ?? {})
+            .map<int, List<ActivityModel>>((key, value) => MapEntry(key, value.map((e) => ActivityModel.fromJson(e)))),
         touristIds: json["tourist_ids"],
       );
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "guide_id": guideId,
         "guide_name": guideName,
@@ -54,7 +52,7 @@ class TripModel {
         "description": description,
         "images": images,
         "estimated_cost": estimatedCost,
-        "itinerary": itinerary.map((e) => e.map((e) => e.toJson())),
+        "itinerary": itinerary.map((k, e) => MapEntry(k, e.map((e) => e.toJson()))),
         "tourists_ids": touristIds,
       };
 }

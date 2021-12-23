@@ -117,10 +117,9 @@ class _TripPageState extends State<TripPage> {
                           AppText('Day ${index + 1}', weight: FontWeight.w600),
                           SizedBox(height: 10.0),
                           Table(
-                            border:
-                                TableBorder.all(color: index % 2 == 0 ? AppColors.primary : AppColors.secondaryVariant),
+                            border: TableBorder.all(color: index % 2 == 0 ? AppColors.primary : AppColors.secondaryVariant),
                             columnWidths: {0: FlexColumnWidth(0.35)},
-                            children: widget.trip.itinerary[index]
+                            children: widget.trip.itinerary[index]!
                                 .map((e) => TableRow(
                                       children: [
                                         Center(

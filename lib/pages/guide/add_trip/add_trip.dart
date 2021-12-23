@@ -119,7 +119,10 @@ class AddTripPage extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () {
                           if (_fbKey.currentState!.saveAndValidate()) {
-                            Get.to(() => TripItineraryPage(days: _tripController.daysCount));
+                            Get.to(() => TripItineraryPage(
+                                  days: _tripController.daysCount,
+                                  tripInfo: _fbKey.currentState!.value,
+                                ));
                           }
                         },
                         child: Padding(
