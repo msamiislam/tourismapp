@@ -10,11 +10,18 @@ import '../../../widgets/profile_image.dart';
 import '../../../widgets/simple_txt.dart';
 import 'add_trip_controller.dart';
 
-class AddTripPage extends StatelessWidget {
+class AddTripPage extends StatefulWidget {
+  const AddTripPage({Key? key}) : super(key: key);
+
+  @override
+  State<AddTripPage> createState() => _AddTripPageState();
+}
+
+class _AddTripPageState extends State<AddTripPage> {
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
   final AddTripController _tripController = Get.put(AddTripController());
 
-  AddTripPage({Key? key}) : super(key: key);
+  List<String> images = [];
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +39,7 @@ class AddTripPage extends StatelessWidget {
           child: Column(
             children: [
               MultiImage(
-                onPickedImages: (images) {},
+                onPickedImages: (images) => this.images = [...images.map((e) => e.path)],
               ),
               SizedBox(height: 15.0),
               FormBuilder(
@@ -119,9 +126,11 @@ class AddTripPage extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () {
                           if (_fbKey.currentState!.saveAndValidate()) {
+                            Map<String, dynamic> data = {..._fbKey.currentState!.value};
+                            data['images'] = images;
                             Get.to(() => TripItineraryPage(
                                   days: _tripController.daysCount,
-                                  tripInfo: _fbKey.currentState!.value,
+                                  tripInfo: data,
                                 ));
                           }
                         },

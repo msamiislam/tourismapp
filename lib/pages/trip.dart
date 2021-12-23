@@ -119,7 +119,7 @@ class _TripPageState extends State<TripPage> {
                           Table(
                             border: TableBorder.all(color: index % 2 == 0 ? AppColors.primary : AppColors.secondaryVariant),
                             columnWidths: {0: FlexColumnWidth(0.35)},
-                            children: widget.trip.itinerary[index]!
+                            children: widget.trip.itinerary[index]
                                 .map((e) => TableRow(
                                       children: [
                                         Center(
