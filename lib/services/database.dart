@@ -52,6 +52,13 @@ abstract class Database {
     print("ended adding attractions");
   }
 
+  static Future<void> addTrips(TripModel model) async {
+    log("started adding trip");
+    log(model.id.toString());
+    await _tripsCollection.doc(model.id).set(model.toJson());
+    log("ended adding trip");
+  }
+
   static Future<List<AttractionModel>> getTopAttractions() async {
     List<AttractionModel> attractions = [];
     QuerySnapshot snap = await _attractionCollection.limit(10).get();

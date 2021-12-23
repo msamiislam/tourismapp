@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:tourismapp/controllers/login_controller.dart';
+import 'package:tourismapp/models/activity_model.dart';
+import 'package:tourismapp/models/trip_model.dart';
+import 'package:tourismapp/services/database.dart';
 import 'package:tourismapp/widgets/simple_txt.dart';
 
 class TripItineraryPage extends StatelessWidget {
   final int days;
+  final Map<String, dynamic> tripInfo;
 
-  TripItineraryPage({Key? key, required this.days}) : super(key: key);
+  TripItineraryPage({Key? key, required this.days, required this.tripInfo}) : super(key: key);
 
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
   List<Map> tripItinerary = [];
@@ -49,20 +55,7 @@ class TripItineraryPage extends StatelessWidget {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
         child: ElevatedButton(
-          onPressed: () {
-            _fbKey.currentState!.save();
-
-            if (_fbKey.currentState!.validate()) {
-              for (var map in tripItinerary) {
-                int theDay = map['day'];
-                for (int i = 0; i < map['activities']; i++) {
-                  int theActivity = i + 1;
-                  print(
-                      'Day $theDay - ${_fbKey.currentState!.value['time$theActivity-$theDay']} - ${_fbKey.currentState!.value['desc$theActivity-$theDay']}');
-                }
-              }
-            }
-          },
+          onPressed: () => addTrip(),
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Text('Add Trip'),
@@ -70,6 +63,47 @@ class TripItineraryPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void addTrip() {
+    LoginController loginController = Get.find<LoginController>();
+    if (_fbKey.currentState!.saveAndValidate()) {
+      List<List<ActivityModel>> itinerary = [];
+      List<ActivityModel> activities;
+      for (var map in tripItinerary) {
+        activities = [];
+        int theDay = map['day'];
+        for (int i = 0; i < map['activities']; i++) {
+          int theActivity = i + 1;
+          activities.add(
+            ActivityModel()
+              ..updateTime(_fbKey.currentState!.value['time$theActivity-$theDay'])
+              ..updateDescription(_fbKey.currentState!.value['desc$theActivity-$theDay']),
+          );
+          // print(
+          //     'Day $theDay - ${_fbKey.currentState!.value['time$theActivity-$theDay']} - ${_fbKey.currentState!.value['desc$theActivity-$theDay']}');
+        }
+        itinerary.add(activities);
+      }
+      Map<int, List<ActivityModel>> its = {};
+      for (int i = 0; i < itinerary.length; i++) {
+        its[i] = itinerary[i];
+      }
+      TripModel model = TripModel(
+        id: 'id${DateTime.now().microsecondsSinceEpoch}',
+        guideId: loginController.user!.id,
+        guideName: loginController.user!.name,
+        guideNumber: loginController.user!.phone,
+        title: tripInfo['title'],
+        location: tripInfo['loc'],
+        description: tripInfo['desc'],
+        images: [],
+        estimatedCost: int.parse(tripInfo['price']),
+        itinerary: {},
+        touristIds: [],
+      );
+      Database.addTrips(model);
+    }
   }
 }
 
