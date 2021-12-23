@@ -35,12 +35,26 @@ class TripModel {
         title: json["title"],
         location: json["location"],
         description: json["description"],
-        images: json["images"],
+        images: [json["images"] as List? ?? []].map((e) => e.toString()).toList(),
         estimatedCost: json["estimated_cost"],
         itinerary: ((json["itinerary"] as List?) ?? [])
             .map<List<ActivityModel>>((value) => value.map((e) => ActivityModel.fromJson(e)))
             .toList(),
-        touristIds: json["tourist_ids"],
+        touristIds: (json["tourist_ids"] as List? ?? []).map((e) => e.toString()).toList(),
+      );
+
+  static TripModel fromJsonWithItinerary(Map<String, dynamic> json, List<List<ActivityModel>> itinerary) => TripModel(
+        id: json["id"],
+        guideId: json["guide_id"],
+        guideName: json["guide_name"],
+        guideNumber: json["guide_number"],
+        title: json["title"],
+        location: json["location"],
+        description: json["description"],
+        images: [json["images"] as List? ?? []].map((e) => e.toString()).toList(),
+        estimatedCost: json["estimated_cost"],
+        itinerary: itinerary,
+        touristIds: (json["tourist_ids"] as List? ?? []).map((e) => e.toString()).toList(),
       );
 
   Map<String, dynamic> toJson() => {

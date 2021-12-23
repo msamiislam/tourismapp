@@ -2,24 +2,30 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:tourismapp/controllers/login_controller.dart';
 import 'package:tourismapp/models/trip_model.dart';
+import 'package:tourismapp/services/database.dart';
+import 'package:tourismapp/utils/launcher.dart';
 
 import '../utils/colors.dart';
 import '../widgets/large_txt.dart';
 import '../widgets/simple_txt.dart';
 
 class TripPage extends StatefulWidget {
-  final bool isGuide;
   final TripModel trip;
 
-  const TripPage(this.trip, {Key? key, this.isGuide = false}) : super(key: key);
+  const TripPage(this.trip, {Key? key}) : super(key: key);
 
   @override
   _TripPageState createState() => _TripPageState();
 }
 
 class _TripPageState extends State<TripPage> {
+  final LoginController loginController = Get.find();
+  bool booked = false;
   List list = [1, 2];
 
   @override
@@ -103,6 +109,20 @@ class _TripPageState extends State<TripPage> {
                     AppLargeText("Description", size: 20.0),
                     SizedBox(height: 5.0),
                     AppText(widget.trip.description, size: 10.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        AppLargeText("Contact Guide", size: 20.0),
+                        InkWell(
+                          onTap: () => Launcher.chat(widget.trip.guideNumber),
+                          child: Icon(
+                            FontAwesomeIcons.whatsapp,
+                            color: Colors.green,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 5.0),
                     SizedBox(height: 20.0),
                     Center(child: AppLargeText("Itinerary", size: 20.0)),
                     ListView.builder(
@@ -125,7 +145,7 @@ class _TripPageState extends State<TripPage> {
                                         Center(
                                           child: Padding(
                                             padding: const EdgeInsets.all(5.0),
-                                            child: AppText(e.time.toString()),
+                                            child: AppText(DateFormat.jm().format(e.time!)),
                                           ),
                                         ),
                                         Center(
@@ -163,15 +183,22 @@ class _TripPageState extends State<TripPage> {
           ),
         ),
       ),
-      bottomNavigationBar: !widget.isGuide
+      bottomNavigationBar: !loginController.user!.isGuide
           ? Padding(
               padding: const EdgeInsets.all(20.0),
               child: SizedBox(
                 height: 40.0,
                 width: Get.width,
                 child: ElevatedButton(
-                  onPressed: () {},
-                  child: AppText('Book Now', weight: FontWeight.w700),
+                  onPressed: widget.trip.touristIds.contains(loginController.user!.id) || booked
+                      ? null
+                      : () async {
+                          await Database.bookTrip(widget.trip.id, [...widget.trip.touristIds, loginController.user!.id]);
+                          setState(() => booked = true);
+                        },
+                  child: AppText(
+                      widget.trip.touristIds.contains(loginController.user!.id) || booked ? 'Already Booked' : 'Book Now',
+                      weight: FontWeight.w700),
                 ),
               ),
             )

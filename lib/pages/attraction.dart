@@ -95,7 +95,7 @@ class _AttractionPageState extends State<AttractionPage> {
                         SizedBox(width: 10.0),
                         Column(
                           children: [
-                            AppLargeText("PKR 8,000", size: 24.0, color: AppColors.secondary),
+                            // AppLargeText("PKR 8,000", size: 24.0, color: AppColors.secondary),
                             Row(
                               children: [
                                 RatingBar.builder(

@@ -13,7 +13,7 @@ class TripCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Get.to(() => TripPage(trip, isGuide: true)),
+      onTap: () => Get.to(() => TripPage(trip)),
       child: Stack(
         children: [
           Container(

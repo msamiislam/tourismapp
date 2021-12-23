@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:tourismapp/controllers/login_controller.dart';
 import 'package:tourismapp/models/activity_model.dart';
+import 'package:tourismapp/models/guide_model.dart';
 import 'package:tourismapp/models/trip_model.dart';
+import 'package:tourismapp/pages/guide/dashboard.dart';
 import 'package:tourismapp/services/database.dart';
 import 'package:tourismapp/widgets/simple_txt.dart';
 
@@ -90,7 +92,7 @@ class _TripItineraryPageState extends State<TripItineraryPage> {
     );
   }
 
-  void addTrip() {
+  void addTrip() async {
     LoginController loginController = Get.find<LoginController>();
     if (_fbKey.currentState!.saveAndValidate()) {
       List<List<ActivityModel>> itinerary = [];
@@ -114,7 +116,7 @@ class _TripItineraryPageState extends State<TripItineraryPage> {
       }
       print(itinerary);
       // return;
-      TripModel model = TripModel(
+      TripModel trip = TripModel(
         id: 'id${DateTime.now().microsecondsSinceEpoch}',
         guideId: loginController.user!.id,
         guideName: loginController.user!.name,
@@ -127,7 +129,26 @@ class _TripItineraryPageState extends State<TripItineraryPage> {
         itinerary: itinerary,
         touristIds: [],
       );
-      Database.addTrips(model);
+      await Database.addTrip(trip);
+      GuideModel guide = (loginController.user as GuideModel);
+      loginController.updateUser(GuideModel(
+        id: guide.id,
+        imageUrl: guide.imageUrl,
+        firstName: guide.firstName,
+        lastName: guide.lastName,
+        email: guide.email,
+        phone: guide.phone,
+        address: guide.address,
+        bloodGroup: guide.bloodGroup,
+        dob: guide.dob,
+        gender: guide.gender,
+        city: guide.city,
+        state: guide.state,
+        companyName: guide.companyName,
+        tripsIds: [...guide.tripsIds, trip.id],
+      ));
+      await Database.updateUser(loginController.user!);
+      Get.offAll(() => GuideDashboardPage());
     }
   }
 }

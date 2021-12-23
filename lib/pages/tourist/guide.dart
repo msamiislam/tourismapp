@@ -40,17 +40,18 @@ class GuideProfilePage extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
-              AppText('${guide.firstName} ${guide.lastName}',
-                  size: 16.0, color: Theme.of(context).colorScheme.primary, weight: FontWeight.w500),
+              AppText(guide.name, size: 16.0, color: Theme.of(context).colorScheme.primary, weight: FontWeight.w500),
               SizedBox(height: 15.0),
               ListTile(
                 leading: Icon(Icons.phone_outlined),
                 title: AppText(guide.phone),
                 trailing: InkWell(
-                    onTap: () {
-                      Launcher.chat(guide.phone);
-                    },
-                    child: Icon(FontAwesomeIcons.whatsapp)),
+                  onTap: () => Launcher.chat(guide.phone),
+                  child: Icon(
+                    FontAwesomeIcons.whatsapp,
+                    color: Colors.green,
+                  ),
+                ),
               ),
               ListTile(
                 leading: Icon(Icons.mail_outlined),
@@ -67,6 +68,7 @@ class GuideProfilePage extends StatelessWidget {
               FutureBuilder<List<TripModel>>(
                   future: Database.getTrips(guide.tripsIds),
                   builder: (context, snapshot) {
+                    print(snapshot);
                     if (snapshot.hasError) {
                       return Center(child: Text(snapshot.error.toString()));
                     }
@@ -74,7 +76,7 @@ class GuideProfilePage extends StatelessWidget {
                       return Center(child: CircularProgressIndicator());
                     }
                     List<TripModel> trips = snapshot.data!;
-                    // if (trips.isEmpty) return SizedBox();
+                    if (trips.isEmpty) return SizedBox();
                     return Column(
                       children: [
                         SizedBox(height: 15.0),

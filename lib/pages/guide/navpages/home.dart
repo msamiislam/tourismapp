@@ -48,7 +48,8 @@ class _GuideHomePageState extends State<GuideHomePage> {
                       borderRadius: BorderRadius.circular(25.0),
                       child: GetBuilder<LoginController>(
                         builder: (context) {
-                          if (_login.user!.imageUrl.isEmpty) return SizedBox(width: 50.0,height:50.0,child: ImagePlaceHolder(_login.user!.initials));
+                          if (_login.user!.imageUrl.isEmpty)
+                            return SizedBox(width: 50.0, height: 50.0, child: ImagePlaceHolder(_login.user!.initials));
                           return CachedNetworkImage(
                             imageUrl: _login.user!.imageUrl,
                             width: 50.0,
@@ -68,6 +69,7 @@ class _GuideHomePageState extends State<GuideHomePage> {
                 child: FutureBuilder<List<TripModel>>(
                     future: Database.getTrips(_login.user!.tripsIds),
                     builder: (context, snapshot) {
+                      print(snapshot);
                       if (snapshot.hasError) {
                         return Center(child: AppText(snapshot.error.toString()));
                       }

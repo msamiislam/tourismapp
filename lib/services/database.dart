@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:tourismapp/models/activity_model.dart';
 import 'package:tourismapp/models/attraction_model.dart';
 import 'package:tourismapp/models/booking_model.dart';
 import 'package:tourismapp/models/tourist_model.dart';
@@ -52,7 +53,7 @@ abstract class Database {
     print("ended adding attractions");
   }
 
-  static Future<void> addTrips(TripModel model) async {
+  static Future<void> addTrip(TripModel model) async {
     log("started adding trip");
     log(model.id.toString());
     await _tripsCollection.doc(model.id).set(model.toJsonWithoutItinerary());
@@ -87,9 +88,21 @@ abstract class Database {
 
   static Future<List<TripModel>> getTrips(List<String> tripsIds) async {
     List<TripModel> trips = [];
-    if (tripsIds.isEmpty) return trips;
-    QuerySnapshot snap = await _tripsCollection.where("id", arrayContainsAny: tripsIds).get();
-    trips.addAll(snap.docs.map((e) => TripModel.fromJson((e.data() as Map<String, dynamic>))));
+    for (String id in tripsIds) {
+      List<List<ActivityModel>> daysActivities = [];
+      DocumentSnapshot doc = await _tripsCollection.doc(id).get();
+      QuerySnapshot itinerarySnap = await _tripsCollection.doc(id).collection('itinerary').get();
+      for (QueryDocumentSnapshot doc in itinerarySnap.docs) {
+        List<ActivityModel> activities = [];
+        (doc.data() as Map<String, dynamic>).forEach((key, value) {
+          activities.addAll((value as List).map((e) => ActivityModel.fromJson(e)));
+        });
+        daysActivities.add(activities);
+      }
+      print(daysActivities);
+
+      trips.add(TripModel.fromJsonWithItinerary((doc.data() as Map<String, dynamic>), daysActivities));
+    }
     return trips;
   }
 
@@ -103,24 +116,25 @@ abstract class Database {
   }
 
   static Future<List<BookingModel>> getBookings(List<String> tripsIds) async {
+    List<TripModel> trips = await getTrips(tripsIds);
     List<BookingModel> bookings = [];
-    if (tripsIds.isEmpty) return bookings;
-    List<TripModel> trips = [];
-    QuerySnapshot snap = await _tripsCollection.where("id", arrayContainsAny: tripsIds).get();
-    if (snap.docs.isEmpty) return bookings;
-    trips.addAll(snap.docs.map((e) => TripModel.fromJson((e.data() as Map<String, dynamic>))));
     for (TripModel trip in trips) {
-      QuerySnapshot snap = await _usersCollection.where("id", arrayContainsAny: trip.touristIds).get();
-      if (snap.docs.isEmpty) continue;
-      snap.docs.map((e) {
-        TouristModel tourist = TouristModel.fromJson((e.data() as Map<String, dynamic>));
-        bookings.add(BookingModel(trip: trip, tourist: tourist));
-      });
+      for (String id in trip.touristIds) {
+        DocumentSnapshot doc = await _usersCollection.doc(id).get();
+        bookings.add(BookingModel(
+          trip: trip,
+          tourist: TouristModel.fromJson((doc.data() as Map<String, dynamic>)),
+        ));
+      }
     }
     return bookings;
   }
 
   static Future<void> updateFavAttraction(TouristModel tourist) async {
     await _usersCollection.doc(tourist.id).update(tourist.toJson());
+  }
+
+  static bookTrip(String tripId, List<String> userIds) async {
+    await _tripsCollection.doc(tripId).update({"tourist_ids": userIds});
   }
 }
