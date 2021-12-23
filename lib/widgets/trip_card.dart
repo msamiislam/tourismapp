@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tourismapp/models/trip_model.dart';
-import 'package:tourismapp/pages/detail.dart';
+import 'package:tourismapp/pages/trip.dart';
 import 'package:tourismapp/widgets/simple_txt.dart';
 
 class TripCard extends StatelessWidget {
@@ -13,7 +13,7 @@ class TripCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Get.to(() => DetailPage(isGuide: true)),
+      onTap: () => Get.to(() => TripPage(trip, isGuide: true)),
       child: Stack(
         children: [
           Container(

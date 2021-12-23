@@ -3,22 +3,25 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
+import 'package:tourismapp/pages/guide/add_trip/trip_itinerary.dart';
 
-import '../../pages/guide/trip_days.dart';
-import '../../utils/colors.dart';
-import '../../widgets/profile_image.dart';
-import '../../widgets/simple_txt.dart';
+import '../../../utils/colors.dart';
+import '../../../widgets/profile_image.dart';
+import '../../../widgets/simple_txt.dart';
+import 'add_trip_controller.dart';
 
-class TripInfoPage extends StatefulWidget {
-  const TripInfoPage({Key? key}) : super(key: key);
+class AddTripPage extends StatefulWidget {
+  const AddTripPage({Key? key}) : super(key: key);
 
   @override
-  State<TripInfoPage> createState() => _TripInfoPageState();
+  State<AddTripPage> createState() => _AddTripPageState();
 }
 
-class _TripInfoPageState extends State<TripInfoPage> {
+class _AddTripPageState extends State<AddTripPage> {
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
-  int count = 1;
+  final AddTripController _tripController = Get.put(AddTripController());
+
+  List<String> images = [];
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +39,7 @@ class _TripInfoPageState extends State<TripInfoPage> {
           child: Column(
             children: [
               MultiImage(
-                onPickedImages: (images) {},
+                onPickedImages: (images) => this.images = [...images.map((e) => e.path)],
               ),
               SizedBox(height: 15.0),
               FormBuilder(
@@ -91,14 +94,46 @@ class _TripInfoPageState extends State<TripInfoPage> {
                       ]),
                     ),
                     SizedBox(height: 15.0),
-                    Counter(
-                      onChanged: (days) => count = days,
+                    Row(
+                      children: [
+                        SizedBox(width: 5.0),
+                        AppText("Trip Days: ", weight: FontWeight.w500),
+                        SizedBox(width: 20.0),
+                        Expanded(
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 8.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5.0),
+                              border: Border.all(color: AppColors.grey),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                InkWell(onTap: _tripController.decrementDaysCount, child: Icon(FontAwesomeIcons.minusCircle)),
+                                GetBuilder<AddTripController>(builder: (context) {
+                                  return Text("${_tripController.daysCount}");
+                                }),
+                                InkWell(onTap: _tripController.incrementDaysCount, child: Icon(FontAwesomeIcons.plusCircle)),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(height: 15.0),
                     Align(
                       alignment: Alignment.centerRight,
                       child: ElevatedButton(
-                        onPressed: () => Get.to(() => TripDaysPage(count)),
+                        onPressed: () {
+                          if (_fbKey.currentState!.saveAndValidate()) {
+                            Map<String, dynamic> data = {..._fbKey.currentState!.value};
+                            data['images'] = images;
+                            Get.to(() => TripItineraryPage(
+                                  days: _tripController.daysCount,
+                                  tripInfo: data,
+                                ));
+                          }
+                        },
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: AppText('Next'),
@@ -112,61 +147,6 @@ class _TripInfoPageState extends State<TripInfoPage> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class Counter extends StatefulWidget {
-  final void Function(int counter) onChanged;
-
-  const Counter({Key? key, required this.onChanged}) : super(key: key);
-
-  @override
-  State<Counter> createState() => _CounterState();
-}
-
-class _CounterState extends State<Counter> {
-  int count = 1;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        SizedBox(width: 5.0),
-        AppText("Trip Days: ", weight: FontWeight.w500),
-        SizedBox(width: 20.0),
-        Expanded(
-          child: Container(
-            padding: EdgeInsets.symmetric(vertical: 8.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5.0),
-              border: Border.all(color: AppColors.grey),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                InkWell(
-                    onTap: () {
-                      if (count > 1) {
-                        count--;
-                        widget.onChanged.call(count);
-                        setState(() {});
-                      }
-                    },
-                    child: Icon(FontAwesomeIcons.minusCircle)),
-                Text("$count"),
-                InkWell(
-                    onTap: () {
-                      count++;
-                      widget.onChanged.call(count);
-                      setState(() {});
-                    },
-                    child: Icon(FontAwesomeIcons.plusCircle)),
-              ],
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

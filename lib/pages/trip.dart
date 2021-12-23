@@ -3,22 +3,23 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tourismapp/models/trip_model.dart';
 
 import '../utils/colors.dart';
 import '../widgets/large_txt.dart';
 import '../widgets/simple_txt.dart';
 
-class DetailPage extends StatefulWidget {
+class TripPage extends StatefulWidget {
   final bool isGuide;
+  final TripModel trip;
 
-  const DetailPage({Key? key, this.isGuide = false}) : super(key: key);
+  const TripPage(this.trip, {Key? key, this.isGuide = false}) : super(key: key);
 
   @override
-  _DetailPageState createState() => _DetailPageState();
+  _TripPageState createState() => _TripPageState();
 }
 
-class _DetailPageState extends State<DetailPage> {
-  int selectedIndex = -1;
+class _TripPageState extends State<TripPage> {
   List list = [1, 2];
 
   @override
@@ -33,11 +34,11 @@ class _DetailPageState extends State<DetailPage> {
                   SizedBox(
                     height: 300,
                     child: Swiper(
-                      itemCount: 3,
+                      itemCount: widget.trip.images.length,
                       pagination: SwiperPagination(),
                       itemBuilder: (BuildContext context, int index) {
                         return CachedNetworkImage(
-                          imageUrl: "https://archaeology.punjab.gov.pk/system/files/2_36.jpg",
+                          imageUrl: widget.trip.images[index],
                           fit: BoxFit.cover,
                           placeholder: (context, url) => Center(
                             widthFactor: 1,
@@ -64,11 +65,11 @@ class _DetailPageState extends State<DetailPage> {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(child: AppLargeText("Badshahi Masjid", color: AppColors.onBackground)),
+                        Expanded(child: AppLargeText(widget.trip.title, color: AppColors.onBackground)),
                         SizedBox(width: 10.0),
                         // Column(
                         //   children: [
-                        AppLargeText("PKR 8,000", size: 24.0, color: AppColors.secondary),
+                        AppLargeText(widget.trip.estimatedCost.toString(), size: 24.0, color: AppColors.secondary),
                         //     Row(
                         //       children: [
                         //         RatingBar.builder(
@@ -95,70 +96,49 @@ class _DetailPageState extends State<DetailPage> {
                       children: [
                         Icon(Icons.location_city, color: AppColors.primary),
                         SizedBox(width: 5),
-                        AppText("Lahore, Pakistan", color: AppColors.onBackground),
+                        AppText("${widget.trip.location}, Pakistan", color: AppColors.onBackground),
                       ],
                     ),
                     SizedBox(height: 20.0),
                     AppLargeText("Description", size: 20.0),
                     SizedBox(height: 5.0),
-                    AppText(
-                        "Packed with historic landmarks, bustling eateries, and manicured parks, the vibrant city of Lahore exudes culture at every corner. From soaring minarets and colorful facades to street-level stalls selling flavorful Punjabi favorites, the increasingly cosmopolitan city radiates with energy.",
-                        size: 10.0),
+                    AppText(widget.trip.description, size: 10.0),
                     SizedBox(height: 20.0),
                     Center(child: AppLargeText("Itinerary", size: 20.0)),
                     ListView.builder(
                       primary: false,
                       shrinkWrap: true,
-                      itemCount: 2,
+                      itemCount: widget.trip.itinerary.length,
                       itemBuilder: (context, index) => Padding(
                         padding: EdgeInsets.only(bottom: index != list.length - 1 ? 15.0 : 0.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            //Implement this
-                            //if(trip.length>1)
-                            AppText('Day ${index + 1}', weight: FontWeight.w600),
-                            SizedBox(height: 10.0),
-                            Table(
-                              border: TableBorder.all(color: index % 2 == 0 ? AppColors.primary : AppColors.secondaryVariant),
-                              columnWidths: {0: FlexColumnWidth(0.35)},
-                              children: [
-                                TableRow(
-                                  children: [
-                                    Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(5.0),
-                                        child: AppText('Time'),
-                                      ),
-                                    ),
-                                    Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(5.0),
-                                        child: AppText('Details'),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                //for trips.length
-                                for (int i = 0; i < 3; i++)
-                                  TableRow(
-                                    children: [
-                                      Center(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(5.0),
-                                          child: AppText('10:00 am'),
+                        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                          //Implement this
+                          //if(trip.length>1)
+                          AppText('Day ${index + 1}', weight: FontWeight.w600),
+                          SizedBox(height: 10.0),
+                          Table(
+                            border: TableBorder.all(color: index % 2 == 0 ? AppColors.primary : AppColors.secondaryVariant),
+                            columnWidths: {0: FlexColumnWidth(0.35)},
+                            children: widget.trip.itinerary[index]
+                                .map((e) => TableRow(
+                                      children: [
+                                        Center(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(5.0),
+                                            child: AppText(e.time.toString()),
+                                          ),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.fromLTRB(10.0, 5.0, 5.0, 5.0),
-                                        child: AppText('Leave from the pickup point'),
-                                      ),
-                                    ],
-                                  ),
-                              ],
-                            ),
-                          ],
-                        ),
+                                        Center(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(5.0),
+                                            child: AppText(e.description ?? ""),
+                                          ),
+                                        ),
+                                      ],
+                                    ))
+                                .toList(),
+                          ),
+                        ]),
                       ),
                     ),
                     // Row(
