@@ -145,8 +145,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       );
                     },
                     child: ExploreItem(
-                        image: travelImages.values.elementAt(index)["image"]!,
-                        text: travelImages.keys.elementAt(index)),
+                        image: travelImages.values.elementAt(index)["image"]!, text: travelImages.keys.elementAt(index)),
                   );
                 },
               ),
@@ -158,9 +157,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   AppLargeText("Explore Guiders", size: 20),
-                  InkWell(
-                      onTap: () => Get.to(() => AllGuidesPage()),
-                      child: AppText("See all", color: AppColors.textColor1)),
+                  InkWell(onTap: () => Get.to(() => AllGuidesPage()), child: AppText("See all", color: AppColors.textColor1)),
                 ],
               ),
             ),
@@ -183,7 +180,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (_, index) {
                         return InkWell(
-                          onTap: () => Get.to(() => GuidePage(users[index] as GuideModel)),
+                          onTap: () => Get.to(() => GuideProfilePage(users[index] as GuideModel)),
                           child: ExploreItem(
                             image: users[index].imageUrl,
                             text: users[index].name,

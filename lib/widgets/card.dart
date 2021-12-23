@@ -19,7 +19,7 @@ class GuideCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Get.to(() => GuidePage(guide)),
+      onTap: () => Get.to(() => GuideProfilePage(guide)),
       child: Stack(
         children: [
           Container(
