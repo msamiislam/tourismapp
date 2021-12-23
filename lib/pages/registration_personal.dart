@@ -79,10 +79,12 @@ class _RegistrationPersonalPageState extends State<RegistrationPersonalPage> {
                       name: "phone",
                       keyboardType: TextInputType.phone,
                       decoration: const InputDecoration(
-                          hintText: "Enter your phone number", labelText: "Phone Number", border: OutlineInputBorder()),
+                          hintText: "Enter your phone number", labelText: "Phone Number (03xxxxxxxxx)", border: OutlineInputBorder()),
                       validator: FormBuilderValidators.compose([
                         FormBuilderValidators.required(context),
                         FormBuilderValidators.numeric(context),
+                        FormBuilderValidators.minLength(context, 11, errorText: "Must be 11 characters"),
+                        FormBuilderValidators.maxLength(context, 11, errorText: "Must be 11 characters"),
                       ]),
                     ),
                     const SizedBox(height: 30.0),
@@ -111,9 +113,7 @@ class _RegistrationPersonalPageState extends State<RegistrationPersonalPage> {
                       inputType: InputType.date,
                       valueTransformer: (value) => value.toString(),
                       decoration: const InputDecoration(
-                          hintText: "Select your date of birth",
-                          labelText: "Date of Birth",
-                          border: OutlineInputBorder()),
+                          hintText: "Select your date of birth", labelText: "Date of Birth", border: OutlineInputBorder()),
                       validator: FormBuilderValidators.compose([
                         FormBuilderValidators.required(context),
                       ]),

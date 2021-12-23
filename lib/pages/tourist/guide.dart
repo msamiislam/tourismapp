@@ -1,12 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tourismapp/models/guide_model.dart';
 import 'package:tourismapp/models/trip_model.dart';
 import 'package:tourismapp/services/database.dart';
+import 'package:tourismapp/utils/launcher.dart';
 import 'package:tourismapp/widgets/image_place_holder.dart';
-import 'package:tourismapp/widgets/package_card.dart';
 import 'package:tourismapp/widgets/simple_txt.dart';
+import 'package:tourismapp/widgets/trip_card.dart';
 
 class GuideProfilePage extends StatelessWidget {
   final GuideModel guide;
@@ -44,6 +46,11 @@ class GuideProfilePage extends StatelessWidget {
               ListTile(
                 leading: Icon(Icons.phone_outlined),
                 title: AppText(guide.phone),
+                trailing: InkWell(
+                    onTap: () {
+                      Launcher.chat(guide.phone);
+                    },
+                    child: Icon(FontAwesomeIcons.whatsapp)),
               ),
               ListTile(
                 leading: Icon(Icons.mail_outlined),
