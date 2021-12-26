@@ -2,23 +2,40 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppText extends StatelessWidget {
-  double size;
+  final double? size;
   final String text;
-  final Color color;
-  AppText({ Key? key,
-  this.size=16,
-  required this.text, 
-  this.color= Colors.black54 }) : super(key: key);
+  final int? maxLines;
+  final double? height;
+  final Color? color;
+  final TextOverflow? overflow;
+  final FontWeight weight;
+  final TextAlign? textAlign;
+
+  const AppText(
+    this.text, {
+    Key? key,
+    this.size,
+    this.color,
+    this.maxLines,
+    this.height,
+    this.overflow,
+    this.textAlign,
+    this.weight = FontWeight.normal,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
+      maxLines: maxLines,
+      textAlign: textAlign,
       style: TextStyle(
         color: color,
+        height: height,
         fontSize: size,
-        fontWeight: FontWeight.w300,
-         ),
+        fontWeight: weight,
+        overflow: overflow,
+      ),
     );
   }
 }

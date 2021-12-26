@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tourismapp/utils/colors.dart';
-import 'package:tourismapp/widgets/simple_txt.dart';
+import '../utils/colors.dart';
+import '../widgets/simple_txt.dart';
 
 class ResponsiveButton extends StatelessWidget {
   final bool? isResponsive;
@@ -28,7 +28,7 @@ class ResponsiveButton extends StatelessWidget {
             //for show text in button
             isResponsive==true?Container(
               margin: const EdgeInsets.only(left: 20),
-             child: AppText(text: "Book Trip Now", color: Colors.white,)):Container(),
+             child: AppText("Book Trip Now", color: Colors.white,)):Container(),
 
              //for show icon in button
             Image.asset("img/responsivebutton.png"),

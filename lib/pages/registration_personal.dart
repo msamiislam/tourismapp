@@ -4,15 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
-import 'package:tourismapp/pages/registration_account.dart';
-import 'package:tourismapp/utils/colors.dart';
-import 'package:tourismapp/widgets/large_txt.dart';
-import 'package:tourismapp/widgets/profile_image.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:tourismapp/pages/guide/guide_registration.dart';
 
-class RegistrationPersonalPage extends StatelessWidget {
+import '../models/enums.dart';
+import '../pages/registration_account.dart';
+import '../utils/colors.dart';
+import '../widgets/large_txt.dart';
+import '../widgets/profile_image.dart';
+
+class RegistrationPersonalPage extends StatefulWidget {
+  const RegistrationPersonalPage({Key? key}) : super(key: key);
+
+  @override
+  State<RegistrationPersonalPage> createState() => _RegistrationPersonalPageState();
+}
+
+class _RegistrationPersonalPageState extends State<RegistrationPersonalPage> {
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey();
 
-  RegistrationPersonalPage({Key? key}) : super(key: key);
+  XFile? profileImage;
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +42,16 @@ class RegistrationPersonalPage extends StatelessWidget {
                 key: _fbKey,
                 child: Column(
                   children: <Widget>[
-                    const SizedBox(height: 50.0),
-                    AppLargeText(text: "Create Your Account"),
+                    AppLargeText("Create Your Account"),
                     const SizedBox(height: 30.0),
                     Container(
+                      width: Get.width / 2,
+                      height: Get.width / 2,
                       clipBehavior: Clip.hardEdge,
                       decoration: BoxDecoration(shape: BoxShape.circle),
                       child: ProfileImage(
-                        onPicked: (file) {},
+                        radius: Get.width / 4,
+                        onPicked: (imageFile) => profileImage = imageFile,
                       ),
                     ),
                     const SizedBox(height: 30.0),
@@ -63,18 +76,20 @@ class RegistrationPersonalPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 30.0),
                     FormBuilderTextField(
-                      name: "phone_number",
+                      name: "phone",
                       keyboardType: TextInputType.phone,
                       decoration: const InputDecoration(
-                          hintText: "Enter your phone number", labelText: "Phone Number", border: OutlineInputBorder()),
+                          hintText: "Enter your phone number", labelText: "Phone Number (03xxxxxxxxx)", border: OutlineInputBorder()),
                       validator: FormBuilderValidators.compose([
                         FormBuilderValidators.required(context),
                         FormBuilderValidators.numeric(context),
+                        FormBuilderValidators.minLength(context, 11, errorText: "Must be 11 characters"),
+                        FormBuilderValidators.maxLength(context, 11, errorText: "Must be 11 characters"),
                       ]),
                     ),
                     const SizedBox(height: 30.0),
                     FormBuilderTextField(
-                      name: "address_line",
+                      name: "address",
                       keyboardType: TextInputType.streetAddress,
                       decoration: const InputDecoration(
                           hintText: "Enter your address", labelText: "Address", border: OutlineInputBorder()),
@@ -84,17 +99,8 @@ class RegistrationPersonalPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 30.0),
                     FormBuilderRadioGroup(
-                      name: "blood group",
-                      options: [
-                        FormBuilderFieldOption(value: "A+"),
-                        FormBuilderFieldOption(value: "A-"),
-                        FormBuilderFieldOption(value: "B+"),
-                        FormBuilderFieldOption(value: "B-"),
-                        FormBuilderFieldOption(value: "O+"),
-                        FormBuilderFieldOption(value: "O-"),
-                        FormBuilderFieldOption(value: "AB+"),
-                        FormBuilderFieldOption(value: "AB-"),
-                      ],
+                      name: "blood_group",
+                      options: BloodGroup.values.map((e) => FormBuilderFieldOption(value: e)).toList(),
                       decoration: const InputDecoration(
                           hintText: "Enter your blood group", labelText: "Blood Group", border: OutlineInputBorder()),
                       validator: FormBuilderValidators.compose([
@@ -103,13 +109,11 @@ class RegistrationPersonalPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 30.0),
                     FormBuilderDateTimePicker(
-                      name: "date_of_birth",
+                      name: "dob",
                       inputType: InputType.date,
                       valueTransformer: (value) => value.toString(),
                       decoration: const InputDecoration(
-                          hintText: "Select your date of birth",
-                          labelText: "Date of Birth",
-                          border: OutlineInputBorder()),
+                          hintText: "Select your date of birth", labelText: "Date of Birth", border: OutlineInputBorder()),
                       validator: FormBuilderValidators.compose([
                         FormBuilderValidators.required(context),
                       ]),
@@ -117,13 +121,26 @@ class RegistrationPersonalPage extends StatelessWidget {
                     const SizedBox(height: 30.0),
                     FormBuilderRadioGroup(
                       name: "gender",
-                      options: [
-                        FormBuilderFieldOption(value: "male", child: Text("Male")),
-                        FormBuilderFieldOption(value: "female", child: Text("Female")),
-                        FormBuilderFieldOption(value: "none", child: Text("None")),
-                      ],
+                      options: Gender.values
+                          .map(
+                            (e) => FormBuilderFieldOption(value: e),
+                          )
+                          .toList(),
                       decoration: const InputDecoration(
                           hintText: "Select your gender", labelText: "Gender", border: OutlineInputBorder()),
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(context),
+                      ]),
+                    ),
+                    const SizedBox(height: 30.0),
+                    FormBuilderRadioGroup(
+                      name: "user_type",
+                      options: UserType.values.map((e) => FormBuilderFieldOption(value: e)).toList(),
+                      decoration: const InputDecoration(
+                        hintText: "Select account type",
+                        labelText: "Account Type",
+                        border: OutlineInputBorder(),
+                      ),
                       validator: FormBuilderValidators.compose([
                         FormBuilderValidators.required(context),
                       ]),
@@ -149,8 +166,14 @@ class RegistrationPersonalPage extends StatelessWidget {
 
   void _next() {
     if (_fbKey.currentState!.saveAndValidate()) {
-      log(_fbKey.currentState!.value.toString());
-      Get.to(() => RegistrationAccount());
+      Map<String, dynamic> data = {}..addAll(_fbKey.currentState!.value);
+      data["image"] = profileImage?.path;
+      log(data.toString());
+      if (data["user_type"] == UserType.guide) {
+        Get.to(() => GuideRegistrationPage(data));
+      } else {
+        Get.to(() => RegistrationAccountPage(data));
+      }
     }
   }
 }

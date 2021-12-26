@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tourismapp/utils/colors.dart';
-import 'package:tourismapp/widgets/simple_txt.dart';
+import '../utils/colors.dart';
+import '../widgets/simple_txt.dart';
 
 class AppButtons extends StatelessWidget {
   final Color color;
@@ -29,7 +29,7 @@ class AppButtons extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         color: AppColors.buttonBackground,
       ),
-      child: isIcon==false?AppText(text: text!, color: color,):Icon(icon, color: color,),
+      child: isIcon==false?AppText(text!, color: color,):Icon(icon, color: color,),
     );
   }
 }
