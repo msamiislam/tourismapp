@@ -2,7 +2,7 @@
     package="com.example.tourismapp">
    <application
         android:label="tourismapp"
-        android:icon="@mipmap/adventuree">
+        android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
