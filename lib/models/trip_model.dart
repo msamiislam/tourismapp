@@ -51,7 +51,7 @@ class TripModel {
         title: json["title"],
         location: json["location"],
         description: json["description"],
-        images: [json["images"] as List? ?? []].map((e) => e.toString()).toList(),
+        images: (json["images"] as List? ?? []).map((e) => e.toString()).toList(),
         estimatedCost: json["estimated_cost"],
         itinerary: itinerary,
         touristIds: (json["tourist_ids"] as List? ?? []).map((e) => e.toString()).toList(),

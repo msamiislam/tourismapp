@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -9,6 +11,7 @@ import 'package:tourismapp/models/guide_model.dart';
 import 'package:tourismapp/models/trip_model.dart';
 import 'package:tourismapp/pages/guide/dashboard.dart';
 import 'package:tourismapp/services/database.dart';
+import 'package:tourismapp/services/storage.dart';
 import 'package:tourismapp/widgets/simple_txt.dart';
 
 class TripItineraryPage extends StatefulWidget {
@@ -97,8 +100,6 @@ class _TripItineraryPageState extends State<TripItineraryPage> {
     if (_fbKey.currentState!.saveAndValidate()) {
       List<List<ActivityModel>> itinerary = [];
       List<ActivityModel> activities;
-      print(tripItinerary);
-      // return;
       for (int i = 0; i < dayActivities.length; i++) {
         int theDay = i + 1;
         activities = [];
@@ -114,8 +115,11 @@ class _TripItineraryPageState extends State<TripItineraryPage> {
         }
         itinerary.add(activities);
       }
-      print(itinerary);
-      // return;
+      List<String> images = widget.tripInfo['images'];
+      List<String> urls = [];
+      for (String image in images) {
+        urls.add(await Storage.uploadImage(image: File(image), id: loginController.user!.id));
+      }
       TripModel trip = TripModel(
         id: 'id${DateTime.now().microsecondsSinceEpoch}',
         guideId: loginController.user!.id,
@@ -124,7 +128,7 @@ class _TripItineraryPageState extends State<TripItineraryPage> {
         title: widget.tripInfo['title'],
         location: widget.tripInfo['loc'],
         description: widget.tripInfo['desc'],
-        images: widget.tripInfo['images'],
+        images: urls,
         estimatedCost: int.parse(widget.tripInfo['price']),
         itinerary: itinerary,
         touristIds: [],
