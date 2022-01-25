@@ -161,6 +161,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     if (!_login.isTourist!) ...[
                       FormBuilderDropdown<String>(
                         name: "city",
+                        initialValue: (_login.user as GuideModel).city,
                         items:
                         Constants.cityContacts.keys.map((e) => DropdownMenuItem(child: Text(e), value: e),).toList(),
                         decoration: const InputDecoration(
@@ -175,6 +176,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       const SizedBox(height: 30.0),
                       FormBuilderDropdown<String>(
                         name: "state",
+                        initialValue: (_login.user as GuideModel).state,
                         items:
                         Constants.states.map((e) => DropdownMenuItem(child: Text(e), value: e)).toList(),
                         decoration: const InputDecoration(

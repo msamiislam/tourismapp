@@ -4,12 +4,11 @@ import 'package:get/get.dart';
 import 'package:tourismapp/models/attraction_model.dart';
 
 import '../controllers/login_controller.dart';
-import '../models/user_model.dart';
-import 'tourist/dashboard.dart';
 import '../pages/login.dart';
 import '../pages/welcome.dart';
 import '../services/database.dart';
 import 'guide/dashboard.dart';
+import 'tourist/dashboard.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -27,13 +26,9 @@ class _SplashPageState extends State<SplashPage> {
       List<AttractionModel> attractions = await Database.getTopAttractions();
       Get.put(attractions, tag: "attractions");
       if (_login.isAppOpened) {
-        if (FirebaseAuth.instance.currentUser == null) {
+        if (FirebaseAuth.instance.currentUser == null || !_login.hasUserData) {
           Get.offAll(() => LoginPage());
         } else {
-          if (!_login.hasUserData) {
-            UserModel user = await Database.getUser(FirebaseAuth.instance.currentUser!.uid);
-            _login.updateUser(user);
-          }
           if (_login.user!.isGuide) {
             Get.off(() => GuideDashboardPage());
           } else {
